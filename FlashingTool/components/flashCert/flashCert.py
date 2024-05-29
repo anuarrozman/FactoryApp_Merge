@@ -65,9 +65,11 @@ class FlashCert:
     def save_cert_id_to_ini(self, directory, certId):
         config = configparser.ConfigParser()
         config['CERT'] = {'certId': certId}
+        config['SN'] = {'serialNumber': self.get_serial_number()}
         with open(os.path.join(directory, 'cert_info.ini'), 'w') as configfile:
             config.write(configfile)
         self.log_message(f"CertId {certId} saved to {os.path.join(directory, 'cert_info.ini')}")
+
 
     def certify(self, bin_path, selected_port):
         try:
@@ -98,7 +100,8 @@ class FlashCert:
                     self.log_message(f"Flashing cert {certId} on port {selected_port}...")
                     self.certify(bin_path, selected_port)
                     self.update_status(certId)
-                    self.create_folder()    
+                    self.create_folder()   
+                    self.save_cert_id_to_ini(os.path.join(os.path.dirname(__file__), self.get_serial_number()), certId) 
                     self.log_message(f"Cert {certId} flashed successfully.")
                 else:
                     self.log_message("No port selected. Please select a port before flashing.")
