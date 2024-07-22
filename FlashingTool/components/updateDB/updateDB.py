@@ -1,4 +1,9 @@
 import mysql.connector
+import logging
+
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 class UpdateDB:
     
@@ -18,7 +23,7 @@ class UpdateDB:
             result = cursor.fetchone()
 
             if result:
-                print("MAC address already exists in the database.")
+                logger.debug(f"MAC address already exists in the database: {mac_address}")
             else:
                 # Insert the MAC address into the database if it doesn't exist
                 sql_query = """
@@ -27,13 +32,54 @@ class UpdateDB:
                             """
                 cursor.execute(sql_query, (mac_address,))
                 connection.commit()
-                print("MAC address inserted into the database.")
+                logger.info(f"MAC address inserted into the database: {mac_address}")
 
         except mysql.connector.Error as error:
-            print("Failed to update database:", error)
+            logger.error(f"Failed to update database: {error}")
 
         finally:
             if connection.is_connected():
                 cursor.close()
                 connection.close()
-                print("MySQL connection closed.")
+                logger.info("MySQL connection closed.")
+
+    def update_text_file(self, mac_address):
+        file_path = '/usr/src/app/ATSoftwareDevelopmentTool/FlashingTool/device_data.txt'
+
+        try:
+            with open(file_path, 'r+') as file:
+                lines = file.readlines()
+                updated_lines = []
+                found = False
+
+                for line in lines:
+                    if 'mac-address:' in line and 'Status:' in line and 'Status: 0' in line:
+                        line_parts = line.split(',')
+                        # Assuming the order of parts and number of parts is fixed
+                        for i, part in enumerate(line_parts):
+                            if 'mac-address:' in part:
+                                line_parts[i] = f" mac-address: {mac_address}"
+                            if 'Status:' in part:
+                                line_parts[i] = " Status: 1\n"
+                        updated_line = ','.join(line_parts)
+                        updated_lines.append(updated_line)
+                        found = True
+                    else:
+                        updated_lines.append(line)
+
+                if not found:
+                    raise IOError("No lines with Status: 0 found in the text file.")
+
+                file.seek(0)
+                file.writelines(updated_lines)
+                file.truncate()
+
+                logger.info(f"MAC address and status updated in the text file where status was 0: {mac_address}")
+        except IOError as e:
+            logger.error(f"IOError occurred: {e}")
+        except Exception as e:
+            logger.error(f"An unexpected error occurred: {e}")
+
+        except IOError as error:
+            logger.error(f"Failed to update text file: {error}")
+            print(f"Error: {error}")
