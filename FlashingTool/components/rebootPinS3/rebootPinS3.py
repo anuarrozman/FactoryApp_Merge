@@ -24,9 +24,11 @@ class RebootPinS3:
     # Function to reboot ESP32-S3
     def reboot_esp32(self):
         self.set_pin_high()
-        time.sleep(0.1)  # Wait for 100 ms
+        time.sleep(1)  # Wait for 100 ms
         self.set_pin_low()
-        time.sleep(0.1)  # Wait for 100 ms
+        time.sleep(1)  # Wait for 100 ms
+        self.set_pin_high()
+        # time.sleep(1)  # Wait for 100 ms
 
     # Clean up GPIO settings
     def cleanup(self):

@@ -130,7 +130,7 @@ class SerialCom:
         self.update_status_label9(f"{did}", "black", ("Helvetica", 12, "italic"))
         
     def process_mtqr(self, decoded_data):
-        mtqr = decoded_data.split("-")[1].strip()
+        mtqr = decoded_data.split("-", 1)[1].strip()
         logger.info(f"MTQR: {mtqr}")
         self.update_status_label10(f"{mtqr}", "black", ("Helvetica", 12, "italic"))
 

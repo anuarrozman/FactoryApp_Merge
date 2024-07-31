@@ -1,8 +1,6 @@
 from . import AHT20  # Assuming AHT20 is the name of the module where AHT20 class is defined
 import logging
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 class SensorLogger:

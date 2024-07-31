@@ -4,8 +4,6 @@ import logging
 import mysql.connector
 import os
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 class ToolsBar:
@@ -88,8 +86,8 @@ class ToolsBar:
             conn.close()
             
     def write_to_text_file(self, data):
-        # file_path = "/usr/src/app/ATSoftwareDevelopmentTool/FlashingTool/device_data.txt"
         file_path = "/usr/src/app/ATSoftwareDevelopmentTool/FlashingTool/device_data.txt"
+        # file_path = '/home/anuarrozman/Airdroitech/ATSoftwareDevelopmentTool/FlashingTool/device_data.txt'
         if not os.path.exists(file_path):
             with open(file_path, 'w') as file:
                 logger.debug(f"Created new file: {file_path}")

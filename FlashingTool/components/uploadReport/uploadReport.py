@@ -2,8 +2,6 @@
 import requests
 import logging
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 def post_report(api_url, data, headers=None):

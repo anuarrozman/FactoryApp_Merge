@@ -10,7 +10,6 @@ import time
 import threading
 import logging
 import concurrent.futures
-import shutil
 
 from components.settingWindow.settingWindow import SettingApp
 from components.toolsBar.toolsBar import ToolsBar
@@ -29,9 +28,9 @@ from components.aht20Sensor.aht20Sensor import SensorLogger
 # from components.servoControl.servoControl import ServoController
 from components.processOrderNumber.processOrderNumber import get_order_numbers
 from components.readOrderFile.readOrderFile import parse_order_file
-from components.rebootPinS3.rebootPinS3 import RebootPinS3
+# from components.rebootPinS3.rebootPinS3 import RebootPinS3
 from components.loggingReport.loggingReport import setup_logging
-# from components.wifiDriver.wifiDriver import scan_wifi_networks
+from components.wifiDriver.wifiDriver import scan_wifi_networks
 
 
 file_path = '/usr/src/app/ATSoftwareDevelopmentTool/FlashingTool/device_data.txt'  # Specify the correct path to your text file
@@ -59,7 +58,7 @@ class SerialCommunicationApp:
         self.factory_flag = None
         self.used_cert_ids = set()
         self.selected_cert_id = None
-        #self.configure_logging()
+
 
         # Create GUI elements
         self.initialize_gui()
@@ -91,7 +90,7 @@ class SerialCommunicationApp:
         self.sendEntry = WriteDeviceInfo(self.send_command, self.result_write_serialnumber, self.result_write_mtqr) #, self.log_message)
         self.dmmReader = DeviceSelectionApp(self.dmm_frame, self.result_3_3v_test, self.result_5v_test)
         self.multimeter = Multimeter()
-        self.rebootPin = RebootPinS3()
+        # self.rebootPin = RebootPinS3()
         # self.aht20Sensor = SensorLogger()
         # self.servo_controller = ServoController()
 
@@ -524,7 +523,7 @@ class SerialCommunicationApp:
         self.write_device_serialnumber_button.grid(row=1, column=7, padx=5, pady=5, sticky=tk.W)
 
         self.write_device_mtqr_button = ttk.Button(self.serial_baud_frame, text="Write MTQR", command=self.send_mqtr)
-        self.write_device_mtqr_button.grid(row=1, column=8, padx=5, pady=5, sticky=tk.W)
+=        self.write_device_mtqr_button.grid(row=1, column=8, padx=5, pady=5, sticky=tk.W)
 
         self.read_atbeam_temp_button = ttk.Button(self.serial_baud_frame, text="Read ATBeam Temp", command=self.get_atbeam_temp)
         self.read_atbeam_temp_button.grid(row=1, column=9, padx=5, pady=5, sticky=tk.W)
@@ -1024,8 +1023,8 @@ class SerialCommunicationApp:
             port1 = config.get("flash", "port1")
             logger.info(f"Port: {port}, Baud: {baud}")
             self.flashFw.get_device_mac_address(port)
-            self.flashCertificate(self.selected_cert_id, "/dev/ttyACM0")
-            # self.flashCertificate(self.selected_cert_id, "/dev/ttyUSB0")
+            # self.flashCertificate(self.selected_cert_id, "/dev/ttyACM0")
+            self.flashCertificate(self.selected_cert_id, "/dev/ttyUSB0")
 
             time.sleep(10)
             
@@ -1034,7 +1033,7 @@ class SerialCommunicationApp:
             self.flashFw.export_esp_idf_path()
             
             with concurrent.futures.ThreadPoolExecutor() as executor:
-                future_s3 = executor.submit(self.flash_s3_firmware, port, baud)
+                future_s3 = executor.submit(self.flash_s3_firmware, port1, baud)
                 future_h2 = executor.submit(self.flash_h2_firmware, port1, baud)
 
                 # Wait for both futures to complete
@@ -1081,151 +1080,111 @@ class SerialCommunicationApp:
 
         config = configparser.ConfigParser()
         config.read(ini_file_path)
-      
+        
+        start_time = time.time()
+        duration = 2 * 60  # 2 minutes
 
-        try:
-
-            start_time = time.time()
-            duration = 2 * 60  # 2 minutes
-
-
-            # Execute commands based on the configuration
+        for _ in range(2):
             if "mac_address" in config:
                 logger.info("Reading MAC Address")
                 self.get_device_mac()
                 time.sleep(self.step_delay)
+                
+        if "prod_name" in config:
+            logger.info("Reading Product Name")
+            prod_name = config.get("prod_name", "prod_command")
+            self.send_command(prod_name + "\r\n")
+            time.sleep(self.step_delay)
 
-            if "mac_address" in config:
-                logger.info("Reading MAC Address")
-                self.get_device_mac()
-                time.sleep(self.step_delay)
+        if "serial_number" in config:
+            logger.info("Writing Serial Number")
+            self.send_serial_number()
+            time.sleep(self.step_delay)
 
-            if "prod_name" in config:
-                logger.info("Reading Product Name")
-                prod_name = config.get("prod_name", "prod_command")
-                self.send_command(prod_name + "\r\n")
-                time.sleep(self.step_delay)
+        if "matter_qr" in config:
+            logger.info("Writing Matter QR")
+            self.send_mqtr()
+            time.sleep(self.step_delay)
+            
+        if "save_device_data" in config:
+            logger.info("Saving Device Data")
+            save_command = config.get("save_device_data", "save_data")
+            self.send_command(save_command + "\r\n")
+            time.sleep(10)
 
-            if "serial_number" in config:
-                logger.info("Writing Serial Number")
-                self.send_serial_number()
-                time.sleep(self.step_delay)
+        if "atbeam_temp" in config:
+            logger.info("Reading ATBeam Temperature")
+            self.get_atbeam_temp()
+            time.sleep(self.step_delay)
 
-            if "matter_qr" in config:
-                logger.info("Writing Matter QR")
-                self.send_mqtr()
-                time.sleep(self.step_delay)
+        if "atbeam_humid" in config:
+            logger.info("Reading ATBeam Humidity")
+            self.get_atbeam_humid()
+            time.sleep(self.step_delay)
+            self.manual_test = True
+            
+        if "temp_compare" in config:
+            logger.info("Comparing Temperature")
+            self.read_temp_aht20()
+            time.sleep(self.step_delay)
+            
+        if "humid_compare" in config:
+            logger.info("Comparing Humidity")
+            self.read_humid_aht20()
+            self.result_group2_factory_mode.config(text="Pass", fg="green", font=("Helvetica", 12, "bold"))
+            self.factory_flag = self.serialCom.device_factory_mode
+            self.factory_flag = False
+            time.sleep(self.step_delay)
+            
+        if "wifi_softap" in config:
+            # self.send_command("FF:3;reboot\r\n")
+            self.rebootPin.reboot_esp32()
+            self.rebootPin.cleanup()
+            self.factory_flag = self.serialCom.device_factory_mode
+            self.factory_flag = True
+            logger.debug(f"Factory Flag: {self.factory_flag}")
+            time.sleep(3)
+            # add wifi logic here
+            logger.info("Start Checking Wi-Fi Soft AP")
+            self.wifi_scanning()
+            time.sleep(self.step_delay)
+            
+        if "wifi_station" in config:
+            logger.info("Starting Wi-Fi Station")
+            time.sleep(self.step_delay)
+            
+        if "ir_def" in config:
+            logger.debug("IR Definition")
+            ir_def = config.get("ir_def", "ir_def")
+            self.send_command(ir_def + "\r\n")
 
-            if "save_device_data" in config:
-                logger.info("Saving Device Data")
-                save_command = config.get("save_device_data", "save_data")
-                self.send_command(save_command + "\r\n")
-                time.sleep(10)
-
-            if "atbeam_temp" in config:
-                logger.info("Reading ATBeam Temperature")
-                self.get_atbeam_temp()
-                time.sleep(self.step_delay)
-
-            if "atbeam_humid" in config:
-                logger.info("Reading ATBeam Humidity")
-                self.get_atbeam_humid()
-                time.sleep(self.step_delay)
-                self.manual_test = True
-
-            if "temp_compare" in config:
-                logger.info("Comparing Temperature")
-                self.read_temp_aht20()
-                time.sleep(self.step_delay)
-
-            if "humid_compare" in config:
-                logger.info("Comparing Humidity")
-                self.read_humid_aht20()
-                self.result_group2_factory_mode.config(text="Pass", fg="green", font=("Helvetica", 12, "bold"))
-                self.factory_flag = self.serialCom.device_factory_mode
-                self.factory_flag = False
-                time.sleep(self.step_delay)
-
-            if "wifi_softap" in config:
-                #self.rebootPin.reboot_esp32()
-                #self.rebootPin.cleanup()
-                self.factory_flag = self.serialCom.device_factory_mode
-                self.factory_flag = True
-                logger.debug(f"Factory Flag: {self.factory_flag}")
-                time.sleep(3)
-                logger.info("Start Checking Wi-Fi Soft AP")
-                #self.wifi_scanning()
-                time.sleep(self.step_delay)
-
-            if "wifi_station" in config:
-                logger.info("Starting Wi-Fi Station")
-                time.sleep(self.step_delay)
-
-            if "ir_def" in config:
-                logger.debug("IR Definition")
-                ir_def = config.get("ir_def", "ir_def")
-                self.send_command(ir_def + "\r\n")
-
-            # Manual test loop
-            while time.time() - start_time < duration:
-                if "manual_test_loop" in config and self.manual_test and self.factory_flag == True:
-                    logger.debug(self.factory_flag)
-                    self.enable_frame(self.group3_frame)
-                    logger.info("Starting manual test loop")
-                    redLed = config.get("manual_test_loop", "redLed")
-                    greenLed = config.get("manual_test_loop", "greenLed")
-                    blueLed = config.get("manual_test_loop", "blueLed")
-                    offLed = config.get("manual_test_loop", "offLed")
-                    ir_send = config.get("manual_test_loop", "ir_send")
-                    logger.debug(f"Red LED: {redLed}, Green LED: {greenLed}, Blue LED: {blueLed}, IR Send: {ir_send}")
-                    time.sleep(1)
-                    self.send_command(redLed + "\r\n")
-                    time.sleep(1)
-                    self.send_command(greenLed + "\r\n")
-                    time.sleep(1)
-                    self.send_command(blueLed + "\r\n")
-                    time.sleep(1)
-                    self.send_command(offLed + "\r\n")
-                    time.sleep(2)
-                    self.send_command(ir_send + "\r\n")
-                    time.sleep(1)
-                else:
-                    logger.error("Manual test loop not found in the INI file or conditions not met")
-                    break
-
+        while time.time() - start_time < duration:
+            if "manual_test_loop" in config and self.manual_test and self.factory_flag == True:
+                logger.debug(self.factory_flag)
+                self.enable_frame(self.group3_frame)
+                logger.info("Starting manual test loop")             
+                redLed = config.get("manual_test_loop", "redLed")
+                greenLed = config.get("manual_test_loop", "greenLed")
+                blueLed = config.get("manual_test_loop", "blueLed")
+                offLed = config.get("manual_test_loop", "offLed")
+                ir_send = config.get("manual_test_loop", "ir_send")
+                logger.debug(f"Red LED: {redLed}, Green LED: {greenLed}, Blue LED: {blueLed}, IR Send: {ir_send}")
                 time.sleep(1)
-
-        except Exception as e:
-            logger.error(f"An error occurred during the test: {e}")
-
-        finally:
-            # Ensure all log entries are flushed
-            logging.shutdown()
-
-            # Define source and destination paths
-            source_path = 'app.log'
-            destination_directory = '/usr/src/app/my-s3-bucket'
-            destination_path = os.path.join(destination_directory, 'app.log')
-
-            # Ensure the destination directory exists
-            logger.debug(f'Creating directory if it does not exist: {destination_directory}')
-            os.makedirs(destination_directory, exist_ok=True)
-
-            # Copy the log file to the destination
-            logger.debug(f'Copying log file from {source_path} to {destination_path}')
-            shutil.copy2(source_path, destination_path)
-
-            # Rename the copied log file with a timestamp or device serial number
-            log_name = self.read_device_sn.cget("text")
-            renamed_file_path = os.path.join(destination_directory, f'{log_name}.log')
-            logger.debug(f'Renaming copied log file to {renamed_file_path}')
-            os.rename(destination_path, renamed_file_path)
-
-            logger.info(f'Log file copied and renamed to {renamed_file_path}')
-            # self.process_reset_device()
-            logger.info("Test Completed")
-            self.reset_tasks()
-
+                self.send_command(redLed + "\r\n")
+                time.sleep(1)
+                self.send_command(greenLed + "\r\n")
+                time.sleep(1)
+                self.send_command(blueLed + "\r\n")
+                time.sleep(1)
+                self.send_command(offLed + "\r\n")
+                time.sleep(2)
+                self.send_command(ir_send + "\r\n")
+                time.sleep(1)
+            else:
+                logger.error("Manual test loop not found in the INI file")
+                break
+                
+            time.sleep(1)
 
     def start_task2_thread(self):
         self.task2_thread = threading.Thread(target=self.start_test2)
@@ -1252,7 +1211,6 @@ class SerialCommunicationApp:
         logger.info("Resetting device")
         self.send_command("FF:3;factoryRST\r\n")
         logger.info("Test Completed")
-        self.reset_tasks()
 
     def reset_tasks(self):
         logger.info("Resetting tasks")
@@ -1289,17 +1247,7 @@ class SerialCommunicationApp:
         self.ext_humid_value.config(text="Ext %", fg="black", font=("Helvetica", 10, "normal"))
         self.input_3_3V_dmm.delete(0, tk.END)
         self.input_5V_dmm.delete(0, tk.END)
-        self.result_read_prod_name.config(text="Not Yet", fg="black", font=("Helvetica", 10, "normal"))
-        self.read_prod_name.config(text="-", fg="black", font=("Helvetica", 10, "normal"))
-        self.result_mac_address_label.config(text="Not Yet", fg="black", font=("Helvetica", 10, "normal"))
-        self.result_group2_factory_mode.config(text="Not Yet", fg="black", font=("Helvetica", 10, "normal"))
-        self.result_ir_def_label.config(text="Not Yet", fg="black", font=("Helvetica", 10, "normal"))
-        self.result_ir_led1.config(text="Not Yet", fg="black", font=("Helvetica", 10, "normal"))
-        self.result_ir_led2.config(text="Not Yet", fg="black", font=("Helvetica", 10, "normal"))
-        self.result_ir_led3.config(text="Not Yet", fg="black", font=("Helvetica", 10, "normal"))
-        self.result_ir_led4.config(text="Not Yet", fg="black", font=("Helvetica", 10, "normal"))
-        self.result_ir_led5.config(text="Not Yet", fg="black", font=("Helvetica", 10, "normal"))
-        self.cert_status_label.config(text=" ", fg="black", font=("Helvetica", 10, "normal"))
+
 
     # def press_button(self, angle, pressing_duration, pressing_time):
     #     # angle = float(self.angle_entry.get())
@@ -1355,17 +1303,6 @@ class SerialCommunicationApp:
     #         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     #     )
     
-    #def configure_logging(self):
-        #filename = self.read_device_sn.cget("text")
-        #log_filename = f'{filename}.log'
-        #log_filename = f'{self.read_device_sn["text"]}.log' if self.read_device_sn["text"] != "-" else 'default.log'
-        #logging.basicConfig(
-        #    filename=log_filename,  # Name of the log file
-        #    level=logging.DEBUG,    # Log level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
-        #    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-        #)
-        #self.logger = logging.getLogger(__name__)
-        #self.logger.debug("Logger initialized with filename: %s", log_filename)
 
 if __name__ == "__main__":
     # Delete "sensor.txt" file during boot up
@@ -1388,16 +1325,3 @@ if __name__ == "__main__":
 
     root.protocol("WM_DELETE_WINDOW", app.on_exit)
     root.mainloop()
-
-    # Copy the log file to the desired destination
-    source_path = '/usr/src/app/app.log'
-    destination_path = '/usr/src/app/my-s3-bucket/'
-
-    # Ensure the destination directory exists
-    os.makedirs(os.path.dirname(destination_path), exist_ok=True)
-
-    # Copy the file
-    shutil.copy2(source_path, destination_path)
-
-    logger.info(f'Log file copied to {destination_path}')
-

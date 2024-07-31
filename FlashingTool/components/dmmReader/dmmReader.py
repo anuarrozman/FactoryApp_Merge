@@ -4,8 +4,6 @@ import hid
 from components.dmmReader.ut61eplus import UT61EPLUS
 import logging
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 class DeviceSelectionApp:
