@@ -11,6 +11,7 @@ import threading
 import logging
 import concurrent.futures
 import shutil
+import subprocess
 
 from components.settingWindow.settingWindow import SettingApp
 from components.toolsBar.toolsBar import ToolsBar
@@ -38,6 +39,8 @@ file_path = '/usr/src/app/ATSoftwareDevelopmentTool/FlashingTool/device_data.txt
 # file_path = '/home/anuarrozman/Airdroitech/ATSoftwareDevelopmentTool/FlashingTool/device_data.txt'
 orders = parse_order_file(file_path)
 order_numbers = get_order_numbers(orders)
+qrcode = None
+manualcode = None
 
 class SerialCommunicationApp:
     def __init__(self, root):
@@ -409,6 +412,8 @@ class SerialCommunicationApp:
     #         self.cert_status_label.config(text=f"Failed to flash cert {selected_cert_id}.")
     
     def on_select_cert_id(self, event):
+        global qrcode
+        global manualcode
         # Retrieve the selected certificate ID from the dropdown
         selected_cert_id = event.widget.get()
         
@@ -418,6 +423,10 @@ class SerialCommunicationApp:
             
             # Update status label
             self.cert_status_label.config(text=f"Cert {selected_cert_id} selected.")
+            qrcode = self.flashCert.get_qrcode_for_cert_id(orders, selected_cert_id)
+            qrcode = str(qrcode).strip("[]'")
+            manualcode = self.flashCert.get_manualcode_for_cert_id(orders, selected_cert_id)
+            manualcode = str(manualcode).strip("[]'")
         else:
             # If no certificate ID is selected
             self.cert_status_label.config(text="No certificate selected.")
@@ -430,6 +439,21 @@ class SerialCommunicationApp:
     def enable_frame(self, frame):
         for child in frame.winfo_children():
             child.configure(state='normal')
+
+    def send_to_printer(self):
+        if qrcode and manualcode:
+            printer_ip = self.printer_ip_var.get()
+            printer_port = self.printer_port_var.get()
+            command = [
+                "python", "/usr/src/app/ATSoftwareDevelopmentTool/FlashingTool/components/sendToPrinter/main.py",
+                qrcode, 
+                manualcode, 
+                printer_ip, 
+                printer_port
+            ]
+            subprocess.run(command)
+        else:
+            logger.error("Please select a Cert ID first before printing.")
 
     def create_widgets(self):
         
@@ -936,6 +960,30 @@ class SerialCommunicationApp:
         
         self.no_h2_led_check = ttk.Button(self.group4_frame, text="No", command=None)
         self.no_h2_led_check.grid(row=3, column=3, padx=5, pady=5, sticky=tk.W)
+
+        # Print
+        self.printer_frame = tk.Frame(self.scrollable_frame, highlightbackground="black", highlightcolor="black", highlightthickness=2, bd=2)
+        self.printer_frame.grid(row=11, column=0, padx=10, pady=10, sticky=tk.W)
+ 
+        self.printer_label = tk.Label(self.printer_frame, text="Printer", font=("Helvetica", 12, "bold"))
+        self.printer_label.grid(row=0, column=1, padx=5, pady=5, sticky=tk.W)
+
+        self.printer_ip_label = tk.Label(self.printer_frame, text="Printer IP:")
+        self.printer_ip_label.grid(row=1, column=1, padx=5, pady=5, sticky=tk.W)
+ 
+        self.printer_ip_var = tk.StringVar(value="10.10.23.220")
+        self.printer_ip_entry = tk.Entry(self.printer_frame, textvariable=self.printer_ip_var)
+        self.printer_ip_entry.grid(row=1, column=2, padx=5, pady=5, sticky=tk.W)
+ 
+        self.printer_port_label = tk.Label(self.printer_frame, text="Printer Port:")
+        self.printer_port_label.grid(row=2, column=1, padx=5, pady=5, sticky=tk.W)
+ 
+        self.printer_port_var = tk.StringVar(value="9100")
+        self.printer_port_entry = tk.Entry(self.printer_frame, textvariable=self.printer_port_var)
+        self.printer_port_entry.grid(row=2, column=2, padx=5, pady=5, sticky=tk.W)
+
+        self.printer_print = ttk.Button(self.printer_frame, text="Print", command=lambda: self.send_to_printer())
+        self.printer_print.grid(row=3, column=1, padx=5, pady=5, sticky=tk.W)
 
     def update_label(self, label, text, fg, font, no_button, yes_button, color):
         label.config(text=text, fg=fg, font=font)

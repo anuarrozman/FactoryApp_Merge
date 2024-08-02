@@ -16,6 +16,14 @@ class FlashCert:
     def get_cert_ids_for_order(self, orders, selected_order_no):
         cert_ids = [order['esp-secure-cert-partition'] for order in orders if order['order-no'] == selected_order_no]
         return cert_ids
+    
+    def get_qrcode_for_cert_id(self, cert_ids, selected_cert_id):
+        qrcode = [cert_id['qrcode'] for cert_id in cert_ids if cert_id['esp-secure-cert-partition'] == selected_cert_id]
+        return qrcode
+    
+    def get_manualcode_for_cert_id(self, cert_ids, selected_cert_id):
+        manualcode = [cert_id['manualcode'] for cert_id in cert_ids if cert_id['esp-secure-cert-partition'] == selected_cert_id]
+        return manualcode
 
     def flash_certificate(self, cert_id, selected_port):
         if cert_id in used_cert_ids:
