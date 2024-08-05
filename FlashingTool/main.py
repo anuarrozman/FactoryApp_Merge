@@ -47,6 +47,7 @@ class SerialCommunicationApp:
         self.root = root
         self.root.title("Serial Communication App")
         self.root.attributes('-zoomed', True)
+        self.root.attributes('-fullscreen', True)
         self.root.resizable(True, True)
 
         # Serial port configuration
@@ -62,6 +63,7 @@ class SerialCommunicationApp:
         self.factory_flag = None
         self.used_cert_ids = set()
         self.selected_cert_id = None
+
         #self.configure_logging()
 
         # Create GUI elements
@@ -216,10 +218,17 @@ class SerialCommunicationApp:
 
     def download_list(self):
         self.toolsBar.download_list()
+        
+    def flash_s3_firmwareButton(self):
+        selected_port = self.port_var1.get()
+        selected_baud = int(self.baud_var1.get())
+        self.flash_s3_firmware(selected_port, selected_baud)
 
     def flash_s3_firmware(self, port_var, baud_var):
+        print('flash_s3_firmware-start');
         # self.flashFw.flash_s3_firmware(self.port_var, self.baud_var)
         self.flashFw.flash_s3_firmware(port_var, baud_var)
+        print('flash_s3_firmware-end');
         
     def flash_h2_firmware(self, port_var, baud_var):
         self.flashFw.flash_h2_firmware(port_var, baud_var)
@@ -262,7 +271,7 @@ class SerialCommunicationApp:
         file_menu.add_command(label="Setting", command=self.config_setting)
         file_menu.add_command(label="Run As Admin", command=self.admin_login)
         file_menu.add_separator()
-        file_menu.add_command(label="Exit", command=self.root.quit)
+        #file_menu.add_command(label="Exit", command=self.on_exit)
         menubar.add_cascade(label="File", menu=file_menu)
 
         tools_menu = tk.Menu(menubar, tearoff=0)
@@ -282,7 +291,7 @@ class SerialCommunicationApp:
         
     def admin_login(self):
         login_window = tk.Toplevel(self.root)
-        app = AdminLoginApp(login_window)
+        app = AdminLoginApp(login_window, self)
         login_window.wait_window(login_window)  # Wait for the login window to close
         if app.result:
             # Decrypt and verify the password
@@ -292,8 +301,40 @@ class SerialCommunicationApp:
                 messagebox.showinfo("Login Successful", "Admin login successful. Manual Test enabled.")
                 # Change the Manual Test from menubar state to Normal
                 self.tools_menu.entryconfig("Manual Test", state=tk.NORMAL)
+                        
+                self.exit_button.grid(row=0, column=6, padx=5, pady=5, sticky=tk.W)
+                self.port_label.grid(row=0, column=0, padx=5, pady=5, sticky=tk.W)
+                self.port_dropdown.grid(row=0, column=1, padx=5, pady=5, sticky=tk.W)
+                self.baud_label.grid(row=0, column=2, padx=5, pady=5, sticky=tk.W)
+                self.baud_dropdown.grid(row=0, column=3, padx=5, pady=5, sticky=tk.W)
+                self.flash_button.grid(row=0, column=4, padx=5, pady=5, sticky=tk.W)
+                self.cert_flash_button.grid(row=0, column=5, padx=5, pady=5, sticky=tk.W)
+                self.port_label1.grid(row=1, column=0, padx=5, pady=5, sticky=tk.W)
+                self.port_dropdown1.grid(row=1, column=1, padx=5, pady=5, sticky=tk.W)
+                self.baud_label1.grid(row=1, column=2, padx=5, pady=5, sticky=tk.W)
+                self.baud_dropdown1.grid(row=1, column=3, padx=5, pady=5, sticky=tk.W)
+                self.open_port_button.grid(row=1, column=4, padx=5, pady=5, sticky=tk.W)
+                self.close_port_button.grid(row=1, column=5, padx=5, pady=5, sticky=tk.W)
+                self.read_device_mac_button.grid(row=1, column=6, padx=5, pady=5, sticky=tk.W)
+                self.write_device_serialnumber_button.grid(row=1, column=7, padx=5, pady=5, sticky=tk.W)
+                self.write_device_mtqr_button.grid(row=1, column=8, padx=5, pady=5, sticky=tk.W)
+                self.read_atbeam_temp_button.grid(row=1, column=9, padx=5, pady=5, sticky=tk.W)
+                self.read_atbeam_humid_button.grid(row=1, column=10, padx=5, pady=5, sticky=tk.W)
+
+
+                self.enable_frame(self.serial_baud_frame)
+                self.serial_baud_frame.grid(row=0, column=0, padx=10, pady=10, sticky=tk.W)
+                        
+                self.enable_frame(self.text_frame)
+                self.text_frame.grid(row=2, column=0, padx=10, pady=10, sticky=tk.W)
+                
+                self.enable_frame(self.servo_frame)
+                self.servo_frame.grid(row=4, column=0, padx=10, pady=10, sticky=tk.W)
+        
+                
             else:
                 messagebox.showerror("Error", "Failed to decrypt password or invalid password!")
+                        
 
     def config_setting(self):
         SettingApp(tk.Toplevel(self.root))
@@ -512,7 +553,7 @@ class SerialCommunicationApp:
         self.baud_dropdown['values'] = ["9600", "115200", "460800"]
         self.baud_dropdown.set("460800")
 
-        self.flash_button = ttk.Button(self.serial_baud_frame, text="Flash FW", command=self.flash_s3_firmware)
+        self.flash_button = ttk.Button(self.serial_baud_frame, text="Flash FW", command=self.flash_s3_firmwareButton)
         self.flash_button.grid(row=0, column=4, padx=5, pady=5, sticky=tk.W)
 
         self.cert_flash_button = ttk.Button(self.serial_baud_frame, text="Flash Cert", command=self.flash_cert)
@@ -556,7 +597,24 @@ class SerialCommunicationApp:
         self.read_atbeam_humid_button = ttk.Button(self.serial_baud_frame, text="Read ATBeam Humid", command=self.get_atbeam_humid)
         self.read_atbeam_humid_button.grid(row=1, column=10, padx=5, pady=5, sticky=tk.W)
 
-        # self.disable_frame(self.serial_baud_frame)
+        #self.disable_frame(self.serial_baud_frame)
+        #self.serial_baud_frame.grid_forget()
+        self.flash_button.grid_forget()
+        self.cert_flash_button.grid_forget()
+        #self.port_label1.grid_forget()
+        self.flash_button.grid_forget()
+        self.baud_dropdown.grid_forget()
+        self.baud_dropdown1.grid_forget()
+        self.open_port_button.grid_forget()
+        self.close_port_button.grid_forget()
+        self.read_device_mac_button.grid_forget()
+        self.write_device_serialnumber_button.grid_forget()
+        self.write_device_mtqr_button.grid_forget()
+        self.read_atbeam_temp_button.grid_forget()
+        self.read_atbeam_humid_button.grid_forget()
+        self.exit_button.grid_forget()
+        self.baud_label1.grid_forget()
+        self.baud_label.grid_forget()
 
         self.text_frame = tk.Frame(self.scrollable_frame)
         self.text_frame.grid(row=2, column=0, padx=10, pady=10, sticky=tk.W)
@@ -567,7 +625,8 @@ class SerialCommunicationApp:
         self.send_button = ttk.Button(self.text_frame, text="Send", command=lambda: self.sendEntry.send_entry_command(self.send_entry_frame))
         self.send_button.grid(row=2, column=1, padx=5, pady=5, sticky=tk.W)
 
-        # self.disable_frame(self.text_frame)
+        self.disable_frame(self.text_frame)
+        self.text_frame.grid_forget()
 
         self.servo_frame = tk.Frame(self.scrollable_frame)
         self.servo_frame.grid(row=4, column=0, padx=10, pady=10, sticky=tk.W)
@@ -591,6 +650,7 @@ class SerialCommunicationApp:
         self.pressing_time_entry.grid(row=2, column=1, padx=5, pady=5, sticky=tk.W)
 
         self.disable_frame(self.servo_frame)
+        self.servo_frame.grid_forget()
 
         self.dmm_frame = tk.Frame(self.scrollable_frame)
         self.dmm_frame.grid(row=3, column=0, padx=10, pady=10, sticky=tk.W)
@@ -605,6 +665,7 @@ class SerialCommunicationApp:
         self.read_humid_aht20_button.grid(row=4, column=2, padx=5, pady=5, sticky=tk.W)
 
         self.disable_frame(self.dmm_frame)
+        self.dmm_frame.grid_forget()
 
         # Start and Stop buttons
         self.control_frame = tk.Frame(self.scrollable_frame)
@@ -960,7 +1021,7 @@ class SerialCommunicationApp:
         
         self.no_h2_led_check = ttk.Button(self.group4_frame, text="No", command=None)
         self.no_h2_led_check.grid(row=3, column=3, padx=5, pady=5, sticky=tk.W)
-
+        
         # Print
         self.printer_frame = tk.Frame(self.scrollable_frame, highlightbackground="black", highlightcolor="black", highlightthickness=2, bd=2)
         self.printer_frame.grid(row=11, column=0, padx=10, pady=10, sticky=tk.W)
@@ -983,7 +1044,7 @@ class SerialCommunicationApp:
         self.printer_port_entry.grid(row=2, column=2, padx=5, pady=5, sticky=tk.W)
 
         self.printer_print = ttk.Button(self.printer_frame, text="Print", command=lambda: self.send_to_printer())
-        self.printer_print.grid(row=3, column=1, padx=5, pady=5, sticky=tk.W)
+        self.printer_print.grid(row=3, column=1, padx=5, pady=5, sticky=tk.W) 
 
     def update_label(self, label, text, fg, font, no_button, yes_button, color):
         label.config(text=text, fg=fg, font=font)
@@ -1070,14 +1131,22 @@ class SerialCommunicationApp:
             port = config.get("flash", "port")
             baud = config.get("flash", "baud")
             port1 = config.get("flash", "port1")
-            logger.info(f"Port: {port}, Baud: {baud}")
+            
+                
+            selected_port = self.port_var.get()
+            selected_baud = int(self.baud_var.get())
+        
+        
+            print('--flash--')
+            print(selected_port)
+            print(selected_baud)
+            logger.info(f"flash Port: {selected_port}, Baud: {selected_baud}")
             self.flashFw.get_device_mac_address(port)
-            self.flashCertificate(self.selected_cert_id, "/dev/ttyACM0")
+            self.flashCertificate(self.selected_cert_id, selected_port)
             # self.flashCertificate(self.selected_cert_id, "/dev/ttyUSB0")
 
             time.sleep(10)
-            
-            
+                
             # export the ESP-IDF path
             self.flashFw.export_esp_idf_path()
             
@@ -1096,7 +1165,15 @@ class SerialCommunicationApp:
             try:
                 port = config.get("factory", "port")
                 baud = config.get("factory", "baud")
-                self.serialCom.open_serial_port(port, baud)
+                    
+                selected_port = self.port_var1.get()
+                selected_baud = int(self.baud_var1.get())
+                
+                print('--factory--')
+                print(selected_port)
+                print(selected_baud)
+                logger.info(f"factory Port: {selected_port}, Baud: {selected_baud}")
+                self.serialCom.open_serial_port(selected_port, selected_baud)
             except configparser.NoOptionError:
                 logger.error("Port not found in the INI file")
 
@@ -1391,8 +1468,11 @@ class SerialCommunicationApp:
 
 
     def on_exit(self):
+        print('on_exit')
         self.root.destroy()
         self.close_serial_port()
+        print('on_exit-end')
+        self.root.quit
 
     # def log_test(self):
     #     file_sn = self.read_device_sn.cget("text")

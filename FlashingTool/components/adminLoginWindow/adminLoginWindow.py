@@ -4,8 +4,9 @@ from cryptography.fernet import Fernet
 import os
 
 class AdminLoginApp:
-    def __init__(self, master):
+    def __init__(self, master, caller):
         self.master = master
+        self.caller = caller
         master.title("Admin Login")
         master.geometry("350x120")
 
@@ -58,3 +59,32 @@ class AdminLoginApp:
             self.master.destroy()
         else:
             messagebox.showerror("Error", "Invalid password!")
+
+            self.caller.disable_frame(self.caller.text_frame)
+            self.caller.text_frame.grid_forget()
+            
+            self.caller.disable_frame(self.caller.servo_frame)
+            self.caller.servo_frame.grid_forget()
+            
+            #self.caller.disable_frame(self.caller.dmm_frame)
+            #self.caller.dmm_frame.grid_forget()
+                        
+            #self.caller.disable_frame(self.serial_baud_frame)
+            #self.caller.serial_baud_frame.grid_forget()
+            self.caller.flash_button.grid_forget()
+            self.caller.cert_flash_button.grid_forget()
+            #self.caller.port_label1.grid_forget()
+            self.caller.flash_button.grid_forget()
+            self.caller.baud_dropdown.grid_forget()
+            self.caller.baud_dropdown1.grid_forget()
+            self.caller.open_port_button.grid_forget()
+            self.caller.close_port_button.grid_forget()
+            self.caller.read_device_mac_button.grid_forget()
+            self.caller.write_device_serialnumber_button.grid_forget()
+            self.caller.write_device_mtqr_button.grid_forget()
+            self.caller.read_atbeam_temp_button.grid_forget()
+            self.caller.read_atbeam_humid_button.grid_forget()
+            self.caller.exit_button.grid_forget()
+            self.caller.baud_label1.grid_forget()
+            self.caller.baud_label.grid_forget()
+

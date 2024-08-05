@@ -4,19 +4,31 @@ import os
 import subprocess
 import configparser
 import logging
+import ast
 
 logger = logging.getLogger(__name__)
 
 used_cert_ids = set()  # Track used cert-ids
+used_cert_file = '/usr/src/app/ATSoftwareDevelopmentTool/FlashingTool/used_cert_ids.pkl'
 class FlashCert:
     def __init__(self, status_label):
         self.status_label = status_label
         self.seleceted_order_number = None
         
+        with open(used_cert_file, 'r') as f:  # Python 3: open(..., 'rb')
+            try:
+              self.used_cert_ids = ast.literal_eval(f.read())
+              #used_cert_ids = pickle.load(f)
+              print('have used cert')
+              print(self.used_cert_ids)
+            except Exception :
+              self.used_cert_ids = set()
+              print('no used cert')
+        
     def get_cert_ids_for_order(self, orders, selected_order_no):
         cert_ids = [order['esp-secure-cert-partition'] for order in orders if order['order-no'] == selected_order_no]
         return cert_ids
-    
+
     def get_qrcode_for_cert_id(self, cert_ids, selected_cert_id):
         qrcode = [cert_id['qrcode'] for cert_id in cert_ids if cert_id['esp-secure-cert-partition'] == selected_cert_id]
         return qrcode
@@ -26,14 +38,18 @@ class FlashCert:
         return manualcode
 
     def flash_certificate(self, cert_id, selected_port):
-        if cert_id in used_cert_ids:
-            # logger.debug(f"Cert ID {cert_id} has already been used.")
-            return False
-
         cert_dir = '/usr/src/app/ATSoftwareDevelopmentTool/FlashingTool/certs'
         cert_file_path = os.path.join(cert_dir, cert_id)
-        logger.debug(f"Cert file path: {cert_file_path}")
+        print('----flash_certificate----')
+        if cert_file_path in self.used_cert_ids:
+            logger.debug(f"Cert ID {cert_id} has already been used.")
+            return False
+        
+        print(self.used_cert_ids)
+        print(cert_file_path)
 
+        logger.debug(f"Cert file path: {cert_file_path}")
+        
         # Check if the file exists
         if not os.path.isfile(cert_file_path):
             logger.error(f"Certificate file {cert_file_path} does not exist.")
@@ -73,11 +89,15 @@ class FlashCert:
             self.update_status_label("Failed", "red", ("Helvetica", 12, "bold"))
             
         # Simulate flashing the certificate
-        used_cert_ids.add(cert_file_path)
+        self.used_cert_ids.add(cert_file_path)
+        with open(used_cert_file, 'w') as f: 
+            f.write(str(self.used_cert_ids)) 
+            #pickle.dump([used_cert_ids], f)
         return True
 
     def get_remaining_cert_ids(self, cert_ids):
-        return [cert_file_path for cert_file_path in cert_ids if cert_file_path not in used_cert_ids]
+        cert_dir = '/usr/src/app/ATSoftwareDevelopmentTool/FlashingTool/certs'
+        return [cert_file_path for cert_file_path in cert_ids if os.path.join(cert_dir, cert_file_path) not in self.used_cert_ids]
         
     def get_certId(self):
         try:
