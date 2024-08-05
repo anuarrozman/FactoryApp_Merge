@@ -271,7 +271,7 @@ class SerialCommunicationApp:
         file_menu.add_command(label="Setting", command=self.config_setting)
         file_menu.add_command(label="Run As Admin", command=self.admin_login)
         file_menu.add_separator()
-        file_menu.add_command(label="Exit", command=self.root.quit)
+        #file_menu.add_command(label="Exit", command=self.on_exit)
         menubar.add_cascade(label="File", menu=file_menu)
 
         tools_menu = tk.Menu(menubar, tearoff=0)
@@ -1468,8 +1468,11 @@ class SerialCommunicationApp:
 
 
     def on_exit(self):
+        print('on_exit')
         self.root.destroy()
         self.close_serial_port()
+        print('on_exit-end')
+        self.root.quit
 
     # def log_test(self):
     #     file_sn = self.read_device_sn.cget("text")
