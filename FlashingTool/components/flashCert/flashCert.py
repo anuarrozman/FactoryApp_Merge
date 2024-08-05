@@ -96,7 +96,8 @@ class FlashCert:
         return True
 
     def get_remaining_cert_ids(self, cert_ids):
-        return [cert_file_path for cert_file_path in cert_ids if cert_file_path not in used_cert_ids]
+        cert_dir = '/usr/src/app/ATSoftwareDevelopmentTool/FlashingTool/certs'
+        return [cert_file_path for cert_file_path in cert_ids if os.path.join(cert_dir, cert_file_path) not in self.used_cert_ids]
         
     def get_certId(self):
         try:
