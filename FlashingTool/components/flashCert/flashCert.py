@@ -185,8 +185,8 @@ class FlashCert:
         esp_idf_path = "/usr/src/app/esp/esp-idf"
 
         if use_esptool == "True":
-            command = f"source {esp_idf_path}/export.sh\nesptool.py -p {selected_port} -b {selected_baud} write_flash {securecert_addr} {esp_bin_path} {dataprovider_addr} {part_bin_path}\n"
-            # command = f"esptool.py -p {selected_port} -b {selected_baud} write_flash {securecert_addr} {esp_bin_path} {dataprovider_addr} {part_bin_path}\n"
+            # command = f"source {esp_idf_path}/export.sh\nesptool.py -p {selected_port} -b {selected_baud} write_flash {securecert_addr} {esp_bin_path} {dataprovider_addr} {part_bin_path}\n"
+            command = f"esptool.py -p {selected_port} -b {selected_baud} write_flash {securecert_addr} {esp_bin_path} {dataprovider_addr} {part_bin_path}\n"
         else:
             command = f"source {esp_idf_path}/export.sh\nopenocd -f {openocd_esp_usb_jtag_cfg_path} -f {openocd_esp32s3_builtin_cfg_path} --command 'program_esp {esp_bin_path} {securecert_addr}; program_esp {part_bin_path} {dataprovider_addr} verify exit'"
             # command = f"openocd -f {openocd_esp_usb_jtag_cfg_path} -f {openocd_esp32s3_builtin_cfg_path} --command 'program_esp {esp_bin_path} {securecert_addr}; program_esp {part_bin_path} {dataprovider_addr} verify exit'"

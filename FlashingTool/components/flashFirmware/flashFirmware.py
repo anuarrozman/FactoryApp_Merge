@@ -120,8 +120,8 @@ class FlashFirmware:
         # Define the path to the esp-idf directory
         esp_idf_path = "/usr/src/app/esp/esp-idf"
 
-        command = f"source {esp_idf_path}/export.sh\nesptool.py -p {selected_port} -b {selected_baud} run\n"
-        # command = f"esptool.py -p {selected_port} -b {selected_baud} run\n"
+        # command = f"source {esp_idf_path}/export.sh\nesptool.py -p {selected_port} -b {selected_baud} run\n"
+        command = f"esptool.py -p {selected_port} -b {selected_baud} run\n"
         
         try:
             # Open subprocess with stdout redirected to PIPE
@@ -489,8 +489,8 @@ class FlashFirmware:
         esp_idf_path = "/usr/src/app/esp/esp-idf"
 
         if use_esptool == "True":
-            command = f"source {esp_idf_path}/export.sh\nesptool.py --chip esp32h2 -p {selected_port} -b {selected_baud} erase_flash\n"
-            # command = f"esptool.py --chip esp32h2 -p {selected_port} -b {selected_baud} erase_flash\n"
+            # command = f"source {esp_idf_path}/export.sh\nesptool.py --chip esp32h2 -p {selected_port} -b {selected_baud} erase_flash\n"
+            command = f"esptool.py --chip esp32h2 -p {selected_port} -b {selected_baud} erase_flash\n"
         else:
             command = f"source {esp_idf_path}/export.sh\nopenocd -f {openocd_esp_usb_jtag_cfg_path} -f {openocd_esp32s3_builtin_cfg_path} --command 'init; reset init; flash erase_address {start_addr} {end_addr}; shutdown'\n"
             # command = f"openocd -f {openocd_esp_usb_jtag_cfg_path} -f {openocd_esp32s3_builtin_cfg_path} --command 'init; reset init; flash erase_address {start_addr} {end_addr}; shutdown'\n"
@@ -566,8 +566,8 @@ class FlashFirmware:
         esp_idf_path = "/usr/src/app/esp/esp-idf"
 
         if use_esptool == "True":
-            command = f"source {esp_idf_path}/export.sh\nesptool.py --chip esp32h2 -p {selected_port} -b {selected_baud} write_flash {bootloader_addr} {boot_loader_path} {partition_table_addr} {partition_table_path} {fw_addr} {fw_path}\n"
-            # command = f"esptool.py --chip esp32h2 -p {selected_port} -b {selected_baud} write_flash {bootloader_addr} {boot_loader_path} {partition_table_addr} {partition_table_path} {fw_addr} {fw_path}\n"
+            # command = f"source {esp_idf_path}/export.sh\nesptool.py --chip esp32h2 -p {selected_port} -b {selected_baud} write_flash {bootloader_addr} {boot_loader_path} {partition_table_addr} {partition_table_path} {fw_addr} {fw_path}\n"
+            command = f"esptool.py --chip esp32h2 -p {selected_port} -b {selected_baud} write_flash {bootloader_addr} {boot_loader_path} {partition_table_addr} {partition_table_path} {fw_addr} {fw_path}\n"
         else:
             command = f"source {esp_idf_path}/export.sh\nopenocd -f {openocd_esp_usb_jtag_cfg_path} -f {openocd_esp32s3_builtin_cfg_path} --command 'program_esp {boot_loader_path} {bootloader_addr}; program_esp {partition_table_path} {partition_table_addr}; program_esp {fw_path} {fw_addr} verify exit'\n"
             # command = f"openocd -f {openocd_esp_usb_jtag_cfg_path} -f {openocd_esp32s3_builtin_cfg_path} --command 'program_esp {boot_loader_path} {bootloader_addr}; program_esp {partition_table_path} {partition_table_addr}; program_esp {fw_path} {fw_addr} verify exit'\n"
