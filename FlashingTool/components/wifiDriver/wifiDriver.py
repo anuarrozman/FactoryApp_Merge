@@ -1,7 +1,55 @@
+# import subprocess
+# import re
+
+# def scan_wifi_networks(interface='wlan0', fallback_interface='wlp44s0'):
+#     try:
+#         # Run iwlist scan command and capture output
+#         scan_output = subprocess.check_output(['sudo', 'iwlist', interface, 'scan'], stderr=subprocess.STDOUT)
+#         scan_output = scan_output.decode('utf-8')
+#     except subprocess.CalledProcessError as e:
+#         print(f"Error scanning WiFi networks on {interface}: {e}")
+#         if fallback_interface and interface != fallback_interface:
+#             print(f"Attempting to scan using fallback interface: {fallback_interface}")
+#             return scan_wifi_networks(fallback_interface, None)
+#         else:
+#             return []
+
+#     # Debug: Print the raw scan output
+#     print("Raw scan output:")
+#     print(scan_output)
+
+#     # Use regular expressions to extract SSID and signal level (RSSI)
+#     networks = []
+#     current_network = {}
+#     lines = scan_output.splitlines()
+#     for line in lines:
+#         if re.match(r'^\s*Cell', line):
+#             if current_network:
+#                 networks.append(current_network)
+#                 current_network = {}
+#         elif re.search(r'\s*Signal level=(-?\d+) dBm', line):
+#             # Extract signal level (RSSI)
+#             match = re.search(r'Signal level=(-?\d+) dBm', line)
+#             if match:
+#                 current_network['Signal_Level'] = match.group(1) + ' dBm'
+#         elif re.search(r'\s*ESSID', line):
+#             # Extract SSID
+#             match = re.search(r'ESSID:"(.*)"', line)
+#             if match:
+#                 current_network['SSID'] = match.group(1)
+
+#     # Append the last network found
+#     if current_network:
+#         networks.append(current_network)
+
+#     return networks
+
+
 import subprocess
 import re
 
 def scan_wifi_networks(interface='wlan0', fallback_interface='wlp44s0'):
+    """Scan for available WiFi networks using the specified interface."""
     try:
         # Run iwlist scan command and capture output
         scan_output = subprocess.check_output(['sudo', 'iwlist', interface, 'scan'], stderr=subprocess.STDOUT)
@@ -44,43 +92,59 @@ def scan_wifi_networks(interface='wlan0', fallback_interface='wlp44s0'):
 
     return networks
 
-def run_iwconfig(interface='wlan0'):
-    try:
-        # Run iwconfig command and capture output
-        iwconfig_output = subprocess.check_output(['iwconfig', interface], stderr=subprocess.STDOUT)
-        iwconfig_output = iwconfig_output.decode('utf-8')
-        
-        # Debug: Print the raw iwconfig output
-        print("Raw iwconfig output:")
-        print(iwconfig_output)
-        
-        # Extract SSID and signal level using regex
-        ssid = re.search(r'ESSID:"(.*)"', iwconfig_output)
-        signal_level = re.search(r'Signal level=(-?\d+) dBm', iwconfig_output)
-        
-        return {
-            'SSID': ssid.group(1) if ssid else 'Unknown',
-            'Signal_Level': signal_level.group(1) + ' dBm' if signal_level else 'N/A',
-        }
-        
-    except subprocess.CalledProcessError as e:
-        print(f"Error running iwconfig on {interface}: {e}")
-        return {}
+def connect_to_network(interface, ssid, password):
+    """Connect to a specified wireless network."""
+    print(f"Connecting to {ssid}...")
+    connect_command = ["sudo", "nmcli", "dev", "wifi", "connect", ssid, "password", password]
+    result = subprocess.run(connect_command, capture_output=True, text=True)
+    
+    if result.returncode != 0:
+        print(f"Failed to connect to {ssid}. Error: {result.stderr.strip()}")
+        return False
+    
+    print(f"Successfully connected to {ssid}.")
+    return True
+
+def get_ip_address(interface):
+    """Retrieve the IP address of the specified interface."""
+    result = subprocess.run(["ip", "addr", "show", interface], capture_output=True, text=True)
+    
+    if result.returncode != 0:
+        print("Failed to get IP address.")
+        return None
+    
+    # Find the IP address in the output
+    ip_match = re.search(r'inet (\d+\.\d+\.\d+\.\d+)', result.stdout)
+    if ip_match:
+        return ip_match.group(1)
+    
+    print("No IP address found.")
+    return None
+
+def main():
+    interface = 'wlan0'  # Change this if your wireless interface is different
+    networks = scan_wifi_networks(interface)
+
+    if not networks:
+        print("No networks found.")
+        return
+
+    print("Available networks:")
+    for i, network in enumerate(networks):
+        print(f"{i + 1}: {network['SSID']} (Signal: {network['Signal_Level']})")
+
+    choice = int(input("Select the network to connect to (number): ")) - 1
+    if choice < 0 or choice >= len(networks):
+        print("Invalid selection.")
+        return
+
+    ssid = networks[choice]['SSID']
+    password = input(f"Enter password for {ssid}: ")
+
+    if connect_to_network(interface, ssid, password):
+        ip_address = get_ip_address(interface)
+        if ip_address:
+            print(f"Your IP address is: {ip_address}")
 
 if __name__ == "__main__":
-    wifi_networks = scan_wifi_networks()
-    if wifi_networks:
-        print("Available WiFi networks:")
-        for network in wifi_networks:
-            ssid = network.get('SSID', 'Unknown')
-            signal_level = network.get('Signal_Level', 'N/A')
-            # print(f"SSID: {ssid}, Signal Level: {signal_level}")
-            if ssid == 'AT-MT:Y1CA00O6148F-405J10':
-                print(f"Target network found: SSID: {ssid}, Signal Level: {signal_level}")
-                signal_level = int(signal_level.split(' ')[0])
-                if signal_level >= -30 and signal_level <= -110:
-                    print(f"Signal level is usable. {signal_level}")
-                else:
-                    print(f"Signal level is not usable. {signal_level}")
-    else:
-        print("No WiFi networks found.")
+    main()

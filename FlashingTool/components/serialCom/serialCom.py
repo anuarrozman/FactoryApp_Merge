@@ -276,6 +276,7 @@ class SerialCom:
     # URL = http://<device_ip>/getDeviceState
     def http_response(self):
         print("HTTP Response")
+        # IP Address of the device : Get after connecting the device to RPI Network
         url = 'http://192.168.0.44:5000/getDeviceState'
         response = requests.get(url)
         if response.status_code == 200:
