@@ -582,3 +582,80 @@ esptool.py -p /dev/ttyUSB0 -b 460800 run
 2024-10-01 10:05:32,299 - __main__ - INFO - Device Wi-Fi Soft AP Name 1: AT-MT:Y1CA00O6148F-405J10
 2024-10-01 10:05:32,299 - __main__ - INFO - Device Wi-Fi Soft AP Name 2: AT BEAM 405J10
 2024-10-01 10:05:32,299 - __main__ - INFO - Wi-Fi Soft AP RSSI Test Range: -80
+2024-10-01 10:10:34,068 - __main__ - INFO - Target network found: SSID: AT-MT:Y1CA00O6148F-405J10, Signal Level: -18 dBm
+2024-10-01 10:10:34,069 - __main__ - INFO - Wi-Fi Soft AP Test: Pass
+2024-10-01 10:10:37,070 - __main__ - INFO - Wi-Fi Soft AP: Pass
+2024-10-01 10:10:37,070 - __main__ - INFO - Reset Factory Mode Flag
+2024-10-01 10:10:37,070 - __main__ - INFO - Start Wi-Fi Station Test
+2024-10-01 10:10:37,070 - __main__ - INFO - Wi-Fi Station RSSI Test Range: -60
+2024-10-01 10:10:37,071 - __main__ - DEBUG - SerialCom, Sent: FF:1;AirTouch_Pi_WiFi_17
+2024-10-01 10:10:37,071 - __main__ - INFO - Wi-Fi Station Command: FF:1;AirTouch_Pi_WiFi_17
+2024-10-01 10:10:38,127 - components.serialCom.serialCom - DEBUG - Received: 1;AirTouch_Pi_WiFi_17
+2024-10-01 10:10:39,071 - __main__ - DEBUG - SerialCom, Sent: FF:3;connectwifi
+2024-10-01 10:10:39,071 - __main__ - INFO - Wi-Fi Station Command: FF:3;connectwifi
+2024-10-01 10:10:40,176 - components.serialCom.serialCom - DEBUG - Received: 3;connectwifi
+2024-10-01 10:10:44,071 - __main__ - DEBUG - SerialCom, Sent: FF:3;RSSI?
+2024-10-01 10:10:44,071 - __main__ - INFO - Wi-Fi Station RSSI Command: FF:3;RSSI?
+2024-10-01 10:10:45,127 - components.serialCom.serialCom - DEBUG - Received: 3;RSSI? = -60
+2024-10-01 10:10:45,127 - components.serialCom.serialCom - INFO - Serial Com, Read WiFi RSSI: -60 dBm
+2024-10-01 10:10:46,072 - __main__ - INFO - Wi-Fi Station RSSI Test Range: -60
+2024-10-01 10:10:46,072 - __main__ - INFO - Wi-Fi Station RSSI: Pass
+2024-10-01 10:10:49,072 - __main__ - INFO - Wi-Fi Station: Pass
+2024-10-01 10:10:49,073 - __main__ - INFO - ESP32H2 Header Pin
+2024-10-01 10:10:49,073 - __main__ - INFO - ESP32H2 Header Pin Test Time in seconds: 20
+2024-10-01 10:10:57,085 - __main__ - INFO - ESP32H2 Header Pin: Pass
+2024-10-01 10:10:57,085 - __main__ - INFO - Entering factory mode
+2024-10-01 10:10:57,086 - __main__ - INFO - Reset Factory Mode Flag
+2024-10-01 10:10:57,086 - __main__ - INFO - Reboot esp32s3 and esp32h2
+2024-10-01 10:10:57,086 - __main__ - INFO - Reboot esp32s3, Port: /dev/ttyUSB0, Baud: 460800
+2024-10-01 10:10:57,086 - __main__ - INFO - Reboot esp32h2, Port: /dev/ttyUSB2, Baud: 115200
+2024-10-01 10:10:57,086 - components.flashFirmware.flashFirmware - INFO - Reset ESP32H2: source /usr/src/app/esp/esp-idf/export.sh
+esptool.py -p /dev/ttyUSB2 -b 115200 run
+
+2024-10-01 10:10:57,087 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = /bin/bash: line 1: /usr/src/app/esp/esp-idf/export.sh: No such file or directory
+2024-10-01 10:10:57,128 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = esptool.py v4.7.0
+2024-10-01 10:10:57,128 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Serial port /dev/ttyUSB2
+2024-10-01 10:10:58,136 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Connecting....
+2024-10-01 10:10:58,136 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Detecting chip type... ESP32-H2
+2024-10-01 10:10:58,136 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Chip is ESP32-H2 (revision v0.1)
+2024-10-01 10:10:58,136 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Features: BLE, IEEE802.15.4
+2024-10-01 10:10:58,136 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Crystal is 32MHz
+2024-10-01 10:10:58,136 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = MAC: 48:31:b7:ff:fe:c0:19:80
+2024-10-01 10:10:58,136 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = BASE MAC: 48:31:b7:c0:19:80
+2024-10-01 10:10:58,136 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = MAC_EXT: ff:fe
+2024-10-01 10:10:58,136 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Uploading stub...
+2024-10-01 10:10:58,136 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Running stub...
+2024-10-01 10:10:58,136 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Stub running...
+2024-10-01 10:10:58,136 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Hard resetting via RTS pin...
+2024-10-01 10:11:03,142 - components.flashFirmware.flashFirmware - INFO - Reset ESP32H2: source /usr/src/app/esp/esp-idf/export.sh
+esptool.py -p /dev/ttyUSB0 -b 460800 run
+
+2024-10-01 10:11:03,143 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = /bin/bash: line 1: /usr/src/app/esp/esp-idf/export.sh: No such file or directory
+2024-10-01 10:11:03,183 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = esptool.py v4.7.0
+2024-10-01 10:11:03,183 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Serial port /dev/ttyUSB0
+2024-10-01 10:11:04,873 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Connecting....
+2024-10-01 10:11:04,873 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Detecting chip type... ESP32-S3
+2024-10-01 10:11:04,874 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Chip is ESP32-S3 (QFN56) (revision v0.1)
+2024-10-01 10:11:04,874 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Features: WiFi, BLE
+2024-10-01 10:11:04,874 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Crystal is 40MHz
+2024-10-01 10:11:04,874 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = MAC: 34:85:18:50:fa:94
+2024-10-01 10:11:04,874 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Uploading stub...
+2024-10-01 10:11:04,874 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Running stub...
+2024-10-01 10:11:04,874 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Stub running...
+2024-10-01 10:11:04,874 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Changing baud rate to 460800
+2024-10-01 10:11:04,874 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Changed.
+2024-10-01 10:11:04,874 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Hard resetting via RTS pin...
+2024-10-01 10:11:06,488 - components.serialCom.serialCom - DEBUG - Received: .
+2024-10-01 10:11:06,488 - components.serialCom.serialCom - DEBUG - Data contains '.'
+2024-10-01 10:11:06,488 - components.serialCom.serialCom - DEBUG - SerialCom, Factory: polyaire&ADT
+
+2024-10-01 10:11:09,879 - __main__ - INFO - Start Wait 3
+2024-10-01 10:11:12,880 - __main__ - INFO - Finish Wait 3
+2024-10-01 10:11:12,880 - __main__ - INFO - ESP32H2 LED Test
+2024-10-01 10:11:12,880 - __main__ - INFO - ESP32H2 LED Test Time in seconds: 10
+2024-10-01 10:11:15,385 - __main__ - INFO - ESP32H2 Small LED: Pass
+2024-10-01 10:11:15,386 - __main__ - INFO - Sticker Printing
+2024-10-01 10:11:15,386 - __main__ - INFO - Print Sticker Time in seconds: 10
+2024-10-01 10:11:15,386 - __main__ - INFO - Print Sticker Auto Mode: False
+2024-10-01 10:11:17,110 - __main__ - INFO - Print Sticker: Cancel
+2024-10-01 10:11:17,390 - __main__ - INFO - Test 2 Completed
