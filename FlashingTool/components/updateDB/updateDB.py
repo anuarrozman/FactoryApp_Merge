@@ -43,7 +43,7 @@ class UpdateDB:
 
     def update_text_file(self, mac_address):
         # file_path = '/usr/src/app/ATSoftwareDevelopmentTool/FlashingTool/device_data.txt'
-        file_path = '/home/anuarrozman2303/Airdroitech/FactoryApp/device_data.txt'
+        file_path = '/usr/src/app/FactoryApp_Merge/device_data.txt'
 
         logger.error(f"starting update_text_file")
         try:

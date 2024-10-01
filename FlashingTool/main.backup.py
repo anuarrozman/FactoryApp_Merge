@@ -716,7 +716,7 @@ class SerialCommunicationApp:
     #     if selected_cert_id:
     #         if selected_cert_id not in self.used_cert_ids:
     #             # Flash the certificate
-    #             self.flashCertificate(selected_cert_id, "/dev/ttyACM0")
+    #             self.flashCertificate(selected_cert_id, "/dev/ttyUSB0")
                 
     #             # Mark the cert_id as used
     #             self.used_cert_ids.add(selected_cert_id)
@@ -1011,7 +1011,7 @@ class SerialCommunicationApp:
         self.port_dropdown['values'] = [port.device for port in serial.tools.list_ports.comports()]
         for port in serial.tools.list_ports.comports():
             # print(str(port.device))
-            if str(port.device) == "/dev/ttyACM0":
+            if str(port.device) == "/dev/ttyUSB0":
                 self.port_dropdown.set(port.device)
 
         self.port_var1 = tk.StringVar()
@@ -1081,7 +1081,7 @@ class SerialCommunicationApp:
         self.port_dropdown['values'] = [port.device for port in serial.tools.list_ports.comports()]
         for port in serial.tools.list_ports.comports():
             # print(str(port.device))
-            if str(port.device) == "/dev/ttyACM0":
+            if str(port.device) == "/dev/ttyUSB0":
                 self.port_dropdown.set(port.device)
 
         self.baud_label = tk.Label(self.serial_baud_frame, text="Baud Rate/波特率:")

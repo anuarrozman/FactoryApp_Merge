@@ -92,10 +92,12 @@ class SerialCom:
                 decoded_data = raw_data.decode("utf-8", errors='replace').strip()
 
                 if decoded_data:
+                    print(f"Received: {decoded_data}")
                     logger.debug(f"Received: {decoded_data}")
                     
                     if "." in decoded_data:
                         if (self.device_factory_mode == False) and (len(decoded_data) == 1):
+                            print("Data contains '.'")
                             logger.debug("Data contains '.'")
                             self.send_data_auto()
                             if factory_mode_counter == 0:

@@ -80,9 +80,9 @@ passcode_data = ""
 
 available_com_ports = []
 
-# file_path = '/usr/src/app/ATSoftwareDevelopmentTool/FlashingTool/device_data.txt'  # Specify the correct path to your text file
+file_path = '/usr/src/app/FactoryApp_Merge/FlashingTool/device_data.txt'  # Specify the correct path to your text file
 # file_path = '/home/anuarrozman/Airdroitech/ATSoftwareDevelopmentTool/FlashingTool/device_data.txt'
-file_path = '/home/anuarrozman2303/Airdroitech/FactoryApp/device_data.txt'
+# file_path = '/home/anuarrozman2303/Airdroitech/FactoryApp/device_data.txt'
 orders = parse_order_file(device_data_file_path)
 order_numbers = get_order_numbers(orders)
 qrcode = None
@@ -2360,6 +2360,8 @@ class SerialCommunicationApp:
                 print("Read MAC Address: Pass")
             else:
                 self.result_read_device_mac.config(text="Failed", fg="red", font=("Helvetica", 10, "bold"))
+                print("Read MAC Address: ",self.read_device_mac.cget("text"))
+                print("Reference MAC Address: ",macAddress_esp32s3_data)
                 logger.info("Read MAC Address: Failed")
                 print("Read MAC Address: Failed")
                 # self.close_serial_port()

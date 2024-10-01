@@ -17,8 +17,8 @@ openocd_esp32s3_builtin_cfg_path = "/home/airdroitech/.espressif/tools/openocd-e
 
 
 used_cert_ids = set()  # Track used cert-ids
-# used_cert_file = '/usr/src/app/ATSoftwareDevelopmentTool/FlashingTool/used_cert_ids.pkl'
-used_cert_file = '/home/anuarrozman2303/Airdroitech/FactoryApp/used_cert_ids.pkl'
+used_cert_file = '/usr/src/app/FactoryApp_Merge/FlashingTool/used_cert_ids.pkl'
+# used_cert_file = '/home/anuarrozman2303/Airdroitech/FactoryApp_Merge/FlashingTool/used_cert_ids.pkl'
 class FlashCert:
     def __init__(self, status_label):
         self.status_label = status_label
@@ -64,7 +64,7 @@ class FlashCert:
     def flash_certificate(self, use_esptool, selected_port, selected_baud, serialnumber_label, serialnumber, certID_label, uuid, macAddr_label, macAddr, securecert_addr, dataprovider_addr):
         print('----flash_certificate----')
         # cert_dir = '/usr/src/app/ATSoftwareDevelopmentTool/FlashingTool/certs/' + str(serialnumber) + '/espsecurecert/out/146d_1/' + str(uuid)
-        cert_dir = '/home/anuarrozman2303/Airdroitech/FactoryApp/certs/' + str(serialnumber) + '/espsecurecert/out/146d_1/' + str(uuid)
+        cert_dir = '/usr/src/app/FactoryApp_Merge/FlashingTool/certs/' + str(serialnumber) + '/espsecurecert/out/146d_1/' + str(uuid)
 
         # cert_file_path = os.path.join(cert_dir, cert_id)
         cert_file_path = cert_dir + '/' + str(uuid) + '_esp_secure_cert.bin'
@@ -137,13 +137,13 @@ class FlashCert:
 
     def get_remaining_cert_ids(self, cert_ids):
         # cert_dir = '/usr/src/app/ATSoftwareDevelopmentTool/FlashingTool/certs'
-        cert_dir = '/home/anuarrozman2303/Airdroitech/FactoryApp/certs/'
+        cert_dir = '/usr/src/app/FactoryApp_Merge/FlashingTool/certs/'
         return [cert_file_path for cert_file_path in cert_ids if os.path.join(cert_dir, cert_file_path) not in self.used_cert_ids]
         
     def get_certId(self):
         try:
             # with open('/usr/src/app/ATSoftwareDevelopmentTool/FlashingTool/device_data.txt', 'r') as file:
-            with open('/home/anuarrozman2303/Airdroitech/FactoryApp/device_data.txt', 'r') as file:
+            with open('/usr/src/app/FactoryApp_Merge/FlashingTool/device_data.txt', 'r') as file:
                 for line in file:
                     if 'Matter Cert ID:' in line and 'Status: None' in line:
                         certId = line.split('Matter Cert ID: ')[1].split(',')[0].strip()
@@ -234,7 +234,7 @@ class FlashCert:
         logger.debug(f"Updating status for certId {certId_fullpath}")
         print(f"Updating status for certId {certId_fullpath}")
         # file_path = '/usr/src/app/ATSoftwareDevelopmentTool/FlashingTool/device_data.txt'
-        file_path = '/home/anuarrozman2303/Airdroitech/FactoryApp/device_data.txt'
+        file_path = '/usr/src/app/FactoryApp_Merge/FlashingTool/device_data.txt'
 
         # try:
         #     with open(file_path, 'r') as file:
@@ -358,7 +358,7 @@ class FlashCert:
 
     def get_bin_path(self, certId):
         # for root, dirs, files in os.walk("/usr/src/app/ATSoftwareDevelopmentTool/FlashingTool/certs"):
-        for root, dirs, files in os.walk("'/home/anuarrozman2303/Airdroitech/FactoryApp/certs/'"):
+        for root, dirs, files in os.walk("'/usr/src/app/FactoryApp_Merge/FlashingTool/certs/'"):
             for file in files:
                 if file.endswith(".bin") and certId in file:
                     return os.path.join(root, file)  # Return the path of the .bin file

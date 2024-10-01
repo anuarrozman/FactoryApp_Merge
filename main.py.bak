@@ -397,7 +397,7 @@ class SerialCommunicationApp:
     #     if selected_cert_id:
     #         if selected_cert_id not in self.used_cert_ids:
     #             # Flash the certificate
-    #             self.flashCertificate(selected_cert_id, "/dev/ttyACM0")
+    #             self.flashCertificate(selected_cert_id, "/dev/ttyUSB0")
                 
     #             # Mark the cert_id as used
     #             self.used_cert_ids.add(selected_cert_id)
@@ -1080,7 +1080,7 @@ class SerialCommunicationApp:
             port1 = config.get("flash", "port1")
             logger.info(f"Port: {port}, Baud: {baud}")
             self.flashFw.get_device_mac_address(port)
-            self.flashCertificate(self.selected_cert_id, "/dev/ttyACM0")
+            self.flashCertificate(self.selected_cert_id, "/dev/ttyUSB0")
             # self.flashCertificate(self.selected_cert_id, "/dev/ttyUSB0")
 
             time.sleep(10)

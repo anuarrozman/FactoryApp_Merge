@@ -1,0 +1,541 @@
+2024-10-01 09:55:47,690 - __main__ - INFO - Factory App Version: 0.0.1
+2024-10-01 09:55:47,690 - __main__ - INFO - Test 1 Start
+2024-10-01 09:55:47,690 - __main__ - INFO - Below are information extracted based on ESP32S3 MAC Address
+2024-10-01 09:55:47,690 - __main__ - INFO - order-no: hand-sample
+2024-10-01 09:55:47,690 - __main__ - INFO -  mac-address: 34:85:18:50:fa:94
+2024-10-01 09:55:47,690 - __main__ - INFO -  serial-id: A09000500
+2024-10-01 09:55:47,690 - __main__ - INFO -  cert-id: Polyaire-DAC-0x146D-0x0001-A09000500-Cert
+2024-10-01 09:55:47,690 - __main__ - INFO -  esp-secure-cert-partition: dc19b802-47e1-4c5b-bf01-5279442482fc_esp_secure_cert.bin
+2024-10-01 09:55:47,690 - __main__ - INFO -  commissionable-data-provider-partition: dc19b802-47e1-4c5b-bf01-5279442482fc-partition.bin
+2024-10-01 09:55:47,690 - __main__ - INFO -  qrcode: MT:Y1CA00O6148F-405J10
+2024-10-01 09:55:47,690 - __main__ - INFO -  manualcode: 1169-154-3426
+2024-10-01 09:55:47,690 - __main__ - INFO -  discriminator: 1428
+2024-10-01 09:55:47,690 - __main__ - INFO -  passcode: 71139859
+2024-10-01 09:55:47,690 - __main__ - INFO - Read ESP32S3 Mac Address
+2024-10-01 09:55:47,690 - components.flashFirmware.flashFirmware - INFO - ESP32S3 MAC Address: 34:85:18:50:fa:94
+2024-10-01 09:55:47,690 - components.flashFirmware.flashFirmware - INFO - Get ESP32S3 MAC Address Completed
+2024-10-01 09:55:47,690 - __main__ - INFO - Read ESP32H2 MAC Address
+2024-10-01 09:55:48,769 - __main__ - INFO - Flashing esp32s3 and esp32h2 firmware
+2024-10-01 09:55:48,769 - __main__ - INFO - Erase Flash ESP32S3: True
+2024-10-01 09:55:48,769 - __main__ - INFO - Erase Flash ESP32S3 Start Address: 0x0
+2024-10-01 09:55:48,769 - __main__ - INFO - Erase Flash ESP32S3 End Address: 0x800000
+2024-10-01 09:55:48,769 - __main__ - INFO - Erase Flash ESP32H2: True
+2024-10-01 09:55:48,769 - __main__ - INFO - Erase Flash ESP32H2 Start Address: 0x0
+2024-10-01 09:55:48,769 - __main__ - INFO - Erase Flash ESP32H2 End Address: 0x400000
+2024-10-01 09:55:48,769 - __main__ - INFO - Flashing ESP32S3 firmware, Port: /dev/ttyUSB0, Baud: 460800
+2024-10-01 09:55:48,769 - __main__ - INFO - ESP32S3 Bootloader Address: 0x0
+2024-10-01 09:55:48,769 - __main__ - INFO - ESP32S3 Partition Table Address: 0xC000
+2024-10-01 09:55:48,769 - __main__ - INFO - ESP32S3 OTA Data Initial Address: 0x1E000
+2024-10-01 09:55:48,769 - __main__ - INFO - ESP32S3 Firmware Address: 0x1F0000
+2024-10-01 09:55:48,769 - __main__ - INFO - ESP32S3 Use ESPTOOL: True
+2024-10-01 09:55:48,769 - __main__ - INFO - Flashing ESP32H2 firmware, Port: /dev/ttyUSB2, Baud: 115200
+2024-10-01 09:55:48,769 - __main__ - INFO - ESP32H2 Bootloader Address: 0x0
+2024-10-01 09:55:48,769 - __main__ - INFO - ESP32H2 Partition Table Address: 0x8000
+2024-10-01 09:55:48,769 - __main__ - INFO - ESP32H2 Firmware Address: 0x10000
+2024-10-01 09:55:48,769 - __main__ - INFO - ESP32H2 Use ESPTOOL: True
+2024-10-01 09:55:48,770 - components.flashFirmware.flashFirmware - ERROR - Error: Unable to find one or more bin files
+2024-10-01 09:55:48,770 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3: esptool.py --chip esp32s3 -p /dev/ttyUSB0 -b 460800 erase_region 0x0 0x800000
+
+2024-10-01 09:55:48,811 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3 = esptool.py v4.7.0
+2024-10-01 09:55:48,811 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3 = Serial port /dev/ttyUSB0
+2024-10-01 09:55:55,865 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3 = Connecting....
+2024-10-01 09:55:55,865 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3 = Chip is ESP32-S3 (QFN56) (revision v0.1)
+2024-10-01 09:55:55,865 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3 = Features: WiFi, BLE
+2024-10-01 09:55:55,865 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3 = Crystal is 40MHz
+2024-10-01 09:55:55,865 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3 = MAC: 34:85:18:50:fa:94
+2024-10-01 09:55:55,866 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3 = Uploading stub...
+2024-10-01 09:55:55,866 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3 = Running stub...
+2024-10-01 09:55:55,866 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3 = Stub running...
+2024-10-01 09:55:55,866 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3 = Changing baud rate to 460800
+2024-10-01 09:55:55,866 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3 = Changed.
+2024-10-01 09:55:55,866 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3 = Erasing region (may be slow depending on size)...
+2024-10-01 09:55:55,866 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3 = Erase completed successfully in 5.4 seconds.
+2024-10-01 09:55:55,866 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3 = Hard resetting via RTS pin...
+2024-10-01 09:55:56,872 - components.flashFirmware.flashFirmware - ERROR - Error: Unable to find one or more bin files
+2024-10-01 09:55:56,873 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware: esptool.py --chip esp32s3 -p /dev/ttyUSB0 -b 460800 write_flash 0x0 /home/anuarrozman2303/Airdroitech/FactoryApp_Merge/FlashingTool/firmware/s3/bootloader.bin 0xC000 /home/anuarrozman2303/Airdroitech/FactoryApp_Merge/FlashingTool/firmware/s3/partition-table.bin 0x1E000 /home/anuarrozman2303/Airdroitech/FactoryApp_Merge/FlashingTool/firmware/s3/ota_data_initial.bin 0x1F0000 /home/anuarrozman2303/Airdroitech/FactoryApp_Merge/FlashingTool/firmware/s3/ARCHIVE/partitions_8MB_TBR/v1_0_0-20240717-rc1.bin
+
+2024-10-01 09:55:56,912 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = esptool.py v4.7.0
+2024-10-01 09:55:56,912 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Serial port /dev/ttyUSB0
+2024-10-01 09:55:58,686 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Connecting....
+2024-10-01 09:55:58,686 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Chip is ESP32-S3 (QFN56) (revision v0.1)
+2024-10-01 09:55:58,686 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Features: WiFi, BLE
+2024-10-01 09:55:58,686 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Crystal is 40MHz
+2024-10-01 09:55:58,686 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = MAC: 34:85:18:50:fa:94
+2024-10-01 09:55:58,686 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Uploading stub...
+2024-10-01 09:55:58,686 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Running stub...
+2024-10-01 09:55:58,686 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Stub running...
+2024-10-01 09:55:58,686 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Changing baud rate to 460800
+2024-10-01 09:55:58,686 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Changed.
+2024-10-01 09:55:58,686 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Configuring flash size...
+2024-10-01 09:55:58,686 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Flash will be erased from 0x00000000 to 0x00005fff...
+2024-10-01 09:55:58,686 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Flash will be erased from 0x0000c000 to 0x0000cfff...
+2024-10-01 09:55:58,686 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Flash will be erased from 0x0001e000 to 0x0001ffff...
+2024-10-01 09:55:58,686 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Flash will be erased from 0x001f0000 to 0x0038afff...
+2024-10-01 09:55:58,686 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Compressed 21136 bytes to 13136...
+2024-10-01 09:55:58,687 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00000000... (100 %)
+2024-10-01 09:55:59,229 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Wrote 21136 bytes (13136 compressed) at 0x00000000 in 0.5 seconds (effective 352.5 kbit/s)...
+2024-10-01 09:55:59,229 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Hash of data verified.
+2024-10-01 09:55:59,229 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Compressed 3072 bytes to 270...
+2024-10-01 09:55:59,229 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0000c000... (100 %)
+2024-10-01 09:55:59,293 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Wrote 3072 bytes (270 compressed) at 0x0000c000 in 0.0 seconds (effective 766.7 kbit/s)...
+2024-10-01 09:55:59,293 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Hash of data verified.
+2024-10-01 09:55:59,293 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Compressed 8192 bytes to 31...
+2024-10-01 09:55:59,293 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0001e000... (100 %)
+2024-10-01 09:55:59,453 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Wrote 8192 bytes (31 compressed) at 0x0001e000 in 0.0 seconds (effective 1361.2 kbit/s)...
+2024-10-01 09:55:59,453 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Hash of data verified.
+2024-10-01 09:55:59,453 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Compressed 1682672 bytes to 1062104...
+2024-10-01 09:55:59,453 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x001f0000... (1 %)
+2024-10-01 09:55:59,821 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x001fc806... (3 %)
+2024-10-01 09:56:00,189 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0020994e... (4 %)
+2024-10-01 09:56:00,556 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00218600... (6 %)
+2024-10-01 09:56:00,924 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00223512... (7 %)
+2024-10-01 09:56:01,292 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0022a505... (9 %)
+2024-10-01 09:56:01,660 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0022f66c... (10 %)
+2024-10-01 09:56:02,027 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0023d5ac... (12 %)
+2024-10-01 09:56:02,411 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00244cdc... (13 %)
+2024-10-01 09:56:02,779 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0024a7f0... (15 %)
+2024-10-01 09:56:03,147 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00250b8c... (16 %)
+2024-10-01 09:56:03,514 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002562d6... (18 %)
+2024-10-01 09:56:03,882 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0025c9dc... (20 %)
+2024-10-01 09:56:04,250 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0026261d... (21 %)
+2024-10-01 09:56:04,617 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00268b3c... (23 %)
+2024-10-01 09:56:04,986 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0026f14a... (24 %)
+2024-10-01 09:56:05,353 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00274cc1... (26 %)
+2024-10-01 09:56:05,721 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0027ae52... (27 %)
+2024-10-01 09:56:06,089 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00280af9... (29 %)
+2024-10-01 09:56:06,457 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0028630f... (30 %)
+2024-10-01 09:56:06,824 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0028c593... (32 %)
+2024-10-01 09:56:07,192 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00292850... (33 %)
+2024-10-01 09:56:07,560 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00297f57... (35 %)
+2024-10-01 09:56:07,927 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0029da76... (36 %)
+2024-10-01 09:56:08,295 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002a3676... (38 %)
+2024-10-01 09:56:08,663 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002a9198... (40 %)
+2024-10-01 09:56:09,031 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002aeb31... (41 %)
+2024-10-01 09:56:09,399 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002b464b... (43 %)
+2024-10-01 09:56:09,766 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002b9ee2... (44 %)
+2024-10-01 09:56:10,134 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002bf595... (46 %)
+2024-10-01 09:56:10,502 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002c48e2... (47 %)
+2024-10-01 09:56:10,870 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002c9b46... (49 %)
+2024-10-01 09:56:11,237 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002cf0be... (50 %)
+2024-10-01 09:56:11,605 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002d4638... (52 %)
+2024-10-01 09:56:11,973 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002d97bc... (53 %)
+2024-10-01 09:56:12,341 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002de7cf... (55 %)
+2024-10-01 09:56:12,708 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002e38b4... (56 %)
+2024-10-01 09:56:13,076 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002e8925... (58 %)
+2024-10-01 09:56:13,444 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002edbf0... (60 %)
+2024-10-01 09:56:13,812 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002f30fa... (61 %)
+2024-10-01 09:56:14,180 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002f8a7d... (63 %)
+2024-10-01 09:56:14,547 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002fe184... (64 %)
+2024-10-01 09:56:14,915 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00303240... (66 %)
+2024-10-01 09:56:15,283 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x003089e4... (67 %)
+2024-10-01 09:56:15,651 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0030e0d0... (69 %)
+2024-10-01 09:56:16,018 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00313fce... (70 %)
+2024-10-01 09:56:16,386 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00319c9c... (72 %)
+2024-10-01 09:56:16,754 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0031f658... (73 %)
+2024-10-01 09:56:17,122 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00324ab9... (75 %)
+2024-10-01 09:56:17,489 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0032a0e6... (76 %)
+2024-10-01 09:56:17,857 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0032f70f... (78 %)
+2024-10-01 09:56:18,225 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00334c0f... (80 %)
+2024-10-01 09:56:18,593 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0033a638... (81 %)
+2024-10-01 09:56:18,960 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0033fdfc... (83 %)
+2024-10-01 09:56:19,328 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x003450e6... (84 %)
+2024-10-01 09:56:19,696 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0034a665... (86 %)
+2024-10-01 09:56:20,063 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0035025c... (87 %)
+2024-10-01 09:56:20,432 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00356107... (89 %)
+2024-10-01 09:56:20,799 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00360972... (90 %)
+2024-10-01 09:56:21,167 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00369015... (92 %)
+2024-10-01 09:56:21,535 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0036f1ac... (93 %)
+2024-10-01 09:56:21,902 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x003753cd... (95 %)
+2024-10-01 09:56:22,270 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0037abd9... (96 %)
+2024-10-01 09:56:22,638 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00380431... (98 %)
+2024-10-01 09:56:23,006 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0038637a... (100 %)
+2024-10-01 09:56:26,386 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Wrote 1682672 bytes (1062104 compressed) at 0x001f0000 in 24.1 seconds (effective 559.4 kbit/s)...
+2024-10-01 09:56:26,386 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Hash of data verified.
+2024-10-01 09:56:26,386 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = 
+2024-10-01 09:56:26,386 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Leaving...
+2024-10-01 09:56:26,386 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Hard resetting via RTS pin...
+2024-10-01 09:56:26,386 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware Complete
+2024-10-01 09:56:26,391 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware Completed
+2024-10-01 09:56:27,393 - __main__ - INFO - Flashing esp32s3 certificate
+2024-10-01 09:56:27,393 - __main__ - INFO - Flashing esp32s3 certificate, Port: /dev/ttyUSB0, Baud: 460800
+2024-10-01 09:56:27,393 - __main__ - INFO - ESP32S3 Secure Cert Partition Address: 0xD000
+2024-10-01 09:56:27,393 - __main__ - INFO - ESP32S3 Data Provider Partition Address: 0x60000
+2024-10-01 09:56:27,393 - __main__ - INFO - ESP32S3 DAC Use ESPTOOL: True
+2024-10-01 09:56:27,393 - components.flashCert.flashCert - DEBUG - Cert file path: /home/anuarrozman2303/Airdroitech/FactoryApp_Merge/FlashingTool/certs/A09000500/espsecurecert/out/146d_1/dc19b802-47e1-4c5b-bf01-5279442482fc/dc19b802-47e1-4c5b-bf01-5279442482fc_esp_secure_cert.bin
+2024-10-01 09:56:27,393 - components.flashCert.flashCert - INFO - Flashing certificate with cert-id: /home/anuarrozman2303/Airdroitech/FactoryApp_Merge/FlashingTool/certs/A09000500/espsecurecert/out/146d_1/dc19b802-47e1-4c5b-bf01-5279442482fc/dc19b802-47e1-4c5b-bf01-5279442482fc_esp_secure_cert.bin on port /dev/ttyUSB0
+2024-10-01 09:56:27,394 - components.flashCert.flashCert - DEBUG - ESP Secure Cert /home/anuarrozman2303/Airdroitech/FactoryApp_Merge/FlashingTool/certs/A09000500/espsecurecert/out/146d_1/dc19b802-47e1-4c5b-bf01-5279442482fc/dc19b802-47e1-4c5b-bf01-5279442482fc_esp_secure_cert.bin on port /dev/ttyUSB0...
+2024-10-01 09:56:27,394 - components.flashCert.flashCert - DEBUG - Certify Process: Flashing cert with bin_path: /home/anuarrozman2303/Airdroitech/FactoryApp_Merge/FlashingTool/certs/A09000500/espsecurecert/out/146d_1/dc19b802-47e1-4c5b-bf01-5279442482fc/dc19b802-47e1-4c5b-bf01-5279442482fc_esp_secure_cert.bin and part_bin_path: /home/anuarrozman2303/Airdroitech/FactoryApp_Merge/FlashingTool/certs/A09000500/espsecurecert/out/146d_1/dc19b802-47e1-4c5b-bf01-5279442482fc/dc19b802-47e1-4c5b-bf01-5279442482fc-partition.bin
+2024-10-01 09:56:27,394 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert with command: source /usr/src/app/esp/esp-idf/export.sh
+esptool.py -p /dev/ttyUSB0 -b 460800 write_flash 0xD000 /home/anuarrozman2303/Airdroitech/FactoryApp_Merge/FlashingTool/certs/A09000500/espsecurecert/out/146d_1/dc19b802-47e1-4c5b-bf01-5279442482fc/dc19b802-47e1-4c5b-bf01-5279442482fc_esp_secure_cert.bin 0x60000 /home/anuarrozman2303/Airdroitech/FactoryApp_Merge/FlashingTool/certs/A09000500/espsecurecert/out/146d_1/dc19b802-47e1-4c5b-bf01-5279442482fc/dc19b802-47e1-4c5b-bf01-5279442482fc-partition.bin
+
+2024-10-01 09:56:27,395 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = /bin/bash: line 1: /usr/src/app/esp/esp-idf/export.sh: No such file or directory
+2024-10-01 09:56:27,434 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = esptool.py v4.7.0
+2024-10-01 09:56:27,434 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Serial port /dev/ttyUSB0
+2024-10-01 09:56:29,049 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Connecting....
+2024-10-01 09:56:29,049 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Detecting chip type... ESP32-S3
+2024-10-01 09:56:29,049 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Chip is ESP32-S3 (QFN56) (revision v0.1)
+2024-10-01 09:56:29,049 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Features: WiFi, BLE
+2024-10-01 09:56:29,049 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Crystal is 40MHz
+2024-10-01 09:56:29,049 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = MAC: 34:85:18:50:fa:94
+2024-10-01 09:56:29,049 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Uploading stub...
+2024-10-01 09:56:29,049 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Running stub...
+2024-10-01 09:56:29,049 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Stub running...
+2024-10-01 09:56:29,049 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Changing baud rate to 460800
+2024-10-01 09:56:29,049 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Changed.
+2024-10-01 09:56:29,049 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Configuring flash size...
+2024-10-01 09:56:29,049 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Flash will be erased from 0x0000d000 to 0x0000efff...
+2024-10-01 09:56:29,049 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Flash will be erased from 0x00060000 to 0x00065fff...
+2024-10-01 09:56:29,049 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Compressed 8192 bytes to 773...
+2024-10-01 09:56:29,049 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Writing at 0x0000d000... (100 %)
+2024-10-01 09:56:29,161 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Wrote 8192 bytes (773 compressed) at 0x0000d000 in 0.1 seconds (effective 820.7 kbit/s)...
+2024-10-01 09:56:29,161 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Hash of data verified.
+2024-10-01 09:56:29,161 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Compressed 24576 bytes to 934...
+2024-10-01 09:56:29,161 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Writing at 0x00060000... (100 %)
+2024-10-01 09:56:29,522 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Wrote 24576 bytes (934 compressed) at 0x00060000 in 0.2 seconds (effective 1119.5 kbit/s)...
+2024-10-01 09:56:29,523 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Hash of data verified.
+2024-10-01 09:56:29,523 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = 
+2024-10-01 09:56:29,523 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Leaving...
+2024-10-01 09:56:29,523 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Hard resetting via RTS pin...
+2024-10-01 09:56:29,523 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert Complete
+2024-10-01 09:56:29,528 - components.flashCert.flashCert - INFO - FlashCert, Create New/Updata Database Start
+2024-10-01 09:56:29,528 - components.flashCert.flashCert - DEBUG - Updating status for certId /home/anuarrozman2303/Airdroitech/FactoryApp_Merge/FlashingTool/certs/A09000500/espsecurecert/out/146d_1/dc19b802-47e1-4c5b-bf01-5279442482fc/dc19b802-47e1-4c5b-bf01-5279442482fc_esp_secure_cert.bin
+2024-10-01 09:56:29,529 - components.flashCert.flashCert - DEBUG - Filtered certId =  esp-secure-cert-partition: dc19b802-47e1-4c5b-bf01-5279442482fc_esp_secure_cert.bin
+2024-10-01 09:56:29,529 - components.flashCert.flashCert - DEBUG - Filtered macAddress =  mac-address: 34:85:18:50:fa:94
+2024-10-01 09:56:29,529 - components.flashCert.flashCert - DEBUG - Reading file: /home/anuarrozman2303/Airdroitech/FactoryApp_Merge/FlashingTool/device_data.txt
+2024-10-01 09:56:29,529 - components.flashCert.flashCert - INFO - Found in database =  mac-address: 34:85:18:50:fa:94
+2024-10-01 09:56:29,529 - components.flashCert.flashCert - INFO - FlashCert, Create New/Updata Database End
+2024-10-01 09:56:29,537 - __main__ - INFO - Test 1 Completed
+2024-10-01 09:56:29,950 - __main__ - INFO - Test 2 Start
+2024-10-01 09:56:29,950 - __main__ - INFO - Entering factory mode
+2024-10-01 09:56:29,950 - __main__ - INFO - Reset Factory Mode Flag
+2024-10-01 09:56:29,951 - __main__ - INFO - Open esp32s3 Factory Port
+2024-10-01 09:56:29,951 - __main__ - INFO - factory Port: /dev/ttyUSB1, Baud: 115200
+2024-10-01 09:56:29,951 - components.serialCom.serialCom - DEBUG - Opening port /dev/ttyUSB1 at 115200 baud
+2024-10-01 09:56:29,956 - components.serialCom.serialCom - INFO - Opened port /dev/ttyUSB1 at 115200 baud
+2024-10-01 09:56:29,956 - __main__ - INFO - Reboot esp32s3 and esp32h2
+2024-10-01 09:56:29,956 - __main__ - INFO - Reboot esp32s3, Port: /dev/ttyUSB0, Baud: 460800
+2024-10-01 09:56:29,956 - __main__ - INFO - Reboot esp32h2, Port: /dev/ttyUSB2, Baud: 115200
+2024-10-01 09:56:29,956 - components.flashFirmware.flashFirmware - INFO - Reset ESP32H2: source /usr/src/app/esp/esp-idf/export.sh
+esptool.py -p /dev/ttyUSB2 -b 115200 run
+
+2024-10-01 09:56:29,957 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = /bin/bash: line 1: /usr/src/app/esp/esp-idf/export.sh: No such file or directory
+2024-10-01 09:56:29,996 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = esptool.py v4.7.0
+2024-10-01 09:56:29,996 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Serial port /dev/ttyUSB2
+2024-10-01 09:56:31,012 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Connecting....
+2024-10-01 09:56:31,012 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Detecting chip type... ESP32-H2
+2024-10-01 09:56:31,012 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Chip is ESP32-H2 (revision v0.1)
+2024-10-01 09:56:31,013 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Features: BLE, IEEE802.15.4
+2024-10-01 09:56:31,013 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Crystal is 32MHz
+2024-10-01 09:56:31,013 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = MAC: 48:31:b7:ff:fe:c0:19:80
+2024-10-01 09:56:31,013 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = BASE MAC: 48:31:b7:c0:19:80
+2024-10-01 09:56:31,013 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = MAC_EXT: ff:fe
+2024-10-01 09:56:31,013 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Uploading stub...
+2024-10-01 09:56:31,013 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Running stub...
+2024-10-01 09:56:31,013 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Stub running...
+2024-10-01 09:56:31,013 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Hard resetting via RTS pin...
+2024-10-01 09:56:31,114 - components.serialCom.serialCom - DEBUG - Received: .
+2024-10-01 09:56:31,114 - components.serialCom.serialCom - DEBUG - Data contains '.'
+2024-10-01 09:56:31,115 - components.serialCom.serialCom - DEBUG - SerialCom, Factory: polyaire&ADT
+
+2024-10-01 09:56:36,018 - components.flashFirmware.flashFirmware - INFO - Reset ESP32H2: source /usr/src/app/esp/esp-idf/export.sh
+esptool.py -p /dev/ttyUSB0 -b 460800 run
+
+2024-10-01 09:56:36,019 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = /bin/bash: line 1: /usr/src/app/esp/esp-idf/export.sh: No such file or directory
+2024-10-01 09:56:36,057 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = esptool.py v4.7.0
+2024-10-01 09:56:36,057 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Serial port /dev/ttyUSB0
+2024-10-01 09:56:37,747 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Connecting....
+2024-10-01 09:56:37,747 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Detecting chip type... ESP32-S3
+2024-10-01 09:56:37,747 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Chip is ESP32-S3 (QFN56) (revision v0.1)
+2024-10-01 09:56:37,747 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Features: WiFi, BLE
+2024-10-01 09:56:37,747 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Crystal is 40MHz
+2024-10-01 09:56:37,747 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = MAC: 34:85:18:50:fa:94
+2024-10-01 09:56:37,747 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Uploading stub...
+2024-10-01 09:56:37,748 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Running stub...
+2024-10-01 09:56:37,748 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Stub running...
+2024-10-01 09:56:37,748 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Changing baud rate to 460800
+2024-10-01 09:56:37,748 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Changed.
+2024-10-01 09:56:37,748 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Hard resetting via RTS pin...
+2024-10-01 09:56:39,346 - components.serialCom.serialCom - DEBUG - Received: .
+2024-10-01 09:56:39,347 - components.serialCom.serialCom - DEBUG - Data contains '.'
+2024-10-01 09:56:39,347 - components.serialCom.serialCom - DEBUG - SerialCom, Factory: polyaire&ADT
+
+2024-10-01 09:56:42,753 - __main__ - INFO - Start Wait 3
+2024-10-01 09:56:45,753 - __main__ - INFO - Finish Wait 3
+2024-10-01 09:56:46,755 - __main__ - INFO - Read MAC Address
+2024-10-01 09:56:46,755 - __main__ - DEBUG - SerialCom, Sent: FF:3;MAC?
+2024-10-01 09:56:46,755 - __main__ - INFO - Read MAC Address Command: FF:3;MAC?
+2024-10-01 09:56:46,755 - __main__ - INFO - Reference MAC Address: 34:85:18:50:fa:94
+2024-10-01 09:56:47,802 - components.serialCom.serialCom - DEBUG - Received: 3;MAC? = 34:85:18:50:FA:94
+2024-10-01 09:56:49,756 - __main__ - INFO - Read MAC Address: Failed
+2024-10-01 09:57:04,269 - __main__ - INFO - Resetting tasks
+2024-10-01 09:57:07,618 - components.serialCom.serialCom - DEBUG - Received: .
+2024-10-01 09:57:11,026 - __main__ - INFO - Factory App Version: 0.0.1
+2024-10-01 09:57:11,026 - __main__ - INFO - Test 1 Start
+2024-10-01 09:57:11,026 - __main__ - INFO - Below are information extracted based on ESP32S3 MAC Address
+2024-10-01 09:57:11,026 - __main__ - INFO - order-no: hand-sample
+2024-10-01 09:57:11,026 - __main__ - INFO -  mac-address: 34:85:18:50:fa:94
+2024-10-01 09:57:11,026 - __main__ - INFO -  serial-id: A09000500
+2024-10-01 09:57:11,026 - __main__ - INFO -  cert-id: Polyaire-DAC-0x146D-0x0001-A09000500-Cert
+2024-10-01 09:57:11,026 - __main__ - INFO -  esp-secure-cert-partition: dc19b802-47e1-4c5b-bf01-5279442482fc_esp_secure_cert.bin
+2024-10-01 09:57:11,026 - __main__ - INFO -  commissionable-data-provider-partition: dc19b802-47e1-4c5b-bf01-5279442482fc-partition.bin
+2024-10-01 09:57:11,026 - __main__ - INFO -  qrcode: MT:Y1CA00O6148F-405J10
+2024-10-01 09:57:11,026 - __main__ - INFO -  manualcode: 1169-154-3426
+2024-10-01 09:57:11,026 - __main__ - INFO -  discriminator: 1428
+2024-10-01 09:57:11,026 - __main__ - INFO -  passcode: 71139859
+2024-10-01 09:57:11,026 - __main__ - INFO - Read ESP32S3 Mac Address
+2024-10-01 09:57:11,026 - components.flashFirmware.flashFirmware - INFO - ESP32S3 MAC Address: 34:85:18:50:fa:94
+2024-10-01 09:57:11,026 - components.flashFirmware.flashFirmware - INFO - Get ESP32S3 MAC Address Completed
+2024-10-01 09:57:11,026 - __main__ - INFO - Read ESP32H2 MAC Address
+2024-10-01 09:57:12,113 - __main__ - INFO - Flashing esp32s3 and esp32h2 firmware
+2024-10-01 09:57:12,113 - __main__ - INFO - Erase Flash ESP32S3: True
+2024-10-01 09:57:12,113 - __main__ - INFO - Erase Flash ESP32S3 Start Address: 0x0
+2024-10-01 09:57:12,113 - __main__ - INFO - Erase Flash ESP32S3 End Address: 0x800000
+2024-10-01 09:57:12,113 - __main__ - INFO - Erase Flash ESP32H2: True
+2024-10-01 09:57:12,113 - __main__ - INFO - Erase Flash ESP32H2 Start Address: 0x0
+2024-10-01 09:57:12,113 - __main__ - INFO - Erase Flash ESP32H2 End Address: 0x400000
+2024-10-01 09:57:12,113 - __main__ - INFO - Flashing ESP32S3 firmware, Port: /dev/ttyUSB0, Baud: 460800
+2024-10-01 09:57:12,113 - __main__ - INFO - ESP32S3 Bootloader Address: 0x0
+2024-10-01 09:57:12,113 - __main__ - INFO - ESP32S3 Partition Table Address: 0xC000
+2024-10-01 09:57:12,113 - __main__ - INFO - ESP32S3 OTA Data Initial Address: 0x1E000
+2024-10-01 09:57:12,113 - __main__ - INFO - ESP32S3 Firmware Address: 0x1F0000
+2024-10-01 09:57:12,113 - __main__ - INFO - ESP32S3 Use ESPTOOL: True
+2024-10-01 09:57:12,113 - __main__ - INFO - Flashing ESP32H2 firmware, Port: /dev/ttyUSB2, Baud: 115200
+2024-10-01 09:57:12,113 - __main__ - INFO - ESP32H2 Bootloader Address: 0x0
+2024-10-01 09:57:12,113 - __main__ - INFO - ESP32H2 Partition Table Address: 0x8000
+2024-10-01 09:57:12,113 - __main__ - INFO - ESP32H2 Firmware Address: 0x10000
+2024-10-01 09:57:12,113 - __main__ - INFO - ESP32H2 Use ESPTOOL: True
+2024-10-01 09:57:12,114 - components.flashFirmware.flashFirmware - ERROR - Error: Unable to find one or more bin files
+2024-10-01 09:57:12,114 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3: esptool.py --chip esp32s3 -p /dev/ttyUSB0 -b 460800 erase_region 0x0 0x800000
+
+2024-10-01 09:57:12,158 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3 = esptool.py v4.7.0
+2024-10-01 09:57:12,158 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3 = Serial port /dev/ttyUSB0
+2024-10-01 09:57:19,029 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3 = Connecting....
+2024-10-01 09:57:19,029 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3 = Chip is ESP32-S3 (QFN56) (revision v0.1)
+2024-10-01 09:57:19,029 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3 = Features: WiFi, BLE
+2024-10-01 09:57:19,029 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3 = Crystal is 40MHz
+2024-10-01 09:57:19,029 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3 = MAC: 34:85:18:50:fa:94
+2024-10-01 09:57:19,029 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3 = Uploading stub...
+2024-10-01 09:57:19,029 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3 = Running stub...
+2024-10-01 09:57:19,029 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3 = Stub running...
+2024-10-01 09:57:19,030 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3 = Changing baud rate to 460800
+2024-10-01 09:57:19,030 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3 = Changed.
+2024-10-01 09:57:19,030 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3 = Erasing region (may be slow depending on size)...
+2024-10-01 09:57:19,030 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3 = Erase completed successfully in 5.2 seconds.
+2024-10-01 09:57:19,030 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3 = Hard resetting via RTS pin...
+2024-10-01 09:57:20,038 - components.flashFirmware.flashFirmware - ERROR - Error: Unable to find one or more bin files
+2024-10-01 09:57:20,039 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware: esptool.py --chip esp32s3 -p /dev/ttyUSB0 -b 460800 write_flash 0x0 /home/anuarrozman2303/Airdroitech/FactoryApp_Merge/FlashingTool/firmware/s3/bootloader.bin 0xC000 /home/anuarrozman2303/Airdroitech/FactoryApp_Merge/FlashingTool/firmware/s3/partition-table.bin 0x1E000 /home/anuarrozman2303/Airdroitech/FactoryApp_Merge/FlashingTool/firmware/s3/ota_data_initial.bin 0x1F0000 /home/anuarrozman2303/Airdroitech/FactoryApp_Merge/FlashingTool/firmware/s3/ARCHIVE/partitions_8MB_TBR/v1_0_0-20240717-rc1.bin
+
+2024-10-01 09:57:20,082 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = esptool.py v4.7.0
+2024-10-01 09:57:20,082 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Serial port /dev/ttyUSB0
+2024-10-01 09:57:21,860 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Connecting....
+2024-10-01 09:57:21,860 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Chip is ESP32-S3 (QFN56) (revision v0.1)
+2024-10-01 09:57:21,860 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Features: WiFi, BLE
+2024-10-01 09:57:21,860 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Crystal is 40MHz
+2024-10-01 09:57:21,861 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = MAC: 34:85:18:50:fa:94
+2024-10-01 09:57:21,861 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Uploading stub...
+2024-10-01 09:57:21,861 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Running stub...
+2024-10-01 09:57:21,861 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Stub running...
+2024-10-01 09:57:21,861 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Changing baud rate to 460800
+2024-10-01 09:57:21,861 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Changed.
+2024-10-01 09:57:21,861 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Configuring flash size...
+2024-10-01 09:57:21,861 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Flash will be erased from 0x00000000 to 0x00005fff...
+2024-10-01 09:57:21,861 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Flash will be erased from 0x0000c000 to 0x0000cfff...
+2024-10-01 09:57:21,861 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Flash will be erased from 0x0001e000 to 0x0001ffff...
+2024-10-01 09:57:21,861 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Flash will be erased from 0x001f0000 to 0x0038afff...
+2024-10-01 09:57:21,861 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Compressed 21136 bytes to 13136...
+2024-10-01 09:57:21,861 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00000000... (100 %)
+2024-10-01 09:57:22,404 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Wrote 21136 bytes (13136 compressed) at 0x00000000 in 0.5 seconds (effective 352.4 kbit/s)...
+2024-10-01 09:57:22,404 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Hash of data verified.
+2024-10-01 09:57:22,404 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Compressed 3072 bytes to 270...
+2024-10-01 09:57:22,404 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0000c000... (100 %)
+2024-10-01 09:57:22,468 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Wrote 3072 bytes (270 compressed) at 0x0000c000 in 0.0 seconds (effective 765.9 kbit/s)...
+2024-10-01 09:57:22,468 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Hash of data verified.
+2024-10-01 09:57:22,468 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Compressed 8192 bytes to 31...
+2024-10-01 09:57:22,468 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0001e000... (100 %)
+2024-10-01 09:57:22,628 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Wrote 8192 bytes (31 compressed) at 0x0001e000 in 0.0 seconds (effective 1364.9 kbit/s)...
+2024-10-01 09:57:22,628 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Hash of data verified.
+2024-10-01 09:57:22,628 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Compressed 1682672 bytes to 1062104...
+2024-10-01 09:57:22,628 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x001f0000... (1 %)
+2024-10-01 09:57:22,996 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x001fc806... (3 %)
+2024-10-01 09:57:23,364 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0020994e... (4 %)
+2024-10-01 09:57:23,732 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00218600... (6 %)
+2024-10-01 09:57:24,100 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00223512... (7 %)
+2024-10-01 09:57:24,467 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0022a505... (9 %)
+2024-10-01 09:57:24,835 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0022f66c... (10 %)
+2024-10-01 09:57:25,203 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0023d5ac... (12 %)
+2024-10-01 09:57:25,587 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00244cdc... (13 %)
+2024-10-01 09:57:25,955 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0024a7f0... (15 %)
+2024-10-01 09:57:26,323 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00250b8c... (16 %)
+2024-10-01 09:57:26,691 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002562d6... (18 %)
+2024-10-01 09:57:27,059 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0025c9dc... (20 %)
+2024-10-01 09:57:27,426 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0026261d... (21 %)
+2024-10-01 09:57:27,795 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00268b3c... (23 %)
+2024-10-01 09:57:28,162 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0026f14a... (24 %)
+2024-10-01 09:57:28,530 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00274cc1... (26 %)
+2024-10-01 09:57:28,898 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0027ae52... (27 %)
+2024-10-01 09:57:29,266 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00280af9... (29 %)
+2024-10-01 09:57:29,634 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0028630f... (30 %)
+2024-10-01 09:57:30,001 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0028c593... (32 %)
+2024-10-01 09:57:30,369 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00292850... (33 %)
+2024-10-01 09:57:30,737 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00297f57... (35 %)
+2024-10-01 09:57:31,105 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0029da76... (36 %)
+2024-10-01 09:57:31,473 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002a3676... (38 %)
+2024-10-01 09:57:31,841 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002a9198... (40 %)
+2024-10-01 09:57:32,209 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002aeb31... (41 %)
+2024-10-01 09:57:32,577 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002b464b... (43 %)
+2024-10-01 09:57:32,944 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002b9ee2... (44 %)
+2024-10-01 09:57:33,312 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002bf595... (46 %)
+2024-10-01 09:57:33,680 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002c48e2... (47 %)
+2024-10-01 09:57:34,048 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002c9b46... (49 %)
+2024-10-01 09:57:34,416 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002cf0be... (50 %)
+2024-10-01 09:57:34,784 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002d4638... (52 %)
+2024-10-01 09:57:35,151 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002d97bc... (53 %)
+2024-10-01 09:57:35,519 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002de7cf... (55 %)
+2024-10-01 09:57:35,887 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002e38b4... (56 %)
+2024-10-01 09:57:36,255 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002e8925... (58 %)
+2024-10-01 09:57:36,623 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002edbf0... (60 %)
+2024-10-01 09:57:36,991 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002f30fa... (61 %)
+2024-10-01 09:57:37,359 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002f8a7d... (63 %)
+2024-10-01 09:57:37,726 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x002fe184... (64 %)
+2024-10-01 09:57:38,094 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00303240... (66 %)
+2024-10-01 09:57:38,462 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x003089e4... (67 %)
+2024-10-01 09:57:38,830 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0030e0d0... (69 %)
+2024-10-01 09:57:39,198 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00313fce... (70 %)
+2024-10-01 09:57:39,566 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00319c9c... (72 %)
+2024-10-01 09:57:39,934 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0031f658... (73 %)
+2024-10-01 09:57:40,301 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00324ab9... (75 %)
+2024-10-01 09:57:40,669 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0032a0e6... (76 %)
+2024-10-01 09:57:41,037 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0032f70f... (78 %)
+2024-10-01 09:57:41,405 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00334c0f... (80 %)
+2024-10-01 09:57:41,773 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0033a638... (81 %)
+2024-10-01 09:57:42,141 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0033fdfc... (83 %)
+2024-10-01 09:57:42,509 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x003450e6... (84 %)
+2024-10-01 09:57:42,876 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0034a665... (86 %)
+2024-10-01 09:57:43,244 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0035025c... (87 %)
+2024-10-01 09:57:43,612 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00356107... (89 %)
+2024-10-01 09:57:43,980 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00360972... (90 %)
+2024-10-01 09:57:44,348 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00369015... (92 %)
+2024-10-01 09:57:44,716 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0036f1ac... (93 %)
+2024-10-01 09:57:45,084 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x003753cd... (95 %)
+2024-10-01 09:57:45,452 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0037abd9... (96 %)
+2024-10-01 09:57:45,820 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x00380431... (98 %)
+2024-10-01 09:57:46,187 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Writing at 0x0038637a... (100 %)
+2024-10-01 09:57:49,572 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Wrote 1682672 bytes (1062104 compressed) at 0x001f0000 in 24.1 seconds (effective 559.2 kbit/s)...
+2024-10-01 09:57:49,572 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Hash of data verified.
+2024-10-01 09:57:49,572 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = 
+2024-10-01 09:57:49,572 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Leaving...
+2024-10-01 09:57:49,572 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = Hard resetting via RTS pin...
+2024-10-01 09:57:49,572 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware Complete
+2024-10-01 09:57:49,581 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware Completed
+2024-10-01 09:57:50,582 - __main__ - INFO - Flashing esp32s3 certificate
+2024-10-01 09:57:50,582 - __main__ - INFO - Flashing esp32s3 certificate, Port: /dev/ttyUSB0, Baud: 460800
+2024-10-01 09:57:50,582 - __main__ - INFO - ESP32S3 Secure Cert Partition Address: 0xD000
+2024-10-01 09:57:50,582 - __main__ - INFO - ESP32S3 Data Provider Partition Address: 0x60000
+2024-10-01 09:57:50,582 - __main__ - INFO - ESP32S3 DAC Use ESPTOOL: True
+2024-10-01 09:57:50,582 - components.flashCert.flashCert - DEBUG - Cert file path: /home/anuarrozman2303/Airdroitech/FactoryApp_Merge/FlashingTool/certs/A09000500/espsecurecert/out/146d_1/dc19b802-47e1-4c5b-bf01-5279442482fc/dc19b802-47e1-4c5b-bf01-5279442482fc_esp_secure_cert.bin
+2024-10-01 09:57:50,582 - components.flashCert.flashCert - INFO - Flashing certificate with cert-id: /home/anuarrozman2303/Airdroitech/FactoryApp_Merge/FlashingTool/certs/A09000500/espsecurecert/out/146d_1/dc19b802-47e1-4c5b-bf01-5279442482fc/dc19b802-47e1-4c5b-bf01-5279442482fc_esp_secure_cert.bin on port /dev/ttyUSB0
+2024-10-01 09:57:50,582 - components.flashCert.flashCert - DEBUG - ESP Secure Cert /home/anuarrozman2303/Airdroitech/FactoryApp_Merge/FlashingTool/certs/A09000500/espsecurecert/out/146d_1/dc19b802-47e1-4c5b-bf01-5279442482fc/dc19b802-47e1-4c5b-bf01-5279442482fc_esp_secure_cert.bin on port /dev/ttyUSB0...
+2024-10-01 09:57:50,582 - components.flashCert.flashCert - DEBUG - Certify Process: Flashing cert with bin_path: /home/anuarrozman2303/Airdroitech/FactoryApp_Merge/FlashingTool/certs/A09000500/espsecurecert/out/146d_1/dc19b802-47e1-4c5b-bf01-5279442482fc/dc19b802-47e1-4c5b-bf01-5279442482fc_esp_secure_cert.bin and part_bin_path: /home/anuarrozman2303/Airdroitech/FactoryApp_Merge/FlashingTool/certs/A09000500/espsecurecert/out/146d_1/dc19b802-47e1-4c5b-bf01-5279442482fc/dc19b802-47e1-4c5b-bf01-5279442482fc-partition.bin
+2024-10-01 09:57:50,582 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert with command: source /usr/src/app/esp/esp-idf/export.sh
+esptool.py -p /dev/ttyUSB0 -b 460800 write_flash 0xD000 /home/anuarrozman2303/Airdroitech/FactoryApp_Merge/FlashingTool/certs/A09000500/espsecurecert/out/146d_1/dc19b802-47e1-4c5b-bf01-5279442482fc/dc19b802-47e1-4c5b-bf01-5279442482fc_esp_secure_cert.bin 0x60000 /home/anuarrozman2303/Airdroitech/FactoryApp_Merge/FlashingTool/certs/A09000500/espsecurecert/out/146d_1/dc19b802-47e1-4c5b-bf01-5279442482fc/dc19b802-47e1-4c5b-bf01-5279442482fc-partition.bin
+
+2024-10-01 09:57:50,583 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = /bin/bash: line 1: /usr/src/app/esp/esp-idf/export.sh: No such file or directory
+2024-10-01 09:57:50,626 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = esptool.py v4.7.0
+2024-10-01 09:57:50,626 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Serial port /dev/ttyUSB0
+2024-10-01 09:57:51,166 - components.serialCom.serialCom - DEBUG - Received: .
+2024-10-01 09:57:52,242 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Connecting....
+2024-10-01 09:57:52,242 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Detecting chip type... ESP32-S3
+2024-10-01 09:57:52,242 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Chip is ESP32-S3 (QFN56) (revision v0.1)
+2024-10-01 09:57:52,242 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Features: WiFi, BLE
+2024-10-01 09:57:52,242 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Crystal is 40MHz
+2024-10-01 09:57:52,242 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = MAC: 34:85:18:50:fa:94
+2024-10-01 09:57:52,242 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Uploading stub...
+2024-10-01 09:57:52,242 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Running stub...
+2024-10-01 09:57:52,242 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Stub running...
+2024-10-01 09:57:52,242 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Changing baud rate to 460800
+2024-10-01 09:57:52,243 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Changed.
+2024-10-01 09:57:52,243 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Configuring flash size...
+2024-10-01 09:57:52,243 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Flash will be erased from 0x0000d000 to 0x0000efff...
+2024-10-01 09:57:52,243 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Flash will be erased from 0x00060000 to 0x00065fff...
+2024-10-01 09:57:52,243 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Compressed 8192 bytes to 773...
+2024-10-01 09:57:52,243 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Writing at 0x0000d000... (100 %)
+2024-10-01 09:57:52,354 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Wrote 8192 bytes (773 compressed) at 0x0000d000 in 0.1 seconds (effective 820.5 kbit/s)...
+2024-10-01 09:57:52,354 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Hash of data verified.
+2024-10-01 09:57:52,354 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Compressed 24576 bytes to 934...
+2024-10-01 09:57:52,354 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Writing at 0x00060000... (100 %)
+2024-10-01 09:57:52,717 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Wrote 24576 bytes (934 compressed) at 0x00060000 in 0.2 seconds (effective 1117.4 kbit/s)...
+2024-10-01 09:57:52,717 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Hash of data verified.
+2024-10-01 09:57:52,717 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = 
+2024-10-01 09:57:52,718 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Leaving...
+2024-10-01 09:57:52,718 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = Hard resetting via RTS pin...
+2024-10-01 09:57:52,718 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert Complete
+2024-10-01 09:57:52,725 - components.flashCert.flashCert - INFO - FlashCert, Create New/Updata Database Start
+2024-10-01 09:57:52,725 - components.flashCert.flashCert - DEBUG - Updating status for certId /home/anuarrozman2303/Airdroitech/FactoryApp_Merge/FlashingTool/certs/A09000500/espsecurecert/out/146d_1/dc19b802-47e1-4c5b-bf01-5279442482fc/dc19b802-47e1-4c5b-bf01-5279442482fc_esp_secure_cert.bin
+2024-10-01 09:57:52,725 - components.flashCert.flashCert - DEBUG - Filtered certId =  esp-secure-cert-partition: dc19b802-47e1-4c5b-bf01-5279442482fc_esp_secure_cert.bin
+2024-10-01 09:57:52,725 - components.flashCert.flashCert - DEBUG - Filtered macAddress =  mac-address: 34:85:18:50:fa:94
+2024-10-01 09:57:52,726 - components.flashCert.flashCert - DEBUG - Reading file: /home/anuarrozman2303/Airdroitech/FactoryApp_Merge/FlashingTool/device_data.txt
+2024-10-01 09:57:52,726 - components.flashCert.flashCert - INFO - Found in database =  mac-address: 34:85:18:50:fa:94
+2024-10-01 09:57:52,726 - components.flashCert.flashCert - INFO - FlashCert, Create New/Updata Database End
+2024-10-01 09:57:52,733 - __main__ - INFO - Test 1 Completed
+2024-10-01 09:57:53,283 - __main__ - INFO - Test 2 Start
+2024-10-01 09:57:53,284 - __main__ - INFO - Entering factory mode
+2024-10-01 09:57:53,285 - __main__ - INFO - Reset Factory Mode Flag
+2024-10-01 09:57:53,285 - __main__ - INFO - Open esp32s3 Factory Port
+2024-10-01 09:57:53,285 - __main__ - INFO - factory Port: /dev/ttyUSB1, Baud: 115200
+2024-10-01 09:57:53,285 - components.serialCom.serialCom - DEBUG - Opening port /dev/ttyUSB1 at 115200 baud
+2024-10-01 09:57:53,286 - components.serialCom.serialCom - INFO - Opened port /dev/ttyUSB1 at 115200 baud
+2024-10-01 09:57:53,286 - __main__ - INFO - Reboot esp32s3 and esp32h2
+2024-10-01 09:57:53,286 - __main__ - INFO - Reboot esp32s3, Port: /dev/ttyUSB0, Baud: 460800
+2024-10-01 09:57:53,286 - __main__ - INFO - Reboot esp32h2, Port: /dev/ttyUSB2, Baud: 115200
+2024-10-01 09:57:53,286 - components.flashFirmware.flashFirmware - INFO - Reset ESP32H2: source /usr/src/app/esp/esp-idf/export.sh
+esptool.py -p /dev/ttyUSB2 -b 115200 run
+
+2024-10-01 09:57:53,287 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = /bin/bash: line 1: /usr/src/app/esp/esp-idf/export.sh: No such file or directory
+2024-10-01 09:57:53,328 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = esptool.py v4.7.0
+2024-10-01 09:57:53,328 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Serial port /dev/ttyUSB2
+2024-10-01 09:57:54,308 - components.serialCom.serialCom - DEBUG - Received: .
+2024-10-01 09:57:54,309 - components.serialCom.serialCom - DEBUG - Data contains '.'
+2024-10-01 09:57:54,309 - components.serialCom.serialCom - DEBUG - SerialCom, Factory: polyaire&ADT
+
+2024-10-01 09:57:54,347 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Connecting....
+2024-10-01 09:57:54,347 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Detecting chip type... ESP32-H2
+2024-10-01 09:57:54,347 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Chip is ESP32-H2 (revision v0.1)
+2024-10-01 09:57:54,347 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Features: BLE, IEEE802.15.4
+2024-10-01 09:57:54,347 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Crystal is 32MHz
+2024-10-01 09:57:54,347 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = MAC: 48:31:b7:ff:fe:c0:19:80
+2024-10-01 09:57:54,348 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = BASE MAC: 48:31:b7:c0:19:80
+2024-10-01 09:57:54,348 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = MAC_EXT: ff:fe
+2024-10-01 09:57:54,348 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Uploading stub...
+2024-10-01 09:57:54,348 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Running stub...
+2024-10-01 09:57:54,348 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Stub running...
+2024-10-01 09:57:54,348 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Hard resetting via RTS pin...
+2024-10-01 09:57:59,354 - components.flashFirmware.flashFirmware - INFO - Reset ESP32H2: source /usr/src/app/esp/esp-idf/export.sh
+esptool.py -p /dev/ttyUSB0 -b 460800 run
+
+2024-10-01 09:57:59,355 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = /bin/bash: line 1: /usr/src/app/esp/esp-idf/export.sh: No such file or directory
+2024-10-01 09:57:59,397 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = esptool.py v4.7.0
+2024-10-01 09:57:59,397 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Serial port /dev/ttyUSB0
+2024-10-01 09:58:01,089 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Connecting....
+2024-10-01 09:58:01,089 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Detecting chip type... ESP32-S3
+2024-10-01 09:58:01,089 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Chip is ESP32-S3 (QFN56) (revision v0.1)
+2024-10-01 09:58:01,089 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Features: WiFi, BLE
+2024-10-01 09:58:01,089 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Crystal is 40MHz
+2024-10-01 09:58:01,089 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = MAC: 34:85:18:50:fa:94
+2024-10-01 09:58:01,089 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Uploading stub...
+2024-10-01 09:58:01,089 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Running stub...
+2024-10-01 09:58:01,089 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Stub running...
+2024-10-01 09:58:01,089 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Changing baud rate to 460800
+2024-10-01 09:58:01,089 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Changed.
+2024-10-01 09:58:01,089 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = Hard resetting via RTS pin...
+2024-10-01 09:58:02,687 - components.serialCom.serialCom - DEBUG - Received: .
+2024-10-01 09:58:02,687 - components.serialCom.serialCom - DEBUG - Data contains '.'
+2024-10-01 09:58:02,687 - components.serialCom.serialCom - DEBUG - SerialCom, Factory: polyaire&ADT
+
+2024-10-01 09:58:06,098 - __main__ - INFO - Start Wait 3
+2024-10-01 09:58:09,099 - __main__ - INFO - Finish Wait 3
+2024-10-01 09:58:10,100 - __main__ - INFO - Read MAC Address
+2024-10-01 09:58:10,100 - __main__ - DEBUG - SerialCom, Sent: FF:3;MAC?
+2024-10-01 09:58:10,100 - __main__ - INFO - Read MAC Address Command: FF:3;MAC?
+2024-10-01 09:58:10,100 - __main__ - INFO - Reference MAC Address: 34:85:18:50:fa:94
+2024-10-01 09:58:11,153 - components.serialCom.serialCom - DEBUG - Received: 3;MAC? = 34:85:18:50:FA:94
+2024-10-01 09:58:13,101 - __main__ - INFO - Read MAC Address: Failed

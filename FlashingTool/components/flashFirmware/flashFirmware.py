@@ -126,19 +126,19 @@ class FlashFirmware:
         try:
             # Open subprocess with stdout redirected to PIPE
             logger.info(f"Reset ESP32H2: {command}")
-            print(f"Reset ESP32H2: {command}")
+            print(f"Reset ESP32S3: {command}")
             process = subprocess.Popen(command, shell=True, executable='/bin/bash', stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
             
             # Read stdout line by line and log in real-time
             for line in iter(process.stdout.readline, ''):
-                logger.info("Reset ESP32H2 = " + line.strip())
-                print("Reset ESP32H2 = " + line.strip())
+                logger.info("Reset ESP32S3 = " + line.strip())
+                print("Reset ESP32S3 = " + line.strip())
             #     if "** Verify OK **" in line:
             #         # process.send_signal(signal.SIGINT)
             #         logger.info("Firmware Flashing Complete")
             #         break
             
-            # time.sleep(5)
+            time.sleep(5)
             # Ensure the process has terminated
             print("Terminate subprocess")
             process.terminate()
@@ -361,7 +361,7 @@ class FlashFirmware:
 
         # Define the directory to search in
         # search_directory = "/usr/src/app/ATSoftwareDevelopmentTool/FlashingTool/firmware/s3"
-        search_directory = "/home/anuarrozman2303/Airdroitech/FactoryApp/firmware/s3"
+        search_directory = "/usr/src/app/FactoryApp_Merge/FlashingTool/firmware"
         # search_directory = "/home/anuarrozman/Airdroitech/ATSoftwareDevelopmentTool/FlashingTool/firmware/s3"
 
         # Find paths for each bin file using keywords
@@ -470,7 +470,7 @@ class FlashFirmware:
         }
 
         # Define the directory to search in
-        search_directory = "/usr/src/app/ATSoftwareDevelopmentTool/FlashingTool/firmware/h2"
+        search_directory = "/usr/src/app/FactoryApp_Merge/FlashingTool/h2"
         # search_directory = "/home/anuarrozman/Airdroitech/ATSoftwareDevelopmentTool/FlashingTool/firmware/h2"
 
         # Find paths for each bin file using keywords
@@ -547,7 +547,7 @@ class FlashFirmware:
 
         # Define the directory to search in
         # search_directory = "/usr/src/app/ATSoftwareDevelopmentTool/FlashingTool/firmware/h2"
-        search_directory = "/home/anuarrozman2303/Airdroitech/FactoryApp/firmware/h2"
+        search_directory = "/usr/src/app/FactoryApp_Merge/FlashingTool/h2"
         # search_directory = "/home/anuarrozman/Airdroitech/ATSoftwareDevelopmentTool/FlashingTool/firmware/h2"
 
         # Find paths for each bin file using keywords

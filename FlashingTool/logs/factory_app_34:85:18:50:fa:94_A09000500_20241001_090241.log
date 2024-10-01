@@ -1,0 +1,158 @@
+2024-10-01 09:02:41,621 - __main__ - INFO - Factory App Version: 0.0.1
+2024-10-01 09:02:41,621 - __main__ - INFO - Test 1 Start
+2024-10-01 09:02:41,621 - __main__ - INFO - Below are information extracted based on ESP32S3 MAC Address
+2024-10-01 09:02:41,621 - __main__ - INFO - order-no: hand-sample
+2024-10-01 09:02:41,621 - __main__ - INFO -  mac-address: 34:85:18:50:fa:94
+2024-10-01 09:02:41,621 - __main__ - INFO -  serial-id: A09000500
+2024-10-01 09:02:41,621 - __main__ - INFO -  cert-id: Polyaire-DAC-0x146D-0x0001-A09000500-Cert
+2024-10-01 09:02:41,621 - __main__ - INFO -  esp-secure-cert-partition: dc19b802-47e1-4c5b-bf01-5279442482fc_esp_secure_cert.bin
+2024-10-01 09:02:41,621 - __main__ - INFO -  commissionable-data-provider-partition: dc19b802-47e1-4c5b-bf01-5279442482fc-partition.bin
+2024-10-01 09:02:41,621 - __main__ - INFO -  qrcode: MT:Y1CA00O6148F-405J10
+2024-10-01 09:02:41,621 - __main__ - INFO -  manualcode: 1169-154-3426
+2024-10-01 09:02:41,621 - __main__ - INFO -  discriminator: 1428
+2024-10-01 09:02:41,621 - __main__ - INFO -  passcode: 71139859
+2024-10-01 09:02:41,621 - __main__ - INFO - Read ESP32S3 Mac Address
+2024-10-01 09:02:41,621 - components.flashFirmware.flashFirmware - INFO - ESP32S3 MAC Address: 34:85:18:50:fa:94
+2024-10-01 09:02:41,621 - components.flashFirmware.flashFirmware - INFO - Get ESP32S3 MAC Address Completed
+2024-10-01 09:02:41,621 - __main__ - INFO - Read ESP32H2 MAC Address
+2024-10-01 09:02:42,718 - __main__ - INFO - Flashing esp32s3 and esp32h2 firmware
+2024-10-01 09:02:42,718 - __main__ - INFO - Erase Flash ESP32S3: True
+2024-10-01 09:02:42,718 - __main__ - INFO - Erase Flash ESP32S3 Start Address: 0x0
+2024-10-01 09:02:42,718 - __main__ - INFO - Erase Flash ESP32S3 End Address: 0x800000
+2024-10-01 09:02:42,718 - __main__ - INFO - Erase Flash ESP32H2: True
+2024-10-01 09:02:42,718 - __main__ - INFO - Erase Flash ESP32H2 Start Address: 0x0
+2024-10-01 09:02:42,718 - __main__ - INFO - Erase Flash ESP32H2 End Address: 0x400000
+2024-10-01 09:02:42,718 - __main__ - INFO - Flashing ESP32S3 firmware, Port: /dev/ttyUSB0, Baud: 460800
+2024-10-01 09:02:42,718 - __main__ - INFO - ESP32S3 Bootloader Address: 0x0
+2024-10-01 09:02:42,718 - __main__ - INFO - ESP32S3 Partition Table Address: 0xC000
+2024-10-01 09:02:42,718 - __main__ - INFO - ESP32S3 OTA Data Initial Address: 0x1E000
+2024-10-01 09:02:42,718 - __main__ - INFO - ESP32S3 Firmware Address: 0x1F0000
+2024-10-01 09:02:42,718 - __main__ - INFO - ESP32S3 Use ESPTOOL: False
+2024-10-01 09:02:42,718 - __main__ - INFO - Flashing ESP32H2 firmware, Port: /dev/ttyUSB2, Baud: 115200
+2024-10-01 09:02:42,718 - __main__ - INFO - ESP32H2 Bootloader Address: 0x0
+2024-10-01 09:02:42,718 - __main__ - INFO - ESP32H2 Partition Table Address: 0x8000
+2024-10-01 09:02:42,718 - __main__ - INFO - ESP32H2 Firmware Address: 0x10000
+2024-10-01 09:02:42,718 - __main__ - INFO - ESP32H2 Use ESPTOOL: True
+2024-10-01 09:02:42,720 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3: source /usr/src/app/esp/esp-idf/export.sh
+openocd -f /home/airdroitech/.espressif/tools/openocd-esp32/v0.12.0-esp32-20240318/openocd-esp32/share/openocd/scripts/interface/esp_usb_jtag.cfg -f /home/airdroitech/.espressif/tools/openocd-esp32/v0.12.0-esp32-20240318/openocd-esp32/share/openocd/scripts/board/esp32s3-builtin.cfg --command 'init; reset init; flash erase_address 0x0 0x800000; shutdown'
+
+2024-10-01 09:02:42,720 - components.flashFirmware.flashFirmware - ERROR - Error: Unable to find one or more bin files
+2024-10-01 09:02:42,721 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3 = /bin/bash: line 1: /usr/src/app/esp/esp-idf/export.sh: No such file or directory
+2024-10-01 09:02:42,721 - components.flashFirmware.flashFirmware - INFO - Erase Flash ESP32S3 = /bin/bash: line 2: openocd: command not found
+2024-10-01 09:02:43,724 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware: source /usr/src/app/esp/esp-idf/export.sh
+esptool.py --chip esp32h2 -p /dev/ttyUSB2 -b 115200 write_flash 0x0 /home/anuarrozman2303/Airdroitech/FactoryApp/firmware/h2/bootloader.bin 0x8000 /home/anuarrozman2303/Airdroitech/FactoryApp/firmware/h2/partition-table.bin 0x10000 /home/anuarrozman2303/Airdroitech/FactoryApp/firmware/h2/ATIR_H2.bin
+
+2024-10-01 09:02:43,724 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware: source /usr/src/app/esp/esp-idf/export.sh
+openocd -f /home/airdroitech/.espressif/tools/openocd-esp32/v0.12.0-esp32-20240318/openocd-esp32/share/openocd/scripts/interface/esp_usb_jtag.cfg -f /home/airdroitech/.espressif/tools/openocd-esp32/v0.12.0-esp32-20240318/openocd-esp32/share/openocd/scripts/board/esp32s3-builtin.cfg --command 'program_esp /home/anuarrozman2303/Airdroitech/FactoryApp/firmware/s3/ota_data_initial.bin 0x1E000; program_esp /home/anuarrozman2303/Airdroitech/FactoryApp/firmware/s3/partition-table.bin 0xC000; program_esp /home/anuarrozman2303/Airdroitech/FactoryApp/firmware/s3/bootloader.bin 0x0; program_esp /home/anuarrozman2303/Airdroitech/FactoryApp/firmware/s3/v1_0_0-20240717-rc1.bin 0x1F0000 verify exit'
+
+2024-10-01 09:02:43,726 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = /bin/bash: line 1: /usr/src/app/esp/esp-idf/export.sh: No such file or directory
+2024-10-01 09:02:43,726 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = /bin/bash: line 1: /usr/src/app/esp/esp-idf/export.sh: No such file or directory
+2024-10-01 09:02:43,726 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32S3 Firmware = /bin/bash: line 2: openocd: command not found
+2024-10-01 09:02:43,726 - components.flashFirmware.flashFirmware - WARNING - Flashing ESP32S3 Firmware Failed
+2024-10-01 09:02:43,769 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = esptool.py v4.7.0
+2024-10-01 09:02:43,769 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = Serial port /dev/ttyUSB2
+2024-10-01 09:02:44,705 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = Connecting....
+2024-10-01 09:02:44,705 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = Chip is ESP32-H2 (revision v0.1)
+2024-10-01 09:02:44,705 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = Features: BLE, IEEE802.15.4
+2024-10-01 09:02:44,705 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = Crystal is 32MHz
+2024-10-01 09:02:44,705 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = MAC: 48:31:b7:ff:fe:c0:19:80
+2024-10-01 09:02:44,705 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = BASE MAC: 48:31:b7:c0:19:80
+2024-10-01 09:02:44,705 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = MAC_EXT: ff:fe
+2024-10-01 09:02:44,705 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = Uploading stub...
+2024-10-01 09:02:44,705 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = Running stub...
+2024-10-01 09:02:44,705 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = Stub running...
+2024-10-01 09:02:44,705 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = Configuring flash size...
+2024-10-01 09:02:44,705 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = Flash will be erased from 0x00000000 to 0x00005fff...
+2024-10-01 09:02:44,705 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = Flash will be erased from 0x00008000 to 0x00008fff...
+2024-10-01 09:02:44,705 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = Flash will be erased from 0x00010000 to 0x00040fff...
+2024-10-01 09:02:44,705 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = Compressed 21424 bytes to 12965...
+2024-10-01 09:02:44,705 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = Writing at 0x00000000... (100 %)
+2024-10-01 09:02:46,179 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = Wrote 21424 bytes (12965 compressed) at 0x00000000 in 1.4 seconds (effective 120.9 kbit/s)...
+2024-10-01 09:02:46,179 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = Hash of data verified.
+2024-10-01 09:02:46,179 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = Compressed 3072 bytes to 103...
+2024-10-01 09:02:46,179 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = Writing at 0x00008000... (100 %)
+2024-10-01 09:02:46,255 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = Wrote 3072 bytes (103 compressed) at 0x00008000 in 0.0 seconds (effective 491.7 kbit/s)...
+2024-10-01 09:02:46,255 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = Hash of data verified.
+2024-10-01 09:02:46,255 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = Compressed 198544 bytes to 102827...
+2024-10-01 09:02:46,255 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = Writing at 0x00010000... (14 %)
+2024-10-01 09:02:47,696 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = Writing at 0x0001b22a... (28 %)
+2024-10-01 09:02:49,136 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = Writing at 0x00021afc... (42 %)
+2024-10-01 09:02:50,576 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = Writing at 0x0002888a... (57 %)
+2024-10-01 09:02:52,016 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = Writing at 0x000303e2... (71 %)
+2024-10-01 09:02:53,455 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = Writing at 0x00036dd1... (85 %)
+2024-10-01 09:02:54,896 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = Writing at 0x0003e517... (100 %)
+2024-10-01 09:02:55,994 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = Wrote 198544 bytes (102827 compressed) at 0x00010000 in 9.2 seconds (effective 172.6 kbit/s)...
+2024-10-01 09:02:55,994 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = Hash of data verified.
+2024-10-01 09:02:55,994 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = 
+2024-10-01 09:02:55,994 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = Leaving...
+2024-10-01 09:02:55,994 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware = Hard resetting via RTS pin...
+2024-10-01 09:02:55,994 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware Complete
+2024-10-01 09:02:56,002 - components.flashFirmware.flashFirmware - INFO - Flashing ESP32H2 Firmware Completed
+2024-10-01 09:02:57,004 - __main__ - INFO - Flashing esp32s3 certificate
+2024-10-01 09:02:57,004 - __main__ - INFO - Flashing esp32s3 certificate, Port: /dev/ttyUSB0, Baud: 460800
+2024-10-01 09:02:57,004 - __main__ - INFO - ESP32S3 Secure Cert Partition Address: 0xD000
+2024-10-01 09:02:57,004 - __main__ - INFO - ESP32S3 Data Provider Partition Address: 0x60000
+2024-10-01 09:02:57,004 - __main__ - INFO - ESP32S3 DAC Use ESPTOOL: False
+2024-10-01 09:02:57,022 - components.flashCert.flashCert - DEBUG - Cert file path: /home/anuarrozman2303/Airdroitech/FactoryApp/certs/A09000500/espsecurecert/out/146d_1/dc19b802-47e1-4c5b-bf01-5279442482fc/dc19b802-47e1-4c5b-bf01-5279442482fc_esp_secure_cert.bin
+2024-10-01 09:02:57,022 - components.flashCert.flashCert - INFO - Flashing certificate with cert-id: /home/anuarrozman2303/Airdroitech/FactoryApp/certs/A09000500/espsecurecert/out/146d_1/dc19b802-47e1-4c5b-bf01-5279442482fc/dc19b802-47e1-4c5b-bf01-5279442482fc_esp_secure_cert.bin on port /dev/ttyUSB0
+2024-10-01 09:02:57,022 - components.flashCert.flashCert - DEBUG - ESP Secure Cert /home/anuarrozman2303/Airdroitech/FactoryApp/certs/A09000500/espsecurecert/out/146d_1/dc19b802-47e1-4c5b-bf01-5279442482fc/dc19b802-47e1-4c5b-bf01-5279442482fc_esp_secure_cert.bin on port /dev/ttyUSB0...
+2024-10-01 09:02:57,022 - components.flashCert.flashCert - DEBUG - Certify Process: Flashing cert with bin_path: /home/anuarrozman2303/Airdroitech/FactoryApp/certs/A09000500/espsecurecert/out/146d_1/dc19b802-47e1-4c5b-bf01-5279442482fc/dc19b802-47e1-4c5b-bf01-5279442482fc_esp_secure_cert.bin and part_bin_path: /home/anuarrozman2303/Airdroitech/FactoryApp/certs/A09000500/espsecurecert/out/146d_1/dc19b802-47e1-4c5b-bf01-5279442482fc/dc19b802-47e1-4c5b-bf01-5279442482fc-partition.bin
+2024-10-01 09:02:57,022 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert with command: source /usr/src/app/esp/esp-idf/export.sh
+openocd -f /home/airdroitech/.espressif/tools/openocd-esp32/v0.12.0-esp32-20240318/openocd-esp32/share/openocd/scripts/interface/esp_usb_jtag.cfg -f /home/airdroitech/.espressif/tools/openocd-esp32/v0.12.0-esp32-20240318/openocd-esp32/share/openocd/scripts/board/esp32s3-builtin.cfg --command 'program_esp /home/anuarrozman2303/Airdroitech/FactoryApp/certs/A09000500/espsecurecert/out/146d_1/dc19b802-47e1-4c5b-bf01-5279442482fc/dc19b802-47e1-4c5b-bf01-5279442482fc_esp_secure_cert.bin 0xD000; program_esp /home/anuarrozman2303/Airdroitech/FactoryApp/certs/A09000500/espsecurecert/out/146d_1/dc19b802-47e1-4c5b-bf01-5279442482fc/dc19b802-47e1-4c5b-bf01-5279442482fc-partition.bin 0x60000 verify exit'
+2024-10-01 09:02:57,023 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = /bin/bash: line 1: /usr/src/app/esp/esp-idf/export.sh: No such file or directory
+2024-10-01 09:02:57,023 - components.flashCert.flashCert - INFO - Flashing ESP32S3 Cert = /bin/bash: line 2: openocd: command not found
+2024-10-01 09:02:57,024 - components.flashCert.flashCert - INFO - FlashCert, Create New/Updata Database Start
+2024-10-01 09:02:57,024 - components.flashCert.flashCert - DEBUG - Updating status for certId /home/anuarrozman2303/Airdroitech/FactoryApp/certs/A09000500/espsecurecert/out/146d_1/dc19b802-47e1-4c5b-bf01-5279442482fc/dc19b802-47e1-4c5b-bf01-5279442482fc_esp_secure_cert.bin
+2024-10-01 09:02:57,024 - components.flashCert.flashCert - DEBUG - Filtered certId =  esp-secure-cert-partition: dc19b802-47e1-4c5b-bf01-5279442482fc_esp_secure_cert.bin
+2024-10-01 09:02:57,024 - components.flashCert.flashCert - DEBUG - Filtered macAddress =  mac-address: 34:85:18:50:fa:94
+2024-10-01 09:02:57,024 - components.flashCert.flashCert - DEBUG - Reading file: /home/anuarrozman2303/Airdroitech/FactoryApp/device_data.txt
+2024-10-01 09:02:57,024 - components.flashCert.flashCert - INFO - Found in database =  mac-address: 34:85:18:50:fa:94
+2024-10-01 09:02:57,024 - components.flashCert.flashCert - INFO - FlashCert, Create New/Updata Database End
+2024-10-01 09:02:57,025 - __main__ - INFO - Test 1 Completed
+2024-10-01 09:02:57,873 - __main__ - INFO - Test 2 Start
+2024-10-01 09:02:57,874 - __main__ - INFO - Entering factory mode
+2024-10-01 09:02:57,874 - __main__ - INFO - Reset Factory Mode Flag
+2024-10-01 09:02:57,874 - __main__ - INFO - Open esp32s3 Factory Port
+2024-10-01 09:02:57,874 - __main__ - INFO - factory Port: /dev/ttyUSB1, Baud: 115200
+2024-10-01 09:02:57,874 - components.serialCom.serialCom - DEBUG - Opening port /dev/ttyUSB1 at 115200 baud
+2024-10-01 09:02:57,882 - components.serialCom.serialCom - INFO - Opened port /dev/ttyUSB1 at 115200 baud
+2024-10-01 09:02:57,883 - __main__ - INFO - Reboot esp32s3 and esp32h2
+2024-10-01 09:02:57,883 - __main__ - INFO - Reboot esp32s3, Port: /dev/ttyUSB0, Baud: 460800
+2024-10-01 09:02:57,883 - __main__ - INFO - Reboot esp32h2, Port: /dev/ttyUSB2, Baud: 115200
+2024-10-01 09:02:57,883 - components.flashFirmware.flashFirmware - INFO - Reset ESP32H2: source /usr/src/app/esp/esp-idf/export.sh
+esptool.py -p /dev/ttyUSB2 -b 115200 run
+
+2024-10-01 09:02:57,884 - components.flashFirmware.flashFirmware - INFO - Reset ESP32H2 = /bin/bash: line 1: /usr/src/app/esp/esp-idf/export.sh: No such file or directory
+2024-10-01 09:02:57,926 - components.flashFirmware.flashFirmware - INFO - Reset ESP32H2 = esptool.py v4.7.0
+2024-10-01 09:02:57,926 - components.flashFirmware.flashFirmware - INFO - Reset ESP32H2 = Serial port /dev/ttyUSB2
+2024-10-01 09:02:58,942 - components.flashFirmware.flashFirmware - INFO - Reset ESP32H2 = Connecting....
+2024-10-01 09:02:58,942 - components.flashFirmware.flashFirmware - INFO - Reset ESP32H2 = Detecting chip type... ESP32-H2
+2024-10-01 09:02:58,942 - components.flashFirmware.flashFirmware - INFO - Reset ESP32H2 = Chip is ESP32-H2 (revision v0.1)
+2024-10-01 09:02:58,942 - components.flashFirmware.flashFirmware - INFO - Reset ESP32H2 = Features: BLE, IEEE802.15.4
+2024-10-01 09:02:58,942 - components.flashFirmware.flashFirmware - INFO - Reset ESP32H2 = Crystal is 32MHz
+2024-10-01 09:02:58,942 - components.flashFirmware.flashFirmware - INFO - Reset ESP32H2 = MAC: 48:31:b7:ff:fe:c0:19:80
+2024-10-01 09:02:58,942 - components.flashFirmware.flashFirmware - INFO - Reset ESP32H2 = BASE MAC: 48:31:b7:c0:19:80
+2024-10-01 09:02:58,942 - components.flashFirmware.flashFirmware - INFO - Reset ESP32H2 = MAC_EXT: ff:fe
+2024-10-01 09:02:58,942 - components.flashFirmware.flashFirmware - INFO - Reset ESP32H2 = Uploading stub...
+2024-10-01 09:02:58,942 - components.flashFirmware.flashFirmware - INFO - Reset ESP32H2 = Running stub...
+2024-10-01 09:02:58,942 - components.flashFirmware.flashFirmware - INFO - Reset ESP32H2 = Stub running...
+2024-10-01 09:02:58,942 - components.flashFirmware.flashFirmware - INFO - Reset ESP32H2 = Hard resetting via RTS pin...
+2024-10-01 09:02:58,950 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3: source /usr/src/app/esp/esp-idf/export.sh
+openocd -f /home/airdroitech/.espressif/tools/openocd-esp32/v0.12.0-esp32-20240318/openocd-esp32/share/openocd/scripts/interface/esp_usb_jtag.cfg -f /home/airdroitech/.espressif/tools/openocd-esp32/v0.12.0-esp32-20240318/openocd-esp32/share/openocd/scripts/board/esp32s3-builtin.cfg --command 'init; reset run; exit'
+
+2024-10-01 09:02:58,951 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = /bin/bash: line 1: /usr/src/app/esp/esp-idf/export.sh: No such file or directory
+2024-10-01 09:02:58,952 - components.flashFirmware.flashFirmware - INFO - Reset ESP32S3 = /bin/bash: line 2: openocd: command not found
+2024-10-01 09:02:58,952 - __main__ - INFO - Start Wait 3
+2024-10-01 09:03:01,952 - __main__ - INFO - Finish Wait 3
+2024-10-01 09:03:02,954 - __main__ - INFO - Read MAC Address
+2024-10-01 09:03:02,954 - __main__ - DEBUG - SerialCom, Sent: FF:3;MAC?
+2024-10-01 09:03:02,954 - __main__ - INFO - Read MAC Address Command: FF:3;MAC?
+2024-10-01 09:03:02,954 - __main__ - INFO - Reference MAC Address: 34:85:18:50:fa:94
+2024-10-01 09:03:05,955 - __main__ - INFO - Read MAC Address: Failed
+2024-10-01 09:03:05,955 - components.serialCom.serialCom - INFO - Close Serial Port
+2024-10-01 09:03:05,955 - components.serialCom.serialCom - DEBUG - Close Port
+2024-10-01 09:03:06,011 - components.serialCom.serialCom - ERROR - Exception in read_serial_data: 'NoneType' object cannot be interpreted as an integer
+2024-10-01 09:03:06,011 - components.serialCom.serialCom - INFO - Exit Serial Com Loop
+2024-10-01 09:03:06,011 - components.serialCom.serialCom - INFO - Serial Com Thread End
+2024-10-01 09:03:12,045 - components.serialCom.serialCom - INFO - Close Serial Port
+2024-10-01 09:03:12,045 - components.serialCom.serialCom - DEBUG - Port is not open.

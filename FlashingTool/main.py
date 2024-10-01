@@ -30,7 +30,7 @@ from components.aht20Sensor.aht20Sensor import SensorLogger
 # from components.servoControl.servoControl import ServoController
 from components.processOrderNumber.processOrderNumber import get_order_numbers
 from components.readOrderFile.readOrderFile import parse_order_file
-from components.rebootPinS3.rebootPinS3 import RebootPinS3
+# from components.rebootPinS3.rebootPinS3 import RebootPinS3
 from components.loggingReport.loggingReport import setup_logging
 from components.wifiDriver.wifiDriver import scan_wifi_networks, run_iwconfig
 from components.sendToPrinter import sendToPrinterFunc
@@ -80,8 +80,9 @@ passcode_data = ""
 
 available_com_ports = []
 
-# file_path = '/usr/src/app/ATSoftwareDevelopmentTool/FlashingTool/device_data.txt'  # Specify the correct path to your text file
+file_path = '/usr/src/app/FactoryApp_Merge/FlashingTool/device_data.txt'  # Specify the correct path to your text file
 # file_path = '/home/anuarrozman/Airdroitech/ATSoftwareDevelopmentTool/FlashingTool/device_data.txt'
+# file_path = '/home/anuarrozman2303/Airdroitech/FactoryApp/device_data.txt'
 orders = parse_order_file(device_data_file_path)
 order_numbers = get_order_numbers(orders)
 qrcode = None
@@ -94,7 +95,7 @@ class SerialCommunicationApp:
         self.root = root
         self.root.title("Serial Communication App")
         self.root.attributes('-zoomed', True)
-        self.root.attributes('-fullscreen', True)
+        # self.root.attributes('-fullscreen', True)
         self.root.resizable(True, True)
 
         # Serial port configuration
@@ -130,20 +131,11 @@ class SerialCommunicationApp:
 
         if not mac_address:
             return True
-        
-        # Get the current date and time
-        current_datetime = datetime.now()
-
-        # Format the date and time
-        # formatted_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
-        formatted_date = current_datetime.strftime("%Y%m%d")
-        formatted_time = current_datetime.strftime("%H%M%S")
 
         # Configure logging
         log_file_name = logs_dir + "/" + logs_file_name + '_' + str(mac_address) + '_' + str(serialID) + '_' + str(formatted_date) + '_' + str(formatted_time) + logs_file_extension
         print(str(log_file_name))
         logging.basicConfig(
-            force=True,
             filename=str(log_file_name),  # Name of the log file
             level=logging.DEBUG,  # Log level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
             format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
@@ -172,21 +164,21 @@ class SerialCommunicationApp:
         self.sendEntry = WriteDeviceInfo(self.send_command, self.result_write_serialnumber, self.result_write_mtqr) #, self.log_message)
         self.dmmReader = DeviceSelectionApp(self.dmm_frame, self.input_3_3V_dmm, self.input_5V_dmm)
         self.multimeter = Multimeter()
-        self.rebootPin = RebootPinS3()
-        self.aht20Sensor = SensorLogger()
+        # self.rebootPin = RebootPinS3()
+        # self.aht20Sensor = SensorLogger()
         # self.servo_controller = ServoController()
         print("initialize components done")
 
     def read_temp_aht20(self):
-        ext_sensor = self.aht20Sensor.read_temp_sensor()
-        ext_sensor = ext_sensor.strip()
-        array = ext_sensor.split(' ')
-        ext_sensor = float(array[0])
-        # ext_sensor = float(ext_sensor.split(' ')[0]) # this step to remove °C
-        # ext_sensor = 25.0
+        # ext_sensor = self.aht20Sensor.read_temp_sensor()
+        ext_sensor = 25.0
         logger.debug(f"External Temperature: {ext_sensor}")
         print(f"External Temperature: {ext_sensor}")
         self.ext_temp_value.config(text=f"{ext_sensor} °C", fg="black", font=("Helvetica", 10, "normal"))
+        # self.get_atbeam_temp()
+        # time.sleep(1)
+        range = self.range_temp_value.cget("text")
+        self.compare_temp(ext_sensor, self.serialCom.sensor_temp_variable, float(range.strip()))
 
         time.sleep(2)
         # atbeam_temp = self.serialCom.sensor_temp_variable
@@ -247,15 +239,15 @@ class SerialCommunicationApp:
             print("File not found")
 
     def read_humid_aht20(self):
-        ext_sensor = self.aht20Sensor.read_humid_sensor()
-        ext_sensor = ext_sensor.strip()
-        array = ext_sensor.split(' ')
-        ext_sensor = float(array[0])
-        # ext_sensor = float(ext_sensor.split(' ')[0]) # this step to remove %
-        # ext_sensor = 50.5
+        # ext_sensor = self.aht20Sensor.read_humid_sensor()
+        ext_sensor = 50.5
         logger.debug(f"External Humidity: {ext_sensor}")
-        print(f"External Humidity: {ext_sensor}")
         self.ext_humid_value.config(text=f"{ext_sensor} %", fg="black", font=("Helvetica", 10, "normal"))
+        # self.get_atbeam_humid()
+        # time.sleep(1)
+        range = self.range_humid_value.cget("text")
+        self.compare_humid(ext_sensor, self.serialCom.sensor_humid_variable, float(range.strip()))
+        # pass
 
         time.sleep(2)
         atbeam_humid = self.serialCom.sensor_humid_variable
@@ -482,16 +474,20 @@ class SerialCommunicationApp:
         selected_port = self.port_var1.get()
         selected_baud = int(self.baud_var1.get())
         # self.flash_s3_firmware(selected_port, selected_baud)
+        
+    def reboot_s3(self, port_var, baud_var):
+        print("Reboot S3 : ", port_var, baud_var)
+        self.flashFw.reset_esptool_device(port_var, baud_var)
 
-    def reboot_s3(self, gpio_method, use_esptool, port_var, baud_var):
-        if gpio_method == True:
-            self.rebootPin.reboot_esp32()
-            self.rebootPin.cleanup()
-        else:
-            if use_esptool == True:
-                self.flashFw.reset_esptool_device(port_var, baud_var)
-            else:
-                self.flashFw.reset_openocd_device(port_var, baud_var)
+    # def reboot_s3(self, gpio_method, use_esptool, port_var, baud_var):
+    #     if gpio_method == True:
+    #         self.rebootPin.reboot_esp32()
+    #         self.rebootPin.cleanup()
+    #     else:
+    #         if use_esptool == True:
+    #             self.flashFw.reset_esptool_device(port_var, baud_var)
+    #         else:
+    #             self.flashFw.reset_openocd_device(port_var, baud_var)
 
     def reboot_h2(self, use_esptool, port_var, baud_var):
         if use_esptool == True:
@@ -539,7 +535,6 @@ class SerialCommunicationApp:
         self.serialCom.open_serial_port(selected_port, selected_baud)
 
     def close_serial_port(self):
-        logging.shutdown()
         self.serialCom.close_serial_port()
 
     def get_device_mac(self):
@@ -728,7 +723,7 @@ class SerialCommunicationApp:
     #     if selected_cert_id:
     #         if selected_cert_id not in self.used_cert_ids:
     #             # Flash the certificate
-    #             self.flashCertificate(selected_cert_id, "/dev/ttyACM0")
+    #             self.flashCertificate(selected_cert_id, "/dev/ttyUSB0")
 
     #             # Mark the cert_id as used
     #             self.used_cert_ids.add(selected_cert_id)
@@ -1026,6 +1021,52 @@ class SerialCommunicationApp:
         passcode_data = passcode_data_array[1]
         # print(passcode_label)
         # print(passcode_data)
+        
+    # Binding Page Up and Page Down keys to scroll the canvas
+        
+    def bind_scroll_keys(self):
+        self.canvas.bind_all("<Prior>", self.scroll_page_up)
+        self.canvas.bind_all("<Next>", self.scroll_page_down)
+        
+    def bind_keys(self):
+        self.root.bind("<space>", self.space_key)
+        self.root.bind("<Escape>", self.escape_key)
+        
+    def space_key(self, event):
+        if self.current_set < len(self.button_sets):
+            self.on_yes_click(self.current_set)
+
+    def escape_key(self, event):
+        if self.current_set < len(self.button_sets):
+            self.on_no_click(self.current_set)
+            
+    def on_yes_click(self, set_number):
+        if set_number == self.current_set:
+            self.handle_click(set_number, "Yes")
+
+    def on_no_click(self, set_number):
+        if set_number == self.current_set:
+            self.handle_click(set_number, "No")
+
+    def scroll_page_up(self, event):
+        self.canvas.yview_scroll(-1, "pages")
+
+    def scroll_page_down(self, event):
+        self.canvas.yview_scroll(1, "pages")
+        
+    def handle_click(self, set_number, button_type):
+        # messagebox.showinfo("Button Clicked", f"Set {set_number + 1} {button_type} button clicked")
+        if button_type == "Yes":
+            self.button_sets[set_number][0].invoke()
+        elif button_type == "No":
+            self.button_sets[set_number][1].invoke()
+        
+        self.disable_buttons(set_number)
+        self.current_set = min(self.current_set + 1, len(self.button_sets) - 1)
+        
+    def disable_buttons(self, set_number):
+        for button in self.button_sets[set_number]:
+            button.config(state=tk.DISABLED)
 
     def refresh_com_ports_list(self):
         self.port_var = tk.StringVar()
@@ -1034,7 +1075,7 @@ class SerialCommunicationApp:
         self.port_dropdown['values'] = [port.device for port in serial.tools.list_ports.comports()]
         for port in serial.tools.list_ports.comports():
             # print(str(port.device))
-            if str(port.device) == "/dev/ttyACM0":
+            if str(port.device) == "/dev/ttyUSB0":
                 self.port_dropdown.set(port.device)
 
         self.port_var1 = tk.StringVar()
@@ -1052,14 +1093,14 @@ class SerialCommunicationApp:
         self.port_dropdown2['values'] = [port.device for port in serial.tools.list_ports.comports()]
         for port in serial.tools.list_ports.comports():
             # print(str(port.device))
-            if str(port.device) == "/dev/ttyUSB0":
+            if str(port.device) == "/dev/ttyUSB2":
                 self.port_dropdown2.set(port.device)
 
     def create_widgets(self):
         global device_data_file_path
         # file_path = '/usr/src/app/ATSoftwareDevelopmentTool/FlashingTool/device_data.txt'
-        # file_path = '/home/anuarrozman/Airdroitech/ATSoftwareDevelopmentTool/FlashingTool/device_data.txt'
-
+        # file_path = '/home/anuarrozman/Airdroitech/ATSoftwareDevelopmentTool/FlashingTool/device_data.txt'        
+        
         order_numbers = self.read_order_numbers(device_data_file_path)
 
         # Create a frame for the canvas
@@ -1068,39 +1109,31 @@ class SerialCommunicationApp:
 
         # Create a canvas and add a scrollbar
         self.canvas = tk.Canvas(self.canvas_frame)
-
-        # Vertical scrollbar
         self.scrollbar = tk.Scrollbar(self.canvas_frame, orient=tk.VERTICAL, command=self.canvas.yview)
         self.canvas.configure(yscrollcommand=self.scrollbar.set)
 
-        # Horizontal scrollbar
-        self.h_scrollbar = tk.Scrollbar(self.canvas_frame, orient=tk.HORIZONTAL, command=self.canvas.xview)
-        self.canvas.configure(xscrollcommand=self.h_scrollbar.set)
-
-        # Pack the scrollbars
         self.scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-        self.h_scrollbar.pack(side=tk.BOTTOM, fill=tk.X)
-
-        # Pack the canvas
         self.canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
         # Create another frame inside the canvas
         self.scrollable_frame = tk.Frame(self.canvas)
-
-        # Bind the scrollable frame's Configure event to update the canvas scroll region
         self.scrollable_frame.bind(
             "<Configure>",
             lambda e: self.canvas.configure(
                 scrollregion=self.canvas.bbox("all")
             )
         )
+        
+        self.bind_scroll_keys()
+        
+        self.bind_keys()
 
         self.canvas.create_window((0, 0), window=self.scrollable_frame, anchor="nw")
 
         # Configure the weight for the scrollable_frame to expand
         self.scrollable_frame.grid_rowconfigure(0, weight=1)
         self.scrollable_frame.grid_columnconfigure(0, weight=1)
-
+        
         self.serial_baud_frame = tk.Frame(self.scrollable_frame)
         self.serial_baud_frame.grid(row=0, column=0, padx=10, pady=10, sticky=tk.W)
 
@@ -1116,7 +1149,7 @@ class SerialCommunicationApp:
         self.port_dropdown['values'] = [port.device for port in serial.tools.list_ports.comports()]
         for port in serial.tools.list_ports.comports():
             # print(str(port.device))
-            if str(port.device) == "/dev/ttyACM0":
+            if str(port.device) == "/dev/ttyUSB0":
                 self.port_dropdown.set(port.device)
 
         self.baud_label = tk.Label(self.serial_baud_frame, text="Baud Rate/波特率:")
@@ -1183,16 +1216,13 @@ class SerialCommunicationApp:
         self.port_label2 = tk.Label(self.serial_baud_frame, text="ESP32H2 Flash Port/ESP32H2烧录端口:")
         self.port_label2.grid(row=2, column=0, padx=5, pady=5, sticky=tk.W)
 
-        self.refresh_com_ports_button = ttk.Button(self.serial_baud_frame, text="Refresh/刷新", command=self.refresh_com_ports_list)
-        self.refresh_com_ports_button.grid(row=0, column=20, padx=5, pady=5, sticky=tk.W)
-
         self.port_var2 = tk.StringVar()
         self.port_dropdown2 = ttk.Combobox(self.serial_baud_frame, textvariable=self.port_var2)
         self.port_dropdown2.grid(row=2, column=1, padx=5, pady=5, sticky=tk.W)
         self.port_dropdown2['values'] = [port.device for port in serial.tools.list_ports.comports()]
         for port in serial.tools.list_ports.comports():
             # print(str(port.device))
-            if str(port.device) == "/dev/ttyUSB0":
+            if str(port.device) == "/dev/ttyUSB2":
                 self.port_dropdown2.set(port.device)
 
         self.baud_label2 = tk.Label(self.serial_baud_frame, text="Baud Rate/波特率:")
@@ -1265,7 +1295,6 @@ class SerialCommunicationApp:
 
         self.read_temp_aht20_button = ttk.Button(self.dmm_frame, text="Read Temperature Sensor", command=self.read_temp_aht20)
         self.read_temp_aht20_button.grid(row=4, column=1, padx=5, pady=5, sticky=tk.W)
-        self.read_temp_aht20_button.grid_forget()
 
         self.read_humid_aht20_button = ttk.Button(self.dmm_frame, text="Read Humidity Sensor", command=self.read_humid_aht20)
         self.read_humid_aht20_button.grid(row=4, column=2, padx=5, pady=5, sticky=tk.W)
@@ -1274,31 +1303,31 @@ class SerialCommunicationApp:
         # self.disable_frame(self.dmm_frame)
         # self.dmm_frame.grid_forget()
 
-
+        
         # Order Number
         self.order_number_frame = tk.Frame(self.scrollable_frame)
         self.order_number_frame.grid(row=5, column=0, padx=10, pady=10, sticky=tk.W)
 
         self.order_number_label = tk.Label(self.order_number_frame, text="Order Number/订单号:")
         self.order_number_label.grid(row=0, column=0, padx=5, pady=5, sticky=tk.W)
-
+        
         self.order_number_dropdown = tk.StringVar()
         self.order_number_dropdown_list = ttk.Combobox(self.order_number_frame, textvariable=self.order_number_dropdown, values=order_numbers)
         # self.order_number_dropdown_list.bind("<<ComboboxSelected>>", self.on_order_selected)
         self.order_number_dropdown_list.grid(row=0, column=1, padx=5, pady=5, sticky=tk.W)
-
+        
         self.selected_order_no_label = tk.Label(self.order_number_frame, text="")
         self.selected_order_no_label.grid(row=0, column=2, padx=5, pady=5, sticky=tk.W)
-
+        
         self.cert_id_label = tk.Label(self.order_number_frame, text="Select Cert ID:")
         self.cert_id_label.grid(row=0, column=3, padx=5, pady=5, sticky=tk.W)
         self.cert_id_label.grid_forget()
-
+        
         cert_id_var = tk.StringVar()
         self.cert_id_dropdown = ttk.Combobox(self.order_number_frame, textvariable=cert_id_var)
         self.cert_id_dropdown.bind("<<ComboboxSelected>>", self.on_select_cert_id)
         self.cert_id_dropdown.grid_forget()
-
+        
         self.cert_status_label = tk.Label(self.order_number_frame, text="")
         self.cert_status_label.grid(row=0, column=5, padx=5, pady=5, sticky=tk.W)
 
@@ -1342,22 +1371,22 @@ class SerialCommunicationApp:
 
         self.read_mac_address_label = tk.Label(self.group1_frame, text="MAC Address/MAC地址: ")
         self.read_mac_address_label.grid(row=1, column=0, padx=5, pady=5, sticky=tk.W)
-
+        
         self.result_mac_address_s3_index = tk.Label(self.group1_frame, text="ESP32S3: ")
-        self.result_mac_address_s3_index.grid(row=1, column=1, padx=5, pady=5, sticky=tk.W)
+        self.result_mac_address_s3_index.grid(row=1, column=1, padx=5, pady=5, sticky=tk.W)  
 
         self.result_mac_address_s3_label = tk.Label(self.group1_frame, text="Not Yet")
-        self.result_mac_address_s3_label.grid(row=1, column=2, padx=5, pady=5, sticky=tk.W)
+        self.result_mac_address_s3_label.grid(row=1, column=2, padx=5, pady=5, sticky=tk.W)  
 
         self.result_mac_address_h2_index = tk.Label(self.group1_frame, text="ESP32H2: ")
-        self.result_mac_address_h2_index.grid(row=1, column=3, padx=5, pady=5, sticky=tk.W)
+        self.result_mac_address_h2_index.grid(row=1, column=3, padx=5, pady=5, sticky=tk.W)  
 
         self.result_mac_address_h2_label = tk.Label(self.group1_frame, text="Not Yet")
-        self.result_mac_address_h2_label.grid(row=1, column=4, padx=5, pady=5, sticky=tk.W)
-
+        self.result_mac_address_h2_label.grid(row=1, column=4, padx=5, pady=5, sticky=tk.W)       
+        
         self.status_flashing_fw = tk.Label(self.group1_frame, text="Flashing Firmware/写入固件: ")
         self.status_flashing_fw.grid(row=2, column=0, padx=5, pady=5, sticky=tk.W)
-
+        
         self.result_flashing_fw_s3_index = tk.Label(self.group1_frame, text="ESP32S3: ")
         self.result_flashing_fw_s3_index.grid(row=2, column=1, padx=5, pady=5, sticky=tk.W)
 
@@ -1366,22 +1395,22 @@ class SerialCommunicationApp:
 
         self.result_flashing_fw_h2_index = tk.Label(self.group1_frame, text="ESP32H2: ")
         self.result_flashing_fw_h2_index.grid(row=2, column=3, padx=5, pady=5, sticky=tk.W)
-
+        
         self.result_flashing_fw_h2_label = tk.Label(self.group1_frame, text="Not Yet")
         self.result_flashing_fw_h2_label.grid(row=2, column=4, padx=5, pady=5, sticky=tk.W)
-
+        
         self.status_flashing_cert = tk.Label(self.group1_frame, text="Flashing DAC/写入DAC: ")
         self.status_flashing_cert.grid(row=3, column=0, padx=5, pady=5, sticky=tk.W)
-
+        
         self.result_flashing_cert_label = tk.Label(self.group1_frame, text="Not Yet")
         self.result_flashing_cert_label.grid(row=3, column=1, padx=5, pady=5, sticky=tk.W)
-
+        
         self.status_factory_mode = tk.Label(self.group1_frame, text="Factory Mode/工厂模式: ")
         self.status_factory_mode.grid(row=4, column=0, padx=5, pady=5, sticky=tk.W)
 
         self.result_factory_mode_label = tk.Label(self.group1_frame, text="Not Yet")
         self.result_factory_mode_label.grid(row=4, column=1, padx=5, pady=5, sticky=tk.W)
-
+        
         self.status_read_device_mac = tk.Label(self.group1_frame, text="Read Device MAC/读MAC地址: ")
         self.status_read_device_mac.grid(row=5, column=0, padx=5, pady=5, sticky=tk.W)
 
@@ -1390,16 +1419,16 @@ class SerialCommunicationApp:
 
         self.read_device_mac = tk.Label(self.group1_frame, text="-")
         self.read_device_mac.grid(row=5, column=2, padx=5, pady=5, sticky=tk.W)
-
+        
         self.status_read_prod_name = tk.Label(self.group1_frame, text="Product Name/产品名称: ")
         self.status_read_prod_name.grid(row=6, column=0, padx=5, pady=5, sticky=tk.W)
-
+        
         self.result_read_prod_name = tk.Label(self.group1_frame, text="Not Yet")
         self.result_read_prod_name.grid(row=6, column=1, padx=5, pady=5, sticky=tk.W)
-
+        
         self.read_prod_name = tk.Label(self.group1_frame, text="-")
         self.read_prod_name.grid(row=6, column=2, padx=5, pady=5, sticky=tk.W)
-
+        
         self.status_write_device_sn = tk.Label(self.group1_frame, text="Write Device S/N/写入S/N号: ")
         self.status_write_device_sn.grid(row=7, column=0, padx=5, pady=5, sticky=tk.W)
 
@@ -1408,7 +1437,7 @@ class SerialCommunicationApp:
 
         self.read_device_sn = tk.Label(self.group1_frame, text="-")
         self.read_device_sn.grid(row=7, column=2, padx=5, pady=5, sticky=tk.W)
-
+        
         self.status_write_device_mtqr = tk.Label(self.group1_frame, text="Write Device Matter QR/写入Matter二维码: ")
         self.status_write_device_mtqr.grid(row=8, column=0, padx=5, pady=5, sticky=tk.W)
 
@@ -1418,125 +1447,119 @@ class SerialCommunicationApp:
         self.read_device_mtqr = tk.Label(self.group1_frame, text="-")
         self.read_device_mtqr.grid(row=8, column=2, padx=5, pady=5, sticky=tk.W)
 
-        self.result_ir_def = tk.Label(self.group1_frame, text="Write IR Definition/写入红外线代码: ")
-        self.result_ir_def.grid(row=9, column=0, padx=5, pady=5, sticky=tk.W)
-
-        self.result_ir_def_label = tk.Label(self.group1_frame, text="Not Yet")
-        self.result_ir_def_label.grid(row=9, column=1, padx=5, pady=5, sticky=tk.W)
-
         self.status_save_device_data_label = tk.Label(self.group1_frame, text="Save Device Data/保存数据: ")
-        self.status_save_device_data_label.grid(row=10, column=0, padx=5, pady=5, sticky=tk.W)
+        self.status_save_device_data_label.grid(row=9, column=0, padx=5, pady=5, sticky=tk.W)
 
         self.result_save_device_data_label = tk.Label(self.group1_frame, text="Not Yet")
-        self.result_save_device_data_label.grid(row=10, column=1, padx=5, pady=5, sticky=tk.W)
+        self.result_save_device_data_label.grid(row=9, column=1, padx=5, pady=5, sticky=tk.W)
 
         self.read_save_device_data_label = tk.Label(self.group1_frame, text="-")
-        self.read_save_device_data_label.grid(row=10, column=2, padx=5, pady=5, sticky=tk.W)
-
+        self.read_save_device_data_label.grid(row=9, column=2, padx=5, pady=5, sticky=tk.W)
+        
         self.status_5v_test = tk.Label(self.group1_frame, text="5V Test/5伏测试: ")
-        self.status_5v_test.grid(row=11, column=0, padx=5, pady=5, sticky=tk.W)
+        self.status_5v_test.grid(row=10, column=0, padx=5, pady=5, sticky=tk.W)
 
         self.result_5v_test = tk.Label(self.group1_frame, text="Not Yet")
-        self.result_5v_test.grid(row=11, column=1, padx=5, pady=5, sticky=tk.W)
+        self.result_5v_test.grid(row=10, column=1, padx=5, pady=5, sticky=tk.W)
 
         self.dmm_5V_reader = tk.Label(self.group1_frame, text="-")
-        self.dmm_5V_reader.grid(row=11, column=2, padx=5, pady=5, sticky=tk.W)
+        self.dmm_5V_reader.grid(row=10, column=2, padx=5, pady=5, sticky=tk.W)
 
         self.input_5V_dmm = tk.Entry(self.group1_frame)
-        self.input_5V_dmm.grid(row=11, column=3, padx=5, pady=5, sticky=tk.W)
+        self.input_5V_dmm.grid(row=10, column=3, padx=5, pady=5, sticky=tk.W)
 
         self.submit_5V_dmm = ttk.Button(self.group1_frame, text="Submit/输入", command=lambda: self.dmm_reader_5V_value_manual(self.input_5V_dmm))
-        self.submit_5V_dmm.grid(row=11, column=4, padx=5, pady=5, sticky=tk.W)
+        self.submit_5V_dmm.grid(row=10, column=4, padx=5, pady=5, sticky=tk.W)
         self.submit_5V_dmm.config(state=tk.DISABLED)
 
         self.range_index_5V_dmm = tk.Label(self.group1_frame, text="Range/测试范围(±): ")
-        self.range_index_5V_dmm.grid(row=11, column=5, padx=5, pady=5, sticky=tk.W)
+        self.range_index_5V_dmm.grid(row=10, column=5, padx=5, pady=5, sticky=tk.W)
 
         self.range_value_5V_dmm = tk.Label(self.group1_frame, text="-")
-        self.range_value_5V_dmm.grid(row=11, column=6, padx=5, pady=5, sticky=tk.W)
+        self.range_value_5V_dmm.grid(row=10, column=6, padx=5, pady=5, sticky=tk.W)
 
         self.status_3_3v_test = tk.Label(self.group1_frame, text="3.3V Test/3.3伏测试: ")
-        self.status_3_3v_test.grid(row=12, column=0, padx=5, pady=5, sticky=tk.W)
+        self.status_3_3v_test.grid(row=11, column=0, padx=5, pady=5, sticky=tk.W)
 
         self.result_3_3v_test = tk.Label(self.group1_frame, text="Not Yet")
-        self.result_3_3v_test.grid(row=12, column=1, padx=5, pady=5, sticky=tk.W)
+        self.result_3_3v_test.grid(row=11, column=1, padx=5, pady=5, sticky=tk.W)
 
         self.dmm_3_3V_reader = tk.Label(self.group1_frame, text="-")
-        self.dmm_3_3V_reader.grid(row=12, column=2, padx=5, pady=5, sticky=tk.W)
+        self.dmm_3_3V_reader.grid(row=11, column=2, padx=5, pady=5, sticky=tk.W)
 
         self.input_3_3V_dmm = tk.Entry(self.group1_frame)
-        self.input_3_3V_dmm.grid(row=12, column=3, padx=5, pady=5, sticky=tk.W)
+        self.input_3_3V_dmm.grid(row=11, column=3, padx=5, pady=5, sticky=tk.W)
 
         self.submit_3_3V_dmm = ttk.Button(self.group1_frame, text="Submit/输入", command=lambda: self.dmm_reader_3_3V_value_manual(self.input_3_3V_dmm))
-        self.submit_3_3V_dmm.grid(row=12, column=4, padx=5, pady=5, sticky=tk.W)
+        self.submit_3_3V_dmm.grid(row=11, column=4, padx=5, pady=5, sticky=tk.W)
         self.submit_3_3V_dmm.config(state=tk.DISABLED)
 
         self.range_index_3_3V_dmm = tk.Label(self.group1_frame, text="Range/测试范围(±): ")
-        self.range_index_3_3V_dmm.grid(row=12, column=5, padx=5, pady=5, sticky=tk.W)
+        self.range_index_3_3V_dmm.grid(row=11, column=5, padx=5, pady=5, sticky=tk.W)
 
         self.range_value_3_3V_dmm = tk.Label(self.group1_frame, text="-")
-        self.range_value_3_3V_dmm.grid(row=12, column=6, padx=5, pady=5, sticky=tk.W)
-
+        self.range_value_3_3V_dmm.grid(row=11, column=6, padx=5, pady=5, sticky=tk.W)
+        
         self.status_atbeam_temp = tk.Label(self.group1_frame, text="Temperature Test/温度测试: ")
-        self.status_atbeam_temp.grid(row=13, column=0, padx=5, pady=5, sticky=tk.W)
+        self.status_atbeam_temp.grid(row=12, column=0, padx=5, pady=5, sticky=tk.W)
 
         self.result_temp_label = tk.Label(self.group1_frame, text="Not Yet")
-        self.result_temp_label.grid(row=13, column=1, padx=5, pady=5, sticky=tk.W)
+        self.result_temp_label.grid(row=12, column=1, padx=5, pady=5, sticky=tk.W)
 
         self.atbeam_temp_index = tk.Label(self.group1_frame, text="Device/产品传感器: ")
-        self.atbeam_temp_index.grid(row=13, column=2, padx=5, pady=5, sticky=tk.W)
+        self.atbeam_temp_index.grid(row=12, column=2, padx=5, pady=5, sticky=tk.W)
 
         self.atbeam_temp_value = tk.Label(self.group1_frame, text="AT °C")
-        self.atbeam_temp_value.grid(row=13, column=3, padx=5, pady=5, sticky=tk.W)
+        self.atbeam_temp_value.grid(row=12, column=3, padx=5, pady=5, sticky=tk.W)
 
         self.ext_temp_index = tk.Label(self.group1_frame, text="External/外部传感器: ")
-        self.ext_temp_index.grid(row=13, column=4, padx=5, pady=5, sticky=tk.W)
+        self.ext_temp_index.grid(row=12, column=4, padx=5, pady=5, sticky=tk.W)
 
         self.ext_temp_value = tk.Label(self.group1_frame, text="Ext °C")
-        self.ext_temp_value.grid(row=13, column=5, padx=5, pady=5, sticky=tk.W)
+        self.ext_temp_value.grid(row=12, column=5, padx=5, pady=5, sticky=tk.W)
 
         self.range_temp_index = tk.Label(self.group1_frame, text="Range/测试范围(±): ")
-        self.range_temp_index.grid(row=13, column=6, padx=5, pady=5, sticky=tk.W)
+        self.range_temp_index.grid(row=12, column=6, padx=5, pady=5, sticky=tk.W)
 
         self.range_temp_value = tk.Label(self.group1_frame, text="-")
-        self.range_temp_value.grid(row=13, column=7, padx=5, pady=5, sticky=tk.W)
+        self.range_temp_value.grid(row=12, column=7, padx=5, pady=5, sticky=tk.W)
 
         self.status_atbeam_humidity = tk.Label(self.group1_frame, text="Humidity Test/湿度测试: ")
-        self.status_atbeam_humidity.grid(row=14, column=0, padx=5, pady=5, sticky=tk.W)
+        self.status_atbeam_humidity.grid(row=13, column=0, padx=5, pady=5, sticky=tk.W)
 
         self.result_humid_label = tk.Label(self.group1_frame, text="Not Yet")
-        self.result_humid_label.grid(row=14, column=1, padx=5, pady=5, sticky=tk.W)
+        self.result_humid_label.grid(row=13, column=1, padx=5, pady=5, sticky=tk.W)
 
         self.atbeam_humid_index = tk.Label(self.group1_frame, text="Device/产品传感器: ")
-        self.atbeam_humid_index.grid(row=14, column=2, padx=5, pady=5, sticky=tk.W)
+        self.atbeam_humid_index.grid(row=13, column=2, padx=5, pady=5, sticky=tk.W)
 
         self.atbeam_humid_value = tk.Label(self.group1_frame, text="AT %")
-        self.atbeam_humid_value.grid(row=14, column=3, padx=5, pady=5, sticky=tk.W)
+        self.atbeam_humid_value.grid(row=13, column=3, padx=5, pady=5, sticky=tk.W)
 
         self.ext_humid_index = tk.Label(self.group1_frame, text="External/外部传感器: ")
-        self.ext_humid_index.grid(row=14, column=4, padx=5, pady=5, sticky=tk.W)
+        self.ext_humid_index.grid(row=13, column=4, padx=5, pady=5, sticky=tk.W)
 
         self.ext_humid_value = tk.Label(self.group1_frame, text="Ext %")
-        self.ext_humid_value.grid(row=14, column=5, padx=5, pady=5, sticky=tk.W)
+        self.ext_humid_value.grid(row=13, column=5, padx=5, pady=5, sticky=tk.W)
 
         self.range_humid_index = tk.Label(self.group1_frame, text="Range/测试范围(±): ")
-        self.range_humid_index.grid(row=14, column=6, padx=5, pady=5, sticky=tk.W)
+        self.range_humid_index.grid(row=13, column=6, padx=5, pady=5, sticky=tk.W)
 
         self.range_humid_value = tk.Label(self.group1_frame, text="-")
-        self.range_humid_value.grid(row=14, column=7, padx=5, pady=5, sticky=tk.W)
+        self.range_humid_value.grid(row=13, column=7, padx=5, pady=5, sticky=tk.W)
 
         self.status_button_label = tk.Label(self.group1_frame, text="Button Test/按钮测试: ")
-        self.status_button_label.grid(row=15, column=0, padx=5, pady=5, sticky=tk.W)
+        self.status_button_label.grid(row=14, column=0, padx=5, pady=5, sticky=tk.W)
 
         self.result_button_label = tk.Label(self.group1_frame, text="Not Yet")
-        self.result_button_label.grid(row=15, column=1, padx=5, pady=5, sticky=tk.W)
+        self.result_button_label.grid(row=14, column=1, padx=5, pady=5, sticky=tk.W)
 
         self.instruction_button_label = tk.Label(self.group1_frame, text="Press Device Button/按产品按钮", font=("Helvetica", 10, "bold"))
-        self.instruction_button_label.grid(row=15, column=2, padx=5, pady=5, sticky=tk.W)
+        self.instruction_button_label.grid(row=14, column=2, padx=5, pady=5, sticky=tk.W)
         self.instruction_button_label.grid_forget()
-
+        
         # Group 2
-
+        
         self.group2_frame = tk.Frame(self.scrollable_frame, highlightbackground="black", highlightcolor="black", highlightthickness=2, bd=2)
         self.group2_frame.grid(row=10, column=0, padx=10, pady=10, sticky=tk.W)
 
@@ -1584,31 +1607,31 @@ class SerialCommunicationApp:
 
         self.range_group2_wifi_station_rssi = tk.Label(self.group2_frame, text="-")
         self.range_group2_wifi_station_rssi.grid(row=3, column=4, padx=5, pady=5, sticky=tk.W)
-
+        
         # Group 3
         self.group3_frame = tk.Frame(self.scrollable_frame, highlightbackground="black", highlightcolor="black", highlightthickness=2, bd=2)
         self.group3_frame.grid(row=9, column=0, padx=10, pady=10, sticky=tk.W)
-
+        
         self.group3_label = tk.Label(self.group3_frame, text="Manual Test/手动测试", font=("Helvetica", 10, "bold"))
         self.group3_label.grid(row=0, column=0, padx=5, pady=5, sticky=tk.W)
-
-        # self.result_ir_def = tk.Label(self.group3_frame, text="IR Definition/红外线代码: ")
-        # self.result_ir_def.grid(row=1, column=0, padx=5, pady=5, sticky=tk.W)
-
-        # self.result_ir_def_label = tk.Label(self.group3_frame, text="Not Yet")
-        # self.result_ir_def_label.grid(row=1, column=1, padx=5, pady=5, sticky=tk.W)
-
+        
+        self.result_ir_def = tk.Label(self.group3_frame, text="IR Definition/红外线代码: ")
+        self.result_ir_def.grid(row=1, column=0, padx=5, pady=5, sticky=tk.W)
+        
+        self.result_ir_def_label = tk.Label(self.group3_frame, text="Not Yet")
+        self.result_ir_def_label.grid(row=1, column=1, padx=5, pady=5, sticky=tk.W)
+        
         self.status_rgb_red_label = tk.Label(self.group3_frame, text="Red LED/红灯: ")
         self.status_rgb_red_label.grid(row=2, column=0, padx=5, pady=5, sticky=tk.W)
 
         self.result_rgb_red_label = tk.Label(self.group3_frame, text="Not Yet")
         self.result_rgb_red_label.grid(row=2, column=1, padx=5, pady=5, sticky=tk.W)
 
-        self.yes_button_red = ttk.Button(self.group3_frame, text="Yes/有", command=lambda: self.update_red_label("Pass", fg="green", font=("Helvetica", 10, "bold")))
+        self.yes_button_red = ttk.Button(self.group3_frame, text="Yes/有", command=lambda: self.update_yesno_label(self.result_rgb_red_label, "Pass", "green"))
         self.yes_button_red.grid(row=2, column=2, padx=5, pady=5, sticky=tk.W)
         self.yes_button_red.config(state=tk.DISABLED)
 
-        self.no_button_red = ttk.Button(self.group3_frame, text="No/没有", command=lambda: self.update_red_label("Failed", fg="red", font=("Helvetica", 10, "bold")))
+        self.no_button_red = ttk.Button(self.group3_frame, text="No/没有", command=lambda: self.update_yesno_label(self.result_rgb_red_label, "Failed", "red"))
         self.no_button_red.grid(row=2, column=3, padx=5, pady=5, sticky=tk.W)
         self.no_button_red.config(state=tk.DISABLED)
 
@@ -1618,11 +1641,11 @@ class SerialCommunicationApp:
         self.result_rgb_green_label = tk.Label(self.group3_frame, text="Not Yet")
         self.result_rgb_green_label.grid(row=3, column=1, padx=5, pady=5, sticky=tk.W)
 
-        self.yes_button_green = ttk.Button(self.group3_frame, text="Yes/有", command=lambda: self.update_green_label("Pass", fg="green", font=("Helvetica", 10, "bold")))
+        self.yes_button_green = ttk.Button(self.group3_frame, text="Yes/有", command=lambda: self.update_yesno_label(self.result_rgb_green_label, "Pass", "green"))
         self.yes_button_green.grid(row=3, column=2, padx=5, pady=5, sticky=tk.W)
         self.yes_button_green.config(state=tk.DISABLED)
 
-        self.no_button_green = ttk.Button(self.group3_frame, text="No/没有", command=lambda: self.update_green_label("Failed", fg="red", font=("Helvetica", 10, "bold")))
+        self.no_button_green = ttk.Button(self.group3_frame, text="No/没有", command=lambda: self.update_yesno_label(self.result_rgb_green_label, "Failed", "red"))
         self.no_button_green.grid(row=3, column=3, padx=5, pady=5, sticky=tk.W)
         self.no_button_green.config(state=tk.DISABLED)
 
@@ -1632,11 +1655,11 @@ class SerialCommunicationApp:
         self.result_rgb_blue_label = tk.Label(self.group3_frame, text="Not Yet")
         self.result_rgb_blue_label.grid(row=4, column=1, padx=5, pady=5, sticky=tk.W)
 
-        self.yes_button_blue = ttk.Button(self.group3_frame, text="Yes/有", command=lambda: self.update_blue_label("Pass", fg="green", font=("Helvetica", 10, "bold")))
+        self.yes_button_blue = ttk.Button(self.group3_frame, text="Yes/有", command=lambda: self.update_yesno_label(self.result_rgb_blue_label, "Pass", "green"))
         self.yes_button_blue.grid(row=4, column=2, padx=5, pady=5, sticky=tk.W)
         self.yes_button_blue.config(state=tk.DISABLED)
 
-        self.no_button_blue = ttk.Button(self.group3_frame, text="No/没有", command=lambda: self.update_blue_label("Failed", fg="red", font=("Helvetica", 10, "bold")))
+        self.no_button_blue = ttk.Button(self.group3_frame, text="No/没有", command=lambda: self.update_yesno_label(self.result_rgb_blue_label, "Failed", "red"))
         self.no_button_blue.grid(row=4, column=3, padx=5, pady=5, sticky=tk.W)
         self.no_button_blue.config(state=tk.DISABLED)
 
@@ -1646,128 +1669,140 @@ class SerialCommunicationApp:
         self.result_ir_rx_label = tk.Label(self.group3_frame, text="Not Yet")
         self.result_ir_rx_label.grid(row=5, column=1, padx=5, pady=5, sticky=tk.W)
 
-        self.yes_button_ir_rx = ttk.Button(self.group3_frame, text="Yes/有", command=lambda: self.update_ir_rx_label("Pass", fg="green", font=("Helvetica", 10, "bold")))
+        self.yes_button_ir_rx = ttk.Button(self.group3_frame, text="Yes/有", command=lambda: self.update_yesno_label(self.result_ir_rx_label, "Pass", "green"))
         self.yes_button_ir_rx.grid(row=5, column=2, padx=5, pady=5, sticky=tk.W)
         self.yes_button_ir_rx.config(state=tk.DISABLED)
 
-        self.no_button_ir_rx = ttk.Button(self.group3_frame, text="No/没有", command=lambda: self.update_ir_rx_label("Failed", fg="red", font=("Helvetica", 10, "bold")))
+        self.no_button_ir_rx = ttk.Button(self.group3_frame, text="No/没有", command=lambda: self.update_yesno_label(self.result_ir_rx_label, "Failed", "red"))
         self.no_button_ir_rx.grid(row=5, column=3, padx=5, pady=5, sticky=tk.W)
         self.no_button_ir_rx.config(state=tk.DISABLED)
-
+        
         self.ir_led1_label = tk.Label(self.group3_frame, text="IR LED 1/红外线1: ")
         self.ir_led1_label.grid(row=6, column=0, padx=5, pady=5, sticky=tk.W)
-
+        
         self.result_ir_led1 = tk.Label(self.group3_frame, text="Not Yet")
         self.result_ir_led1.grid(row=6, column=1, padx=5, pady=5, sticky=tk.W)
-
-        self.yes_button_ir_led1 = ttk.Button(self.group3_frame, text="Yes/有", command=lambda: self.update_ir_led1_label("Pass", fg="green", font=("Helvetica", 10, "bold")))
+        
+        self.yes_button_ir_led1 = ttk.Button(self.group3_frame, text="Yes/有", command=lambda: self.update_yesno_label(self.result_ir_led1, "Pass", "green"))
         self.yes_button_ir_led1.grid(row=6, column=2, padx=5, pady=5, sticky=tk.W)
         self.yes_button_ir_led1.config(state=tk.DISABLED)
-
-        self.no_button_ir_led1 = ttk.Button(self.group3_frame, text="No/没有", command=lambda: self.update_ir_led1_label("Failed", fg="red", font=("Helvetica", 10, "bold")))
+        
+        self.no_button_ir_led1 = ttk.Button(self.group3_frame, text="No/没有", command=lambda: self.update_yesno_label(self.result_ir_led1, "Failed", "red"))
         self.no_button_ir_led1.grid(row=6, column=3, padx=5, pady=5, sticky=tk.W)
         self.no_button_ir_led1.config(state=tk.DISABLED)
-
+        
         self.ir_led2_label = tk.Label(self.group3_frame, text="IR LED 2/红外线2: ")
         self.ir_led2_label.grid(row=7, column=0, padx=5, pady=5, sticky=tk.W)
-
+        
         self.result_ir_led2 = tk.Label(self.group3_frame, text="Not Yet")
         self.result_ir_led2.grid(row=7, column=1, padx=5, pady=5, sticky=tk.W)
-
-        self.yes_button_ir_led2 = ttk.Button(self.group3_frame, text="Yes/有", command=lambda: self.update_ir_led2_label("Pass", fg="green", font=("Helvetica", 10, "bold")))
+        
+        self.yes_button_ir_led2 = ttk.Button(self.group3_frame, text="Yes/有", command=lambda: self.update_yesno_label(self.result_ir_led2, "Pass", "green"))
         self.yes_button_ir_led2.grid(row=7, column=2, padx=5, pady=5, sticky=tk.W)
         self.yes_button_ir_led2.config(state=tk.DISABLED)
-
-        self.no_button_ir_led2 = ttk.Button(self.group3_frame, text="No/没有", command=lambda: self.update_ir_led2_label("Failed", fg="red", font=("Helvetica", 10, "bold")))
+        
+        self.no_button_ir_led2 = ttk.Button(self.group3_frame, text="No/没有", command=lambda: self.update_yesno_label(self.result_ir_led2, "Failed", "red"))
         self.no_button_ir_led2.grid(row=7, column=3, padx=5, pady=5, sticky=tk.W)
         self.no_button_ir_led2.config(state=tk.DISABLED)
-
+        
         self.ir_led3_label = tk.Label(self.group3_frame, text="IR LED 3/红外线3: ")
         self.ir_led3_label.grid(row=8, column=0, padx=5, pady=5, sticky=tk.W)
-
+        
         self.result_ir_led3 = tk.Label(self.group3_frame, text="Not Yet")
         self.result_ir_led3.grid(row=8, column=1, padx=5, pady=5, sticky=tk.W)
-
-        self.yes_button_ir_led3 = ttk.Button(self.group3_frame, text="Yes/有", command=lambda: self.update_ir_led3_label("Pass", fg="green", font=("Helvetica", 10, "bold")))
+        
+        self.yes_button_ir_led3 = ttk.Button(self.group3_frame, text="Yes/有", command=lambda: self.update_yesno_label(self.result_ir_led3, "Pass", "green"))
         self.yes_button_ir_led3.grid(row=8, column=2, padx=5, pady=5, sticky=tk.W)
         self.yes_button_ir_led3.config(state=tk.DISABLED)
-
-        self.no_button_ir_led3 = ttk.Button(self.group3_frame, text="No/没有", command=lambda: self.update_ir_led3_label("Failed", fg="red", font=("Helvetica", 10, "bold")))
+        
+        self.no_button_ir_led3 = ttk.Button(self.group3_frame, text="No/没有", command=lambda: self.update_yesno_label(self.result_ir_led3, "Failed", "red"))
         self.no_button_ir_led3.grid(row=8, column=3, padx=5, pady=5, sticky=tk.W)
         self.no_button_ir_led3.config(state=tk.DISABLED)
-
+        
         self.ir_led4_label = tk.Label(self.group3_frame, text="IR LED 4/红外线4: ")
         self.ir_led4_label.grid(row=9, column=0, padx=5, pady=5, sticky=tk.W)
-
+        
         self.result_ir_led4 = tk.Label(self.group3_frame, text="Not Yet")
         self.result_ir_led4.grid(row=9, column=1, padx=5, pady=5, sticky=tk.W)
-
-        self.yes_button_ir_led4 = ttk.Button(self.group3_frame, text="Yes/有", command=lambda: self.update_ir_led4_label("Pass", fg="green", font=("Helvetica", 10, "bold")))
+        
+        self.yes_button_ir_led4 = ttk.Button(self.group3_frame, text="Yes/有", command=lambda: self.update_yesno_label(self.result_ir_led4, "Pass", "green"))
         self.yes_button_ir_led4.grid(row=9, column=2, padx=5, pady=5, sticky=tk.W)
         self.yes_button_ir_led4.config(state=tk.DISABLED)
-
-        self.no_button_ir_led4 = ttk.Button(self.group3_frame, text="No/没有", command=lambda: self.update_ir_led4_label("Failed", fg="red", font=("Helvetica", 10, "bold")))
+        
+        self.no_button_ir_led4 = ttk.Button(self.group3_frame, text="No/没有", command=lambda: self.update_yesno_label(self.result_ir_led4, "Failed", "red"))
         self.no_button_ir_led4.grid(row=9, column=3, padx=5, pady=5, sticky=tk.W)
         self.no_button_ir_led4.config(state=tk.DISABLED)
-
+        
         self.ir_led5_label = tk.Label(self.group3_frame, text="IR LED 5/红外线5: ")
         self.ir_led5_label.grid(row=10, column=0, padx=5, pady=5, sticky=tk.W)
-
+        
         self.result_ir_led5 = tk.Label(self.group3_frame, text="Not Yet")
         self.result_ir_led5.grid(row=10, column=1, padx=5, pady=5, sticky=tk.W)
-
-        self.yes_button_ir_led5 = ttk.Button(self.group3_frame, text="Yes/有", command=lambda: self.update_ir_led5_label("Pass", fg="green", font=("Helvetica", 10, "bold")))
+        
+        self.yes_button_ir_led5 = ttk.Button(self.group3_frame, text="Yes/有", command=lambda: self.update_yesno_label(self.result_ir_led5, "Pass", "green"))
         self.yes_button_ir_led5.grid(row=10, column=2, padx=5, pady=5, sticky=tk.W)
         self.yes_button_ir_led5.config(state=tk.DISABLED)
-
-        self.no_button_ir_led5 = ttk.Button(self.group3_frame, text="No/没有", command=lambda: self.update_ir_led5_label("Failed", fg="red", font=("Helvetica", 10, "bold")))
+        
+        self.no_button_ir_led5 = ttk.Button(self.group3_frame, text="No/没有", command=lambda: self.update_yesno_label(self.result_ir_led5, "Failed", "red"))
         self.no_button_ir_led5.grid(row=10, column=3, padx=5, pady=5, sticky=tk.W)
         self.no_button_ir_led5.config(state=tk.DISABLED)
-
+        
 
         # Group 4
         self.group4_frame = tk.Frame(self.scrollable_frame, highlightbackground="black", highlightcolor="black", highlightthickness=2, bd=2)
         self.group4_frame.grid(row=11, column=0, padx=10, pady=10, sticky=tk.W)
-
+        
         self.group4_label = tk.Label(self.group4_frame, text="ESP32H2 Test/ESP32H2测试", font=("Helvetica", 10, "bold"))
         self.group4_label.grid(row=0, column=0, padx=5, pady=5, sticky=tk.W)
-
+        
         self.status_short_header = tk.Label(self.group4_frame, text="Short Header/排针短路: ")
         self.status_short_header.grid(row=1, column=0, padx=5, pady=5, sticky=tk.W)
-
+        
         self.result_short_header = tk.Label(self.group4_frame, text="Not Yet")
         self.result_short_header.grid(row=1, column=1, padx=5, pady=5, sticky=tk.W)
-
-        self.yes_short_header = ttk.Button(self.group4_frame, text="Yes/有", command=lambda: self.update_status_short_header_label("Pass", fg="green", font=("Helvetica", 10, "bold")))
+        
+        self.yes_short_header = ttk.Button(self.group4_frame, text="Yes/有", command=lambda: self.update_yesno_label(self.result_short_header, "Pass", "green"))
         self.yes_short_header.grid(row=1, column=2, padx=5, pady=5, sticky=tk.W)
         self.yes_short_header.config(state=tk.DISABLED)
-
-        self.no_short_header = ttk.Button(self.group4_frame, text="No/没有", command=lambda: self.update_status_short_header_label("Failed", fg="red", font=("Helvetica", 10, "bold")))
+        
+        self.no_short_header = ttk.Button(self.group4_frame, text="No/没有", command=lambda: self.update_yesno_label(self.result_short_header, "Failed", "red"))
         self.no_short_header.grid(row=1, column=3, padx=5, pady=5, sticky=tk.W)
         self.no_short_header.config(state=tk.DISABLED)
-
+        
         self.status_factory_reset = tk.Label(self.group4_frame, text="Factory Reset/恢复出厂设置: ")
         self.status_factory_reset.grid(row=2, column=0, padx=5, pady=5, sticky=tk.W)
-        self.status_factory_reset.grid_forget()
-
+        
         self.result_factory_reset = tk.Label(self.group4_frame, text="Not Yet")
         self.result_factory_reset.grid(row=2, column=1, padx=5, pady=5, sticky=tk.W)
-        self.result_factory_reset.grid_forget()
-
+        
         self.status_h2_led_check = tk.Label(self.group4_frame, text="ESP32H2 Small LED Test/ESP32H2小红灯测试: ")
         self.status_h2_led_check.grid(row=3, column=0, padx=5, pady=5, sticky=tk.W)
-
+        
         self.result_h2_led_check = tk.Label(self.group4_frame, text="Not Yet")
         self.result_h2_led_check.grid(row=3, column=1, padx=5, pady=5, sticky=tk.W)
-
-        self.yes_h2_led_check = ttk.Button(self.group4_frame, text="Yes/有", command=lambda: self.update_status_h2_led_label("Pass", fg="green", font=("Helvetica", 10, "bold")))
+        
+        self.yes_h2_led_check = ttk.Button(self.group4_frame, text="Yes/有", command=lambda: self.update_yesno_label(self.result_h2_led_check, "Pass", "green"))
         self.yes_h2_led_check.grid(row=3, column=2, padx=5, pady=5, sticky=tk.W)
         self.yes_h2_led_check.config(state=tk.DISABLED)
-
-        self.no_h2_led_check = ttk.Button(self.group4_frame, text="No/没有", command=lambda: self.update_status_h2_led_label("Failed", fg="red", font=("Helvetica", 10, "bold")))
+        
+        self.no_h2_led_check = ttk.Button(self.group4_frame, text="No/没有", command=lambda: self.update_yesno_label(self.result_h2_led_check, "Failed", "red"))
         self.no_h2_led_check.grid(row=3, column=3, padx=5, pady=5, sticky=tk.W)
         self.no_h2_led_check.config(state=tk.DISABLED)
-
+        
+        self.button_sets = [
+            [self.yes_button_red, self.no_button_red],
+            [self.yes_button_green, self.no_button_green],
+            [self.yes_button_blue, self.no_button_blue],
+            [self.yes_button_ir_rx, self.no_button_ir_rx],
+            [self.yes_button_ir_led1, self.no_button_ir_led1],
+            [self.yes_button_ir_led2, self.no_button_ir_led2],
+            [self.yes_button_ir_led3, self.no_button_ir_led3],
+            [self.yes_button_ir_led4, self.no_button_ir_led4],
+            [self.yes_button_ir_led5, self.no_button_ir_led5],
+            [self.yes_short_header, self.no_short_header],
+            [self.yes_h2_led_check, self.no_h2_led_check]
+        ]
+        
         # Print
         self.printer_frame = tk.Frame(self.scrollable_frame, highlightbackground="black", highlightcolor="black", highlightthickness=2, bd=2)
         self.printer_frame.grid(row=12, column=0, padx=10, pady=10, sticky=tk.W)
@@ -1819,50 +1854,9 @@ class SerialCommunicationApp:
         self.printer_no_print.grid(row=6, column=2, padx=5, pady=5, sticky=tk.W)
         self.printer_no_print.config(state=tk.DISABLED)
 
-    def update_label(self, label, text, fg, font, no_button, yes_button, color):
-        label.config(text=text, fg=fg, font=font)
-        # if text == "Pass":
-        #     no_button.config(state='disabled')
-        #     logger.info(f"{color} LED: Pass")
-        #     print(f"{color} LED: Pass")
-
-        # else:
-        #     yes_button.config(state='disabled')
-        #     logger.error(f"{color} LED: Failed")
-        #     print(f"{color} LED: Failed")
-
-    def update_red_label(self, text, fg, font):
-        self.update_label(self.result_rgb_red_label, text, fg, font, self.no_button_red, self.yes_button_red, "Red")
-
-    def update_green_label(self, text, fg, font):
-        self.update_label(self.result_rgb_green_label, text, fg, font, self.no_button_green, self.yes_button_green, "Green")
-
-    def update_blue_label(self, text, fg, font):
-        self.update_label(self.result_rgb_blue_label, text, fg, font, self.no_button_blue, self.yes_button_blue, "Blue")
-
-    def update_ir_rx_label(self, text, fg, font):
-        self.update_label(self.result_ir_rx_label, text, fg, font, self.no_button_ir_rx, self.yes_button_ir_rx, "IR Receiver")
-
-    def update_ir_led1_label(self, text, fg, font):
-        self.update_label(self.result_ir_led1, text, fg, font, self.no_button_ir_led1, self.yes_button_ir_led1, "IR LED 1")
-
-    def update_ir_led2_label(self, text, fg, font):
-        self.update_label(self.result_ir_led2, text, fg, font, self.no_button_ir_led2, self.yes_button_ir_led2, "IR LED 2")
-
-    def update_ir_led3_label(self, text, fg, font):
-        self.update_label(self.result_ir_led3, text, fg, font, self.no_button_ir_led3, self.yes_button_ir_led3, "IR LED 3")
-
-    def update_ir_led4_label(self, text, fg, font):
-        self.update_label(self.result_ir_led4, text, fg, font, self.no_button_ir_led4, self.yes_button_ir_led4, "IR LED 4")
-
-    def update_ir_led5_label(self, text, fg, font):
-        self.update_label(self.result_ir_led5, text, fg, font, self.no_button_ir_led5, self.yes_button_ir_led5, "IR LED 5")
-
-    def update_status_short_header_label(self, text, fg, font):
-        self.update_label(self.result_short_header, text, fg, font, self.no_short_header, self.yes_short_header, "Short Header")
-
-    def update_status_h2_led_label(self, text, fg, font):
-        self.update_label(self.result_h2_led_check, text, fg, font, self.no_h2_led_check, self.yes_h2_led_check, "ESP32H2 LED")
+        
+    def update_yesno_label(self, label, text, color):
+        label.config(text=text, fg=color, font=("Helvetica", 12, "bold"))
 
     def enable_configurable_ui(self):
         self.start_button.config(state=tk.NORMAL)
@@ -2004,7 +1998,7 @@ class SerialCommunicationApp:
         esp32s3_fw_address = config.get("flash_firmware_esp32s3", "flash_firmware_esp32s3_address")
         esp32s3_use_esptool = config.get("flash_firmware_esp32s3", "flash_firmware_esp32s3_use_esptool")
         esp32s3_port = self.port_var.get()
-        esp32s3_port = "/dev/ttyACM0"
+        esp32s3_port = "/dev/ttyUSB0"
         esp32s3_baud = int(self.baud_var.get())
 
         esp32h2_port = config.get("flash_firmware_esp32h2", "flash_firmware_esp32h2_port")
@@ -2298,7 +2292,7 @@ class SerialCommunicationApp:
 
             # try:
             esp32s3_port = self.port_var.get()
-            esp32s3_port = "/dev/ttyACM0"
+            esp32s3_port = "/dev/ttyUSB0"
             esp32s3_baud = int(self.baud_var.get())
 
             esp32s3_factroy_port = self.port_var1.get()
@@ -2321,7 +2315,9 @@ class SerialCommunicationApp:
             logger.info(f"Reboot esp32s3, Port: {esp32s3_port}, Baud: {esp32s3_baud}")
             logger.info(f"Reboot esp32h2, Port: {esp32h2_port}, Baud: {esp32h2_baud}")
             self.reboot_h2(True, esp32h2_port, esp32h2_baud)
-            self.reboot_s3(False, False, esp32s3_port, esp32s3_baud)
+            # self.reboot_s3(False, False, esp32s3_port, esp32s3_baud)
+            self.reboot_s3(esp32s3_port, esp32s3_baud)
+
 
             logger.info("Start Wait 3")
             print("Start Wait 3")
@@ -2347,6 +2343,7 @@ class SerialCommunicationApp:
         self.status_read_device_mac.config(fg="blue")
         self.status_read_device_mac.grid()
 
+        # Split by characters!! Capital and small letters
         if "read_mac_address" in config:
             logger.info("Read MAC Address")
             print("Read MAC Address")
@@ -2358,21 +2355,15 @@ class SerialCommunicationApp:
             logger.info(f"Reference MAC Address: {macAddress_esp32s3_data}")
             print(f"Reference MAC Address: {macAddress_esp32s3_data}")
             time.sleep(self.step_delay) # This delay is to allow so time for serial com to respond
-            if self.read_device_mac.cget("text") == str(macAddress_esp32s3_data):
+            if self.read_device_mac.cget("text").lower() == str(macAddress_esp32s3_data).lower():
                 self.result_read_device_mac.config(text="Pass", fg="green", font=("Helvetica", 10, "bold"))
                 logger.info("Read MAC Address: Pass")
                 print("Read MAC Address: Pass")
-                
-                # self.close_serial_port()
-                # self.enable_configurable_ui()
-                # messagebox.showwarning("Warning", "Test Stop!")
-                # return True
             else:
                 self.result_read_device_mac.config(text="Failed", fg="red", font=("Helvetica", 10, "bold"))
                 logger.info("Read MAC Address: Failed")
                 print("Read MAC Address: Failed")
-
-                self.close_serial_port()
+                # self.close_serial_port()
                 self.enable_configurable_ui()
                 messagebox.showwarning("Warning", "Test Stop!")
                 return True
@@ -3152,7 +3143,7 @@ class SerialCommunicationApp:
 
             # try:
             esp32s3_port = self.port_var.get()
-            esp32s3_port = "/dev/ttyACM0"
+            esp32s3_port = "/dev/ttyUSB0"
             esp32s3_baud = int(self.baud_var.get())
 
             esp32s3_factroy_port = self.port_var1.get()
@@ -3175,7 +3166,9 @@ class SerialCommunicationApp:
             logger.info(f"Reboot esp32s3, Port: {esp32s3_port}, Baud: {esp32s3_baud}")
             logger.info(f"Reboot esp32h2, Port: {esp32h2_port}, Baud: {esp32h2_baud}")
             self.reboot_h2(True, esp32h2_port, esp32h2_baud)
-            self.reboot_s3(False, False, esp32s3_port, esp32s3_baud)
+            # self.reboot_s3(False, False, esp32s3_port, esp32s3_baud)
+            self.reboot_s3(esp32s3_port, esp32s3_baud)
+
 
             logger.info("Start Wait 3")
             print("Start Wait 3")
@@ -3209,6 +3202,11 @@ class SerialCommunicationApp:
             # self.factory_flag = self.serialCom.device_factory_mode
             # self.factory_flag = True
             # logger.debug(f"Factory Flag: {self.factory_flag}")
+            time.sleep(3)
+            
+            # HTTP Req Device State
+            self.serialCom.http_response()
+            
             time.sleep(3)
             logger.info("Start Wi-Fi Soft AP Test")
             print("Start Wi-Fi Soft AP Test")
@@ -3340,7 +3338,7 @@ class SerialCommunicationApp:
 
             # try:
             esp32s3_port = self.port_var.get()
-            esp32s3_port = "/dev/ttyACM0"
+            esp32s3_port = "/dev/ttyUSB0"
             esp32s3_baud = int(self.baud_var.get())
 
             esp32s3_factroy_port = self.port_var1.get()
@@ -3363,7 +3361,9 @@ class SerialCommunicationApp:
             logger.info(f"Reboot esp32s3, Port: {esp32s3_port}, Baud: {esp32s3_baud}")
             logger.info(f"Reboot esp32h2, Port: {esp32h2_port}, Baud: {esp32h2_baud}")
             self.reboot_h2(True, esp32h2_port, esp32h2_baud)
-            self.reboot_s3(False, False, esp32s3_port, esp32s3_baud)
+            # self.reboot_s3(False, False, esp32s3_port, esp32s3_baud)
+            self.reboot_s3(esp32s3_port, esp32s3_baud)
+
 
             logger.info("Start Wait 3")
             print("Start Wait 3")
@@ -3458,7 +3458,7 @@ class SerialCommunicationApp:
 
         # finally:
         # Ensure all log entries are flushed
-        # logging.shutdown()
+        logging.shutdown()
 
         # # Define source and destination paths
         # source_path = 'app.log'
@@ -3481,7 +3481,7 @@ class SerialCommunicationApp:
         # logger.info(f'Log file copied and renamed to {renamed_file_path}')
         # # self.process_reset_device()
 
-        self.close_serial_port()
+        # self.close_serial_port()
 
         logger.info("Test 2 Completed")
         print("Test 2 Completed")
@@ -3513,12 +3513,8 @@ class SerialCommunicationApp:
 
             task1_thread = self.start_task1_thread()
             task2_thread = self.start_task2_thread()
-
-            # if task1_thread and task1_thread.is_alive():
-            #     task1_thread.join()
-
-            # if task2_thread and task2_thread.is_alive():
-            #     task2_thread.join()
+            # task1_thread.join()
+            # task2_thread.join()
 
             # logger.info("System Stop and Ready for next action")
             print("System Stop and Ready for next action")
@@ -3546,6 +3542,7 @@ class SerialCommunicationApp:
 
     def fail_ui(self):
         logger.info("Resetting tasks")
+        # self.serialCom.close_serial_port()
         self.result_flashing_fw_label.config(text="Failed", fg="red", font=("Helvetica", 10, "bold"))
         self.result_flashing_fw_h2_label.config(text="Failed", fg="red", font=("Helvetica", 10, "bold"))
         self.result_flashing_cert_label.config(text="Failed", fg="red", font=("Helvetica", 10, "bold"))
@@ -3660,6 +3657,8 @@ class SerialCommunicationApp:
         manualCode_data = ""
         discriminator_data = ""
         passcode_data = ""
+
+        # self.serialCom.close_serial_port()
 
         self.read_mac_address_label.config(fg="black")
         self.read_mac_address_label.grid()
@@ -3831,7 +3830,7 @@ class SerialCommunicationApp:
     def on_exit(self):
         print('on_exit')
         self.root.destroy()
-        self.close_serial_port()
+        # self.close_serial_port()
         print('on_exit-end')
         self.root.quit
 
@@ -3858,19 +3857,18 @@ class SerialCommunicationApp:
 
 if __name__ == "__main__":
 
-    # # Get the current date and time
-    # current_datetime = datetime.now()
+    # Get the current date and time
+    current_datetime = datetime.now()
 
-    # # Format the date and time
-    # # formatted_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
-    # formatted_date = current_datetime.strftime("%Y%m%d")
-    # formatted_time = current_datetime.strftime("%H%M%S")
+    # Format the date and time
+    # formatted_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
+    formatted_date = current_datetime.strftime("%Y%m%d")
+    formatted_time = current_datetime.strftime("%H%M%S")
 
     # Configure logging
     # log_file_name = logs_dir + "/" + logs_file_name + '_' + str(formatted_date) + logs_file_extension
     # print(str(log_file_name))
     # logging.basicConfig(
-    #     force=True,
     #     filename=str(log_file_name),  # Name of the log file
     #     level=logging.DEBUG,  # Log level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
     #     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
