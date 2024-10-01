@@ -112,6 +112,8 @@ class SerialCommunicationApp:
         self.factory_flag = None
         self.used_cert_ids = set()
         self.selected_cert_id = None
+        self.current_set = None
+        self.button_sets = []
 
         #self.configure_logging()
 
