@@ -1029,6 +1029,7 @@ class SerialCommunicationApp:
         self.canvas.bind_all("<Next>", self.scroll_page_down)
         
     def bind_keys(self):
+        print("Binding keys")
         self.root.bind("<space>", self.space_key)
         self.root.bind("<Escape>", self.escape_key)
         
