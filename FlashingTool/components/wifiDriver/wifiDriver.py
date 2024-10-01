@@ -1,10 +1,10 @@
 import subprocess
 import re
 
-def scan_wifi_networks(interface='wlp44s0', fallback_interface='wlan0'):
+def scan_wifi_networks(interface='wlan0', fallback_interface='wlp44s0'):
     try:
         # Run iwlist scan command and capture output
-        scan_output = subprocess.check_output(['iwlist', interface, 'scan'], stderr=subprocess.STDOUT)
+        scan_output = subprocess.check_output(['sudo', 'iwlist', interface, 'scan'], stderr=subprocess.STDOUT)
         scan_output = scan_output.decode('utf-8')
     except subprocess.CalledProcessError as e:
         print(f"Error scanning WiFi networks on {interface}: {e}")
@@ -44,6 +44,29 @@ def scan_wifi_networks(interface='wlp44s0', fallback_interface='wlan0'):
 
     return networks
 
+def run_iwconfig(interface='wlan0'):
+    try:
+        # Run iwconfig command and capture output
+        iwconfig_output = subprocess.check_output(['iwconfig', interface], stderr=subprocess.STDOUT)
+        iwconfig_output = iwconfig_output.decode('utf-8')
+        
+        # Debug: Print the raw iwconfig output
+        print("Raw iwconfig output:")
+        print(iwconfig_output)
+        
+        # Extract SSID and signal level using regex
+        ssid = re.search(r'ESSID:"(.*)"', iwconfig_output)
+        signal_level = re.search(r'Signal level=(-?\d+) dBm', iwconfig_output)
+        
+        return {
+            'SSID': ssid.group(1) if ssid else 'Unknown',
+            'Signal_Level': signal_level.group(1) + ' dBm' if signal_level else 'N/A',
+        }
+        
+    except subprocess.CalledProcessError as e:
+        print(f"Error running iwconfig on {interface}: {e}")
+        return {}
+
 if __name__ == "__main__":
     wifi_networks = scan_wifi_networks()
     if wifi_networks:
@@ -54,5 +77,10 @@ if __name__ == "__main__":
             # print(f"SSID: {ssid}, Signal Level: {signal_level}")
             if ssid == 'AT-MT:Y1CA00O6148F-405J10':
                 print(f"Target network found: SSID: {ssid}, Signal Level: {signal_level}")
+                signal_level = int(signal_level.split(' ')[0])
+                if signal_level >= -30 and signal_level <= -110:
+                    print(f"Signal level is usable. {signal_level}")
+                else:
+                    print(f"Signal level is not usable. {signal_level}")
     else:
         print("No WiFi networks found.")

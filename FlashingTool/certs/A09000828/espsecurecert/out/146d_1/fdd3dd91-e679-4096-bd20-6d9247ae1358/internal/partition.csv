@@ -1,0 +1,14 @@
+key,type,encoding,value
+chip-factory,namespace,,
+discriminator,data,u32,1688
+iteration-count,data,u32,10000
+salt,data,string,9zv0N7D9J1sTRN8er5817TOOCMC7uls/a6o8QwO5Qug=
+vendor-id,data,u32,5229
+vendor-name,data,string,Polyaire
+product-id,data,u32,1
+product-name,data,string,ATBeam
+hardware-ver,data,u32,10
+hw-ver-str,data,string,1.0
+serial-num,data,string,f6b6714e5a8c5cda1326012666e644b3
+verifier,data,string,REmzRMYV6kuePtFpefnPD8DRI7iT525ybyKHaFkJPisEsZvmheUH/6yX/0nMJTMBiJj/DLA8frVR86lFsJZAOrrn0zXWX5nmqeJg0ABzJAm6KG4FuVzBGiwNWD8c+X9J2Q==
+cert-dclrn,file,binary,../cd/Polyaire_CD-0x146D-0x0001-0x0201-A09000828.der

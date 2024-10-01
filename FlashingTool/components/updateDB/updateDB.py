@@ -42,9 +42,10 @@ class UpdateDB:
                 logger.info("MySQL connection closed.")
 
     def update_text_file(self, mac_address):
-        file_path = '/usr/src/app/ATSoftwareDevelopmentTool/FlashingTool/device_data.txt'
-        # file_path = '/home/anuarrozman/Airdroitech/ATSoftwareDevelopmentTool/FlashingTool/device_data.txt'
+        # file_path = '/usr/src/app/ATSoftwareDevelopmentTool/FlashingTool/device_data.txt'
+        file_path = '/home/anuarrozman2303/Airdroitech/FactoryApp/device_data.txt'
 
+        logger.error(f"starting update_text_file")
         try:
             with open(file_path, 'r+') as file:
                 lines = file.readlines()
@@ -52,16 +53,17 @@ class UpdateDB:
                 found = False
 
                 for line in lines:
-                    if 'mac-address:' in line and 'Status:' in line and 'Status: 0' in line:
+                    # if 'mac-address:' in line and 'Status:' in line and 'Status: 0' in line:
+                    if 'mac-address:' in line:
                         line_parts = line.split(',')
                         # Assuming the order of parts and number of parts is fixed
                         for i, part in enumerate(line_parts):
                             if 'mac-address:' in part:
                                 line_parts[i] = f" mac-address: {mac_address}"
-                            if 'Status:' in part:
-                                line_parts[i] = " Status: 1\n"
-                        updated_line = ','.join(line_parts)
-                        updated_lines.append(updated_line)
+                            # if 'Status:' in part:
+                            #     line_parts[i] = " Status: 1\n"
+                        # updated_line = ','.join(line_parts)
+                        # updated_lines.append(updated_line)
                         found = True
                     else:
                         updated_lines.append(line)
@@ -74,11 +76,13 @@ class UpdateDB:
                 file.truncate()
 
                 logger.info(f"MAC address and status updated in the text file where status was 0: {mac_address}")
+                print(f"MAC address and status updated in the text file where status was 0: {mac_address}")
         except IOError as e:
             logger.error(f"IOError occurred: {e}")
+            print(f"IOError occurred: {e}")
         except Exception as e:
             logger.error(f"An unexpected error occurred: {e}")
-
+            print(f"IOError occurred: {e}")
         except IOError as error:
             logger.error(f"Failed to update text file: {error}")
             print(f"Error: {error}")

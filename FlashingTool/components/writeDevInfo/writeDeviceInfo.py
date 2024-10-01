@@ -12,6 +12,15 @@ class WriteDeviceInfo:
         command = send_entry.get() + "\r\n"
         self.send_command(command)
         send_entry.delete(0, "end")
+        
+    def send_serial_number_command(self):
+        logger.debug(f"Product Name: ATBEAM")
+        command = f"FF:3;PRD-ATBEAM\r\n"
+        self.send_command(command)
+        logger.info(f"Sent product name command: {command}")
+        # self.update_status_in_text_file_serial_number(index, line) # Temporary bar this code Soo
+        # self.status_label1.config(text="Success")
+        # self.update_status_label1("Pass", "green", ("Helvetica", 12, "bold"))
 
     def get_serial_number_from_text_file(self):
         try:
@@ -44,14 +53,15 @@ class WriteDeviceInfo:
         except IOError as e:
             logger.error(f"Error updating status in file: {e}")
 
-    def send_serial_number_command(self):
-        serial_number, index, line = self.get_serial_number_from_text_file()
+    def send_serial_number_command(self, serial_number):
+        # serial_number, index, line = self.get_serial_number_from_text_file() # Temporary bar this code Soo
         if serial_number:
             logger.debug(f"Serial number: {serial_number}")
-            command = f"FF:3;DID-{serial_number}\r\n"
+            # command = f"FF:3;DID-{serial_number}\r\n"
+            command = f"FF:3;SRN-{serial_number}\r\n"
             self.send_command(command)
             logger.info(f"Sent serial number command: {command}")
-            self.update_status_in_text_file_serial_number(index, line)
+            # self.update_status_in_text_file_serial_number(index, line) # Temporary bar this code Soo
             # self.status_label1.config(text="Success")
             self.update_status_label1("Pass", "green", ("Helvetica", 12, "bold"))
         else:
@@ -90,14 +100,14 @@ class WriteDeviceInfo:
         except IOError as e:
             logger.error(f"Error updating status in file: {e}")
 
-    def send_mtqr_command(self):
-        mtqr, index, line = self.get_mtqr_from_text_file()
+    def send_mtqr_command(self, mtqr):
+        # mtqr, index, line = self.get_mtqr_from_text_file()
         if mtqr:
             logger.debug(f"Matter QR String: {mtqr}")
             command = f"FF:3;MTQR-{mtqr}\r\n"
             self.send_command(command)
             logger.info(f"Sent MTQR command: {command}")
-            self.update_status_in_text_file_mtqr(index, line)
+            # self.update_status_in_text_file_mtqr(index, line) # Temporary bar this code Soo
             # self.status_label2.config(text="Success")
             self.update_status_label2("Pass", "green", ("Helvetica", 12, "bold"))
         else:

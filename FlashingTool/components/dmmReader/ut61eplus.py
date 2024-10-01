@@ -286,8 +286,12 @@ class Measurement:
 
 class UT61EPLUS:
 
-    CP2110_VID = 0x10c4
-    CP2110_PID = 0xEA80
+    # CP2110_VID = 0x10c4
+    # CP2110_PID = 0xEA80
+
+    CP2110_VID = 0x1a86
+    CP2110_PID = 0xe429
+    
     path = "/dev/hidraw5"
 
     _SEQUENCE_GET_NAME = bytes.fromhex('AB CD 03 5F 01 DA')
