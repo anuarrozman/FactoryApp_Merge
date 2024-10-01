@@ -84,7 +84,9 @@ def scan_wifi_networks(interface='wlan0', fallback_interface='wlp44s0'):
             # Extract SSID
             match = re.search(r'ESSID:"(.*)"', line)
             if match:
-                current_network['SSID'] = match.group(1)
+                ssid = match.group(1)
+                if ssid.startswith("AT"):  # Only add networks starting with 'AT'
+                    current_network['SSID'] = ssid
 
     # Append the last network found
     if current_network:
@@ -129,16 +131,26 @@ def main():
         print("No networks found.")
         return
 
-    print("Available networks:")
+    print("Available networks starting with 'AT':")
     for i, network in enumerate(networks):
-        print(f"{i + 1}: {network['SSID']} (Signal: {network['Signal_Level']})")
+        # Ensure 'SSID' exists before printing
+        if 'SSID' in network:
+            print(f"{i + 1}: {network['SSID']} (Signal: {network['Signal_Level']})")
+
+    if not networks:
+        print("No 'AT' networks found.")
+        return
 
     choice = int(input("Select the network to connect to (number): ")) - 1
     if choice < 0 or choice >= len(networks):
         print("Invalid selection.")
         return
 
-    ssid = networks[choice]['SSID']
+    ssid = networks[choice].get('SSID')
+    if not ssid:
+        print("Invalid network selected.")
+        return
+
     password = input(f"Enter password for {ssid}: ")
 
     if connect_to_network(interface, ssid, password):

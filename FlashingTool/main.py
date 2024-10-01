@@ -32,7 +32,7 @@ from components.processOrderNumber.processOrderNumber import get_order_numbers
 from components.readOrderFile.readOrderFile import parse_order_file
 # from components.rebootPinS3.rebootPinS3 import RebootPinS3
 from components.loggingReport.loggingReport import setup_logging
-from components.wifiDriver.wifiDriver import scan_wifi_networks, run_iwconfig
+from components.wifiDriver.wifiDriver import scan_wifi_networks
 from components.sendToPrinter import sendToPrinterFunc
 
 logger = logging.getLogger(__name__)
