@@ -161,12 +161,11 @@
 # if __name__ == "__main__":
 #     main()
 
-
 import subprocess
 import re
 import socket
 
-def scan_wifi_networks(interface='wlp44s0'):
+def scan_wifi_networks(interface):
     """Scan for available WiFi networks using the specified interface."""
     try:
         # Run iwlist scan command and capture output
@@ -191,7 +190,7 @@ def scan_wifi_networks(interface='wlp44s0'):
 
 def connect_to_network(interface, ssid):
     """Connect to a specified wireless network without a password."""
-    print(f"Connecting to {ssid}...")
+    print(f"Connecting to {ssid} using {interface}...")
     connect_command = ["sudo", "nmcli", "dev", "wifi", "connect", ssid]  # No password required
     result = subprocess.run(connect_command, capture_output=True, text=True)
     
@@ -216,12 +215,21 @@ def get_esp32_ip():
     finally:
         sock.close()
 
+def select_interface():
+    """Try both interfaces (wlp44s0 and wlan0) and return the first that works."""
+    interfaces = ['wlp44s0', 'wlan0']
+    for interface in interfaces:
+        networks = scan_wifi_networks(interface)
+        if networks:
+            print(f"Found networks on {interface}.")
+            return interface, networks
+    return None, []
+
 def main():
-    interface = 'wlp44s0'  # Change this if your wireless interface is different
-    networks = scan_wifi_networks(interface)
+    interface, networks = select_interface()
 
     if not networks:
-        print("No networks starting with 'AT-MT' found.")
+        print("No networks starting with 'AT-MT' found on any interface.")
         return
 
     # Automatically connect to the first network found
@@ -235,3 +243,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
