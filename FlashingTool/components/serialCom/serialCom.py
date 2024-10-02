@@ -175,8 +175,10 @@ class SerialCom:
         # logger.info(f"MAC Address done")
         # self.status_label3.config(text="Success")
         # self.update_status_label3("Pass", "green", ("Helvetica", 10, "bold"))
+        print(f"ANUAR: {self.mac_address_variable}")
+        
         self.update_status_label7(f"{self.mac_address_variable}", "black", ("Helvetica", 10, "italic"))
-        self.mac_address_variable = ""
+        # self.mac_address_variable = ""
         
     def process_product_name(self, decoded_data):
         product_name = decoded_data.split("=")[1].strip()
@@ -285,7 +287,16 @@ class SerialCom:
             print("Response JSON: ")
             print(json_data)
             
-            temp = json_data['data']['temp']
+            id = json_data['info']['id']
+            ipaddress = json_data['info']['local_ip']
+            hw_version = json_data['info']['hw']
+            fw_version = json_data['info']['fw']
+            
+            print(f"ID: {id}")
+            print(f"IP Address: {ipaddress}")
+            print(f"Hardware Version: {hw_version}")
+            print(f"Firmware Version: {fw_version}")
+            
         else:
             print(f"Failed to retrieve data. HTTP status code: {response.status_code}")
 

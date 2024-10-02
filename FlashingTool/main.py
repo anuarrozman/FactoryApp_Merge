@@ -32,7 +32,7 @@ from components.processOrderNumber.processOrderNumber import get_order_numbers
 from components.readOrderFile.readOrderFile import parse_order_file
 # from components.rebootPinS3.rebootPinS3 import RebootPinS3
 from components.loggingReport.loggingReport import setup_logging
-from components.wifiDriver.wifiDriver import scan_wifi_networks
+from components.wifiDriver.wifiDriver import scan_wifi_networks, connect_to_network, get_ip_address
 from components.sendToPrinter import sendToPrinterFunc
 
 logger = logging.getLogger(__name__)
@@ -80,9 +80,8 @@ passcode_data = ""
 
 available_com_ports = []
 
-file_path = '/usr/src/app/FactoryApp_Merge/FlashingTool/device_data.txt'  # Specify the correct path to your text file
-# file_path = '/home/anuarrozman/Airdroitech/ATSoftwareDevelopmentTool/FlashingTool/device_data.txt'
-# file_path = '/home/anuarrozman2303/Airdroitech/FactoryApp/device_data.txt'
+# file_path = '/usr/src/app/FactoryApp_Merge/FlashingTool/device_data.txt'  # Specify the correct path to your text file
+file_path = '/home/anuarrozman2303/Airdroitech/FactoryApp_Merge/FlashingTool/device_data.txt'
 orders = parse_order_file(device_data_file_path)
 order_numbers = get_order_numbers(orders)
 qrcode = None
@@ -1611,6 +1610,54 @@ class SerialCommunicationApp:
         self.range_group2_wifi_station_rssi = tk.Label(self.group2_frame, text="-")
         self.range_group2_wifi_station_rssi.grid(row=3, column=4, padx=5, pady=5, sticky=tk.W)
         
+        self.http_req_ip_address = tk.Label(self.group2_frame, text="IP Address: ")
+        self.http_req_ip_address.grid(row=4, column=0, padx=5, pady=5, sticky=tk.W)
+        
+        self.result_http_req_ip_address = tk.Label(self.group2_frame, text="Not Yet")
+        self.result_http_req_ip_address.grid(row=4, column=1, padx=5, pady=5, sticky=tk.W)
+        
+        self.http_dev_ip_address = tk.Label(self.group2_frame, text="-")
+        self.http_dev_ip_address.grid(row=4, column=2, padx=5, pady=5, sticky=tk.W)
+        
+        self.connected_ip_address = tk.Label(self.group2_frame, text="Connected IP Address:")
+        self.connected_ip_address.grid(row=4, column=3, padx=5, pady=5, sticky=tk.W)
+        
+        self.value_connected_ip_address = tk.Label(self.group2_frame, text="-")
+        self.value_connected_ip_address.grid(row=4, column=4, padx=5, pady=5, sticky=tk.W)
+        
+        self.http_req_device_id = tk.Label(self.group2_frame, text="Device ID: ")
+        self.http_req_device_id.grid(row=5, column=0, padx=5, pady=5, sticky=tk.W)
+        
+        self.result_http_req_device_id = tk.Label(self.group2_frame, text="Not Yet")
+        self.result_http_req_device_id.grid(row=5, column=1, padx=5, pady=5, sticky=tk.W)
+        
+        self.http_dev_id = tk.Label(self.group2_frame, text="-")
+        self.http_dev_id.grid(row=5, column=2, padx=5, pady=5, sticky=tk.W)
+        
+        self.ref_dev_id = tk.Label(self.group2_frame, text="Reference Device ID:")
+        self.ref_dev_id.grid(row=5, column=3, padx=5, pady=5, sticky=tk.W)
+        
+        self.value_ref_dev_id = tk.Label(self.group2_frame, text="-")
+        self.value_ref_dev_id.grid(row=5, column=4, padx=5, pady=5, sticky=tk.W)
+        
+        self.http_hw_version = tk.Label(self.group2_frame, text="Hardware Version: ")
+        self.http_hw_version.grid(row=6, column=0, padx=5, pady=5, sticky=tk.W)
+        
+        self.result_http_hw_version = tk.Label(self.group2_frame, text="Not Yet")
+        self.result_http_hw_version.grid(row=6, column=1, padx=5, pady=5, sticky=tk.W)
+        
+        self.http_dev_hw_version = tk.Label(self.group2_frame, text="-")
+        self.http_dev_hw_version.grid(row=6, column=2, padx=5, pady=5, sticky=tk.W)
+        
+        self.http_fw_version = tk.Label(self.group2_frame, text="Firmware Version: ")
+        self.http_fw_version.grid(row=7, column=0, padx=5, pady=5, sticky=tk.W)
+        
+        self.result_http_fw_version = tk.Label(self.group2_frame, text="Not Yet")
+        self.result_http_fw_version.grid(row=7, column=1, padx=5, pady=5, sticky=tk.W)
+        
+        self.http_dev_fw_version = tk.Label(self.group2_frame, text="-")
+        self.http_dev_fw_version.grid(row=7, column=2, padx=5, pady=5, sticky=tk.W)
+        
         # Group 3
         self.group3_frame = tk.Frame(self.scrollable_frame, highlightbackground="black", highlightcolor="black", highlightthickness=2, bd=2)
         self.group3_frame.grid(row=9, column=0, padx=10, pady=10, sticky=tk.W)
@@ -1944,7 +1991,8 @@ class SerialCommunicationApp:
     def check_factory_flag(self):
         flag_value = self.serialCom.get_factory_flag()
         print(f"Factory Flag: {flag_value}")
-
+        
+        
     def start_test(self):
         global factroy_app_version
         global device_data
@@ -2365,7 +2413,7 @@ class SerialCommunicationApp:
             else:
                 self.result_read_device_mac.config(text="Failed", fg="red", font=("Helvetica", 10, "bold"))
                 logger.info("Read MAC Address: Failed")
-                print("Read MAC Address: Failed")
+                print("Read MAC Address: Failed, ", macAddress_esp32s3_data, self.read_device_mac.cget("text"))
                 # self.close_serial_port()
                 self.enable_configurable_ui()
                 messagebox.showwarning("Warning", "Test Stop!")
@@ -3270,7 +3318,7 @@ class SerialCommunicationApp:
                 self.result_group2_wifi_station.config(text="Failed", fg="red", font=("Helvetica", 10, "bold"))
                 logger.info("Wi-Fi Station: Failed")
                 print("Wi-Fi Station: Failed")
-
+                
         self.status_group2_wifi_station.config(fg="black")
         self.status_group2_wifi_station.grid()
 

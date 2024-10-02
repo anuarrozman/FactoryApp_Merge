@@ -360,9 +360,8 @@ class FlashFirmware:
         }
 
         # Define the directory to search in
-        # search_directory = "/usr/src/app/ATSoftwareDevelopmentTool/FlashingTool/firmware/s3"
-        search_directory = "/usr/src/app/FactoryApp_Merge/FlashingTool/firmware"
-        # search_directory = "/home/anuarrozman/Airdroitech/ATSoftwareDevelopmentTool/FlashingTool/firmware/s3"
+        # search_directory = "/usr/src/app/FactoryApp_Merge/FlashingTool/firmware"
+        search_directory = "/home/anuarrozman2303/Airdroitech/FactoryApp_Merge/FlashingTool/firmware/s3"
 
         # Find paths for each bin file using keywords
         bin_paths = {key: self.find_bin_path(keyword, search_directory) for key, keyword in keywords.items()}
@@ -470,8 +469,8 @@ class FlashFirmware:
         }
 
         # Define the directory to search in
-        search_directory = "/usr/src/app/FactoryApp_Merge/FlashingTool/h2"
-        # search_directory = "/home/anuarrozman/Airdroitech/ATSoftwareDevelopmentTool/FlashingTool/firmware/h2"
+        # search_directory = "/usr/src/app/FactoryApp_Merge/FlashingTool/h2"
+        search_directory = "/home/anuarrozman2303/Airdroitech/FactoryApp_Merge/FlashingTool/firmware/h2"
 
         # Find paths for each bin file using keywords
         bin_paths = {key: self.find_bin_path(keyword, search_directory) for key, keyword in keywords.items()}
@@ -546,9 +545,8 @@ class FlashFirmware:
         }
 
         # Define the directory to search in
-        # search_directory = "/usr/src/app/ATSoftwareDevelopmentTool/FlashingTool/firmware/h2"
-        search_directory = "/usr/src/app/FactoryApp_Merge/FlashingTool/h2"
-        # search_directory = "/home/anuarrozman/Airdroitech/ATSoftwareDevelopmentTool/FlashingTool/firmware/h2"
+        # search_directory = "/usr/src/app/FactoryApp_Merge/FlashingTool/h2"
+        search_directory = "/home/anuarrozman2303/Airdroitech/FactoryApp_Merge/FlashingTool/firmware/h2"
 
         # Find paths for each bin file using keywords
         bin_paths = {key: self.find_bin_path(keyword, search_directory) for key, keyword in keywords.items()}
